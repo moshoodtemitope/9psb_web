@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="79px" height="77px" viewBox="0 0 79 77" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 58 (101010) - https://sketch.com -->
+    <title>020085A4-7808-4F81-B371-91201F2D1FB5</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="1.273833%" x2="71.857828%" y2="129.742599%" id="linearGradient-1">
+            <stop stop-color="#82A946" offset="0%"></stop>
+            <stop stop-color="#548E4E" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Open-account-Screen-Step-4-Copy" transform="translate(-984.000000, -238.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <g id="checked-(1)" transform="translate(984.000000, 238.000000)">
+                <path d="M39.5,0 C17.9619117,0 0.5,17.2373191 0.5,38.5 C0.5,59.7626809 17.9619117,77 39.5,77 C61.0404649,77 78.5,59.7626809 78.5,38.5 C78.5,17.2373191 61.0397337,0 39.5,0 Z M32.3458044,58.2766989 L15.1732854,41.3250622 L20.8969709,35.6747573 L32.3458044,46.976089 L58.1030291,21.5483634 L63.8267146,27.1986683 L32.3458044,58.2766989 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

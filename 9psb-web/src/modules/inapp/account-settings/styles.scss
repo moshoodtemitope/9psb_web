@@ -1,0 +1,58 @@
+@import "../../../assets/scss/utils";
+
+.dp-placeholder {
+    height: 90px;
+    width: 90px;
+    line-height: 90px;
+    background: #F8F9F9;
+    border-radius: 50%;
+    border: 5px solid #EAEDED;
+    margin:  0 auto;
+    cursor: pointer;
+    &:hover{
+        background: #ffffff;
+    }
+}
+.helptext {
+    font-size: 12px;
+    opacity: 0.5;
+}
+.customer-name-text {
+    text-align: center;
+    font-weight: 600;
+    text-transform: capitalize;
+    margin: 15px 0 50px;
+}
+.customer-data-summary{
+    margin-bottom: 30px;
+}
+#photo-upload{
+    display: none;
+}
+.customer-photo{
+    text-align: center;
+}
+.each-info {
+    display: flex;
+    justify-content: space-between;
+    >div{
+        flex-basis: 50%;
+    }
+    .info-title {
+        font-weight: 600;
+        font-size: 15px;
+    }
+    .info-data {
+        font-size: 13px;
+        word-break: break-all;
+        margin-bottom: 10px;
+    }
+    @media screen  and (max-width: 599px){
+        
+        display: block;
+        margin-bottom: 15px;
+        .info-data{
+            margin-bottom: 15px;
+        }
+    }
+}

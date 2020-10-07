@@ -1,0 +1,10 @@
+@import "../../../assets/scss/utils";
+.react-datepicker__input-container input {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 2px;
+    &:focus,  &:hover{
+        border: 1px solid #8BB44B!important;
+    }
+}

@@ -1,0 +1,74 @@
+@import "../../../assets/scss/shared/colors";
+.itemwrap{
+    margin-top: 50px;
+    text-align: left;
+    display: flex;
+    align-items: baseline;
+    img{
+        width: 20px;
+        height: 20px;
+        margin: unset;
+        display: block;
+        opacity: 0.7;
+    }
+    .errormessage {
+        // color: #EC7063;
+        font-size: 16px;
+        font-weight: 600;
+        padding-left: 18px;
+        flex: 1 1 0;
+        position: relative;
+        bottom: 3px;
+        // margin-top: 10px;
+        h4{
+            font-size: 16px;
+        }
+        .error-msg {
+            font-weight: normal;
+            font-size: 14px;
+            margin-top: 6px;
+            opacity: 0.8;
+        }
+    }
+    .retrybtn{
+        font-size: 13px;
+        border-bottom: 1px solid;
+        color: #EC7063;
+        position: relative;
+        // top: 17px;
+        &:hover{
+            cursor: pointer;
+            font-weight: 500;
+        }
+    }
+}
+.app-panel.error{
+    background: #FFF1F0!important;
+    border: 1px solid #FFA39E!important;
+    margin: 10px 0;
+    padding: 20px 21px !important;
+    position: relative;
+    .closeicon{
+        
+        cursor: pointer;
+        img{
+            position: absolute;
+            top: 13px;
+            right: 21px;
+            opacity: 0.7;
+            height: 12px;
+            width: 12px;
+            cursor: pointer;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+}
+@media screen and  (min-width: 768px) and (max-width: 1024px){
+    
+}
+
+@media screen  and (max-width: 768px){
+    
+}

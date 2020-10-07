@@ -1,0 +1,31 @@
+@import "../../../assets/scss/shared/colors";
+.pageloader{
+    margin-top: 50px;
+    img{
+        width: 140px;
+        height: 140px;
+        margin: 0 auto;
+        display: block;
+    }
+}
+@media screen and  (min-width: 768px) and (max-width: 1024px){
+    .ad-wrap .border-lines{
+        margin-top: 10px;
+    }
+    .ad-wrap{
+        padding: 34px 20px 35px;
+    }
+}
+
+@media screen  and (max-width: 768px){
+    .ads-panel{
+        max-width: 400px;
+        margin: 44px auto 0;
+        .ad-wrap .app-img img{
+            transform: scale(1.12);
+        }
+    }
+    .ad-wrap {
+        padding: 35px 20px 35px;
+    }
+}

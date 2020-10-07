@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="280px" height="149px" viewBox="0 0 280 149" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 58 (101010) - https://sketch.com -->
+    <title>3F85C753-F436-4D87-B2A3-1C071BD0E72A</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <ellipse id="path-1" cx="401.80417" cy="66.5" rx="116" ry="85.5"></ellipse>
+        <filter x="-19.2%" y="-24.9%" width="138.4%" height="152.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="7.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.329411765   0 0 0 0 0.556862745   0 0 0 0 0.305882353  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.0958193824">
+        <g id="Dashboard" transform="translate(-564.000000, -191.000000)">
+            <g id="Oval-Copy-2-+-Oval-Copy-7-+-Oval-Copy-8-Mask" transform="translate(301.000000, 190.614069)">
+                <g id="Oval-Copy-7" transform="translate(401.804170, 66.500000) rotate(-25.000000) translate(-401.804170, -66.500000) ">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#A3C23D" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

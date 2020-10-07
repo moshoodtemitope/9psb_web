@@ -1,0 +1,97 @@
+.headingwrap {
+    background: #fff;
+    border-bottom: 1px solid rgba(163, 194, 61, 0.4);
+    box-shadow: 1px 0 20px rgba(0,0,0,.08);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: 8px solid #A3C23D;
+    position: fixed;
+    width: 100%;
+    z-index: 5;
+    .logo-wrap img {
+        max-width: 128px;
+    }
+    .container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 100%;
+    }
+    .header-items {
+        display: flex;
+        align-items: center;
+        .logoutlink {
+            img{
+                width: 19px;
+                margin-right: 7px;
+                opacity: 0.7;
+            }
+        }
+        .heading-cta{
+            color: rgba(0,0,0,0.85);
+            opacity: 0.8;
+            font-size: 14px;
+            margin: 0 10px;
+            img{
+                width: 19px;
+                margin-right: 7px;
+                opacity: 0.7;
+            }
+            &:hover{
+                cursor: pointer;
+                text-decoration: none;
+                font-weight: 600;
+            }
+        }
+        a{
+            color: rgba(0,0,0,0.85);
+            opacity: 0.8;
+            font-size: 14px;
+            margin: 0 20px;
+            &:hover{
+                text-decoration: none;
+                font-weight: 600;
+            }
+        }
+        .download-app {
+            margin-left: 20px;
+            a{
+                margin: 0 10px 10px 0 ;
+            }
+            span{
+                font-weight: 500;
+                font-size: 14px;
+                display: block;
+            }
+        }
+    }
+}
+
+.siderbar-wrapper {
+    max-width: 300px;
+    width: 20%;
+}
+
+@media screen and  (max-width: 1023px) {
+    .headingwrap{
+        .download-app{
+            // display: none;
+        }
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .headingwrap .container{
+        max-width: 90%;
+        padding-right: unset;
+        padding-left: 55px;
+    }
+    .headingwrap .header-items a{
+        margin: 0;
+    }
+    .logo-wrap {
+        img{
+            width: 70%;
+        }
+    }
+}

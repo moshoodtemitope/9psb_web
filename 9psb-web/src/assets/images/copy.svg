@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="15px" viewBox="0 0 13 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 58 (101010) - https://sketch.com -->
+    <title>98564226-9A31-4DD2-89B2-43E16D64606A</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M169.590909,46.6363636 L162.090909,46.6363636 L162.090909,37.0909091 L169.590909,37.0909091 L169.590909,46.6363636 Z M169.590909,35.7272727 L162.090909,35.7272727 C161.337794,35.7272727 160.727273,36.3377935 160.727273,37.0909091 L160.727273,46.6363636 C160.727273,47.3894792 161.337794,48 162.090909,48 L169.590909,48 C170.344025,48 170.954545,47.3894792 170.954545,46.6363636 L170.954545,37.0909091 C170.954545,36.3377935 170.344025,35.7272727 169.590909,35.7272727 L169.590909,35.7272727 Z M167.545455,33 L159.363636,33 C158.610521,33 158,33.6105208 158,34.3636364 L158,43.9090909 L159.363636,43.9090909 L159.363636,34.3636364 L167.545455,34.3636364 L167.545455,33 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard" transform="translate(-1012.000000, -259.000000)">
+            <g id="Group-4-Copy" transform="translate(854.000000, 226.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Shape" fill="#548E4E" fill-rule="nonzero" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

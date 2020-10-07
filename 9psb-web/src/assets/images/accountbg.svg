@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1013px" height="149px" viewBox="0 0 1013 149" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 58 (101010) - https://sketch.com -->
+    <title>A01357F0-E2F3-418F-BF4F-ABF279AFE39A</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="96.2517262%" y1="48.6884573%" x2="-41.0597203%" y2="51.5776825%" id="linearGradient-1">
+            <stop stop-color="#88B34C" offset="0%"></stop>
+            <stop stop-color="#167557" offset="100%"></stop>
+        </linearGradient>
+        <path d="M5,0.385931271 L1008,0.385931271 C1010.76142,0.385931271 1013,2.62450752 1013,5.38593127 L1013,144.385931 C1013,147.147355 1010.76142,149.385931 1008,149.385931 L5,149.385931 C2.23857625,149.385931 3.38176876e-16,147.147355 0,144.385931 L0,5.38593127 C-3.38176876e-16,2.62450752 2.23857625,0.385931271 5,0.385931271 Z" id="path-2"></path>
+        <ellipse id="path-4" cx="401.80417" cy="66.5" rx="116" ry="85.5"></ellipse>
+        <filter x="-19.2%" y="-24.9%" width="138.4%" height="152.0%" filterUnits="objectBoundingBox" id="filter-5">
+            <feMorphology radius="7.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.329411765   0 0 0 0 0.556862745   0 0 0 0 0.305882353  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <ellipse id="path-6" cx="-40" cy="164.885931" rx="116" ry="85.5"></ellipse>
+        <filter x="-19.2%" y="-24.9%" width="138.4%" height="152.0%" filterUnits="objectBoundingBox" id="filter-7">
+            <feMorphology radius="7.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.329411765   0 0 0 0 0.556862745   0 0 0 0 0.305882353  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard" transform="translate(-301.000000, -191.000000)">
+            <g id="Oval-Copy-2-+-Oval-Copy-7-+-Oval-Copy-8-Mask" transform="translate(301.000000, 190.614069)">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                <ellipse id="Oval-Copy-2" fill-opacity="0.305534309" fill="#FFFFFF" opacity="0.0958193824" mask="url(#mask-3)" transform="translate(339.304170, 76.500000) rotate(-25.000000) translate(-339.304170, -76.500000) " cx="339.30417" cy="76.5" rx="83.5" ry="75.5"></ellipse>
+                <g id="Oval-Copy-7" opacity="0.0958193824" mask="url(#mask-3)" transform="translate(401.804170, 66.500000) rotate(-25.000000) translate(-401.804170, -66.500000) ">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                    <use fill="#A3C23D" fill-rule="evenodd" xlink:href="#path-4"></use>
+                </g>
+                <g id="Oval-Copy-9" opacity="0.0958193824" mask="url(#mask-3)" transform="translate(-40.000000, 164.885931) rotate(-25.000000) translate(40.000000, -164.885931) ">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-7)" xlink:href="#path-6"></use>
+                    <use fill="#A3C23D" fill-rule="evenodd" xlink:href="#path-6"></use>
+                </g>
+                <ellipse id="Oval-Copy-8" fill="#1D7454" opacity="0.0958193824" mask="url(#mask-3)" transform="translate(320.304170, -7.500000) rotate(-25.000000) translate(-320.304170, 7.500000) " cx="320.30417" cy="-7.5" rx="75.5" ry="56.5"></ellipse>
+            </g>
+        </g>
+    </g>
+</svg>

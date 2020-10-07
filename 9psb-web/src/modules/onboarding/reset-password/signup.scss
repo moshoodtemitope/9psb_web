@@ -1,0 +1,12 @@
+
+.bvn-info{
+    text-align: center;
+    font-size: 13px;
+}
+
+button.lightbtn.smalltext.btn.btn-secondary {
+    font-weight: 600;
+    &:hover{
+        background: #F4F6F6 !important;
+    }
+}

@@ -1,0 +1,10 @@
+.noborder-input, .form-control.noborder-input{
+    border: none;
+}
+
+input.form-control{
+    font-size: 13px;
+    background: rgba(242, 242, 242, 0.47);
+    border: 1px solid rgba(52, 73, 94, 0.24);
+    height: 40px;
+}

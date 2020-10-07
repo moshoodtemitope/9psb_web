@@ -1,0 +1,118 @@
+.siderbar-wrapper {
+    max-width: 220px;
+    width: 20%;
+    position: fixed;
+    top: 87px;
+    bottom: 38px;
+    overflow: auto;
+    background: linear-gradient(180deg, #A3C23D 0%, #1D7454 88.69%, #548E4E 200%);
+    box-shadow: 5px 0 5px -2px rgba(136, 136, 136, 0.4);
+    z-index: 1;
+    &::-webkit-scrollbar { 
+        display: none;  /* Chrome Safari */
+    }
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+    overflow-y:scroll;
+    overflow-x:hidden;
+    .all-navs{
+        margin-top: 30px;
+        a,.logout-cta{
+            display: flex;
+            align-items: center;
+            color: #fff;
+            font-size: 13px;
+            padding: 10px 20px;
+            transition: .3s ease;
+            img{
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+            &.active, &:hover{
+                cursor: pointer;
+                background: rgba(45, 45, 45, 0.29);
+                border-left: 5px solid #A3C23D;
+                text-decoration: none;
+            }
+        }
+    }
+    .account-wrap {
+        display: flex;
+        padding-left: 20px;
+        align-items: center;
+        margin-top: 30px;
+    }
+    .customer-info{
+        margin-left: 10px;
+        margin-right: 10px;
+        h4{
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .other-info {
+            color: #EAEDED;
+            font-size: 13px;
+        }
+    }
+    .dp-placeholder{
+        height: 50px;
+        width: 50px;
+        line-height: 50px;
+        background: #EAEDED;
+        border-radius: 50%;
+        border: 5px solid #ffffff;
+    }
+}
+
+.mobilenav{
+    z-index: 5;
+    line-height: 67px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    button.hamburger{
+        transform: scale(0.75);
+        padding-bottom: 0;
+        padding-right: 0;
+        &:focus{
+            outline: none;
+        }
+    }
+    .hamburger-inner, .hamburger-inner:after, .hamburger-inner:before{
+        background-color: #548E4E;
+    }
+    .hamburger.is-active .hamburger-inner, .hamburger.is-active .hamburger-inner:after, .hamburger.is-active .hamburger-inner:before{
+        background-color: #548E4E;
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .siderbar-wrapper {
+        max-width: 215px;
+        width: 70%;
+        top: 72px;
+        bottom: 0;
+        // position: relative;
+        // &::after{
+        //     position: fixed;
+        //     content: '';
+        //     background: rgba(0, 0, 0, 0.7);
+        //     bottom: 0;
+        //     width: 100%;
+        //     top: 72px;
+        //     left: 215px;
+        // }
+    }
+    .sidebar-underlay{
+        position: fixed;
+        content: '';
+        background: rgba(0, 0, 0, 0.7);
+        bottom: 0;
+        width: 100%;
+        top: 72px;
+        left: 215px;
+        z-index: 1;
+    }
+}

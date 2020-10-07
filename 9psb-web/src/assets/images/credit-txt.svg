@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 58 (101010) - https://sketch.com -->
+    <title>58FEAEB4-91FD-4FDE-AC7F-E914DB61152B</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="24" height="24" rx="4"></rect>
+        <polygon id="path-3" points="1.33333333 2.27333333 2.27333333 1.33333333 9.33333333 8.39333333 9.33333333 4 10.6666667 4 10.6666667 10.6666667 4 10.6666667 4 9.33333333 8.39333333 9.33333333"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard" transform="translate(-325.000000, -733.000000)">
+            <g id="Trasaction-Tile/02/Recieved-Copy" transform="translate(325.000000, 717.000000)">
+                <g id="Content" transform="translate(0.000000, 11.000000)">
+                    <g id="Icon" transform="translate(0.000000, 5.000000)">
+                        <g id="Color">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <g id="Mask"></g>
+                            <g id="Icon-Background-Color" opacity="0.1" mask="url(#mask-2)" fill="#00CC96">
+                                <rect id="Color" x="0" y="0" width="24" height="24"></rect>
+                            </g>
+                        </g>
+                        <g transform="translate(6.000000, 6.000000)">
+                            <rect id="Base" x="0" y="0" width="12" height="12"></rect>
+                            <mask id="mask-4" fill="white">
+                                <use xlink:href="#path-3"></use>
+                            </mask>
+                            <use id="Shape" fill="#000000" fill-rule="nonzero" xlink:href="#path-3"></use>
+                            <g id="Color/02" mask="url(#mask-4)" fill="#00CC96">
+                                <rect id="Color" x="0" y="0" width="12" height="12"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
