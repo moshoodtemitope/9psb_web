@@ -601,6 +601,7 @@ function CreateTransactionPin   (requestPayload){
                     // dispatch(Logout());
                     psbuser.isPinSet = true;
                     psbuser.isProfileSet = true;
+                    localStorage.setItem('psb-auth', JSON.stringify(psbuser));
                     history.push("/app/create-pin-success");
 
                     // if(psbuser.isProfileSet===false){

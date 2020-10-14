@@ -193,7 +193,7 @@ class AccountSettings extends React.Component{
                                             </div>
                                             <div  className="blocked-bar-link" onClick={() => history.push(`/app/account-settings/reset-pin`)}>
                                                 <div>
-                                                    <div className="main-text">Reset Pin</div>
+                                                    <div className="main-text">Change Pin</div>
                                                     <div className="sub-text">Can remember but want to reset</div>
                                                 </div>
                                                 <img src={RightCaret} alt="" />

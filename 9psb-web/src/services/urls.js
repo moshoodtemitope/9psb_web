@@ -1,9 +1,12 @@
 
 // const URL = 'http://52.170.209.118';
-const URL = 'http://40.76.69.211/';
+// const URL = 'http://40.76.69.211/';
 // const URL = 'http://102.164.38.19';
 
+const URL = process.env.NODE_ENV === 'development' ? 'http://40.76.69.211/' : 'https://api.9psb.com.ng'
 const BASEURL = URL;  
+
+// https://api.9psb.com.ng
 
 export const routes = {
     BASEURL: BASEURL,
