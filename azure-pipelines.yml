@@ -10,8 +10,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  projectFolder: 'banklite'
-  buildOutputFolder: 'banklite/build'
+  projectFolder: '9psb-web'
+  buildOutputFolder: '9psb-web/build'
   
 steps:
 ## Run the npm install/build
