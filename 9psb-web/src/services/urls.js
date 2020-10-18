@@ -12,6 +12,7 @@ const BASEURL = URL;
 export const routes = {
     BASEURL: BASEURL,
     // Identity endpoints
+    //Test
     LOGIN_URL: BASEURL + 'Onboarding/api/Identity/login',
     // LOGIN_URL: 'http://102.164.38.19/Onboarding/api/Identity/login',
     
