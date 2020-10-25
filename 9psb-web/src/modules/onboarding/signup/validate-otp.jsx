@@ -246,7 +246,7 @@ class ValidateSignUpOtp extends React.Component{
                             </Formik>
                         </div>
                         <div className="signup-info">
-                           Alrready have an account? <Link to='/'>Sign In</Link> 
+                           Already have an account? <Link to='/'>Sign In</Link> 
                         </div>
                     </div>
                 </div>
