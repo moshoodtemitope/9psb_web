@@ -4,8 +4,8 @@
 // const URL = 'http://102.164.38.19';
 
 // const URL = process.env.NODE_ENV === 'development' ? 'http://40.76.69.211/' : 'http://41.190.22.40/'
+const URL = process.env.NODE_ENV === 'development' ? 'https://prod-api.9psb.com.ng/' : 'https://api.9psb.com.ng/'
 // const URL = process.env.NODE_ENV === 'development' ? 'http://40.76.69.211/' : 'https://api.9psb.com.ng/'
-const URL = process.env.NODE_ENV === 'development' ? 'http://40.76.69.211/' : 'https://api.9psb.com.ng/'
 const BASEURL = URL;  
 
 // https://api.9psb.com.ng

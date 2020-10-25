@@ -821,7 +821,14 @@ class Dashboard extends React.Component{
                 
 
                 {GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_FAILURE && 
-                   <ErrorMessage errorMessage={GetCustomerDashboardDataRequest.request_data.error} canRetry={true} retryFunc={this.getCustomerDashboardInfo} />
+                    <div>
+                        {
+                            psbuser.allAccounts!==undefined && 
+                            this.renderDefaultAccountSummary()
+                        }
+                        <ErrorMessage errorMessage={GetCustomerDashboardDataRequest.request_data.error} canRetry={true} retryFunc={this.getCustomerDashboardInfo} />
+                        {this.renderQuickActions()}
+                   </div>
                 }
 
                 {GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS && 

@@ -121,7 +121,7 @@ export class ApiService {
                 serviceToTest = url.split("api/")[1];
                 let userData = JSON.parse(localStorage.getItem("psb-auth"));
 
-                console.log("ajajaja", serviceToTest);
+                // console.log("ajajaja", serviceToTest);
                 if(transferUrls.indexOf(serviceToTest)===-1
                     && airtmeUrls.indexOf(serviceToTest)===-1
                     && dataUrls.indexOf(serviceToTest)===-1
@@ -182,7 +182,7 @@ export class ApiService {
                     // if(payload.walletNumber!==undefined){
                     //     walletNumber = payload.walletNumber
                     // }
-                    
+                    // console.log("unsigned", `${userData.cif}|${walletNumber}`)
                     transactionAuth  = createTransactionSigner(`${userData.cif}|${walletNumber}`);
                     // axios.defaults.headers.common['transactionAuth'] = ;
                     axios.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}`);
@@ -320,6 +320,8 @@ export class ApiService {
                     axios.defaults.headers.common[key] = value;
                 }
             }
+            let serviceResponse ="",
+                serviceResponse2 ="";
 
             if(psbAuth!==null && psbAuth!==undefined && skipTokenRefreshForUrls.indexOf(serviceToTest) === -1){
                 lastRefreshTime = psbAuth.lastLogForAuth;
@@ -370,7 +372,16 @@ export class ApiService {
                                     // return service;
                                     if(response3.status>=200 && response3.status < 210){
                                         // console.log("success in token")
-                                        return service;
+                                        // return service;
+                                        if(response3.headers['content-type'].indexOf('application/json')>-1 || response3.headers['content-type'].indexOf('application/octet-stream')>-1){
+                                            // return response3;
+                                            return service;
+                                            
+                                        }else{
+                                            // serviceResponse = "An error occured";
+                                            serviceResponse = Promise.reject(response3);
+                                            return serviceResponse;
+                                        }
                                     }
                                 })
                                 .catch((error2)=>{
@@ -419,7 +430,15 @@ export class ApiService {
                 // return service;
                 if(response.status>=200 && response.status < 210){
                     // console.log("success outside token")
-                    return service;
+                    // return service;
+                    if(response.headers['content-type'].indexOf('application/json')>-1 || response.headers['content-type'].indexOf('application/octet-stream')>-1){
+                        // return response;
+                        return service;
+                    }else{
+                        // serviceResponse = "An error occured";
+                        serviceResponse = Promise.reject(response);
+                        return serviceResponse;
+                    }
                 }
             }).catch(function (error) {
                 if (error.response) {
