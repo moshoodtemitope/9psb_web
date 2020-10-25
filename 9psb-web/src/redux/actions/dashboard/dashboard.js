@@ -98,14 +98,18 @@ function GetCustomerAccounts   (requestPayload){
             dispatch(request(consume));
             return consume
                 .then(response =>{
-                    if(response.data.length>=1){
-                        let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+                    if(response.status===200 && response.headers['content-type'].indexOf('application/json')>-1){
+                        if(response.data.length>=1){
+                            let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
 
-                        psbAuth.allAccounts = response.data;
+                            psbAuth.allAccounts = response.data;
 
-                        localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                            localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                        }
+                        dispatch(success(response.data));
+                    }else{
+                        dispatch(failure(handleRequestErrors("An error occured. Please try again")));
                     }
-                    dispatch(success(response.data));
                    
                     
                 }).catch(error =>{
