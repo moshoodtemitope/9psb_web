@@ -214,7 +214,7 @@ class CardRequestDetails extends React.Component{
                                                             value={values.amountToSend}
                                                             className={errors.amountToSend && touched.amountToSend ? "is-invalid" : null}
                                                             required />
-                                                            <div className="forminput-helptext">This Pin will be required at the ATM</div>
+                                                            <div className="forminput-helptext">This PIN will be required at the ATM</div>
                                                         {errors.amountToSend && touched.amountToSend ? (
                                                             <span className="invalid-feedback">{errors.amountToSend}</span>
                                                         ) : null}

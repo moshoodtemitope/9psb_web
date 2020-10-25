@@ -205,7 +205,21 @@ class ConfirmTransferToPhone extends React.Component{
                                                     }
                                                 </div>
                                             </div>
-                                            
+                                            {TransferMoneyToPhoneNumberRequest.request_status ===paymentsConstants.TRANSFER_TO_PHONE_NUMBER_FAILURE && 
+                                                <div className="">
+                                                    {
+                                                        TransferMoneyToPhoneNumberRequest.request_data.failedRequest==="savebeneficiary" &&
+                                                        <ErrorMessage errorMessage={TransferMoneyToPhoneNumberRequest.request_data.error} canRetry={false} retryFunc={()=>this.confirmTransfer(payload, true)} />
+                                                    }
+                                                    {
+                                                        TransferMoneyToPhoneNumberRequest.request_data.failedRequest==="transfer" &&
+                                                        <ErrorMessage errorMessage={TransferMoneyToPhoneNumberRequest.request_data.error} 
+                                                                    // canRetry={TransferMoneyToPhoneNumberRequest.request_data.error!=="Insufficient balance."? true: false} 
+                                                                    retryFunc={()=>this.confirmTransfer(payload, false)} />
+                                                    }
+                                                    
+                                                </div>
+                                            }
 
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
@@ -231,21 +245,7 @@ class ConfirmTransferToPhone extends React.Component{
                                                 </div>
                                             </div>
 
-                                            {TransferMoneyToPhoneNumberRequest.request_status ===paymentsConstants.TRANSFER_TO_PHONE_NUMBER_FAILURE && 
-                                                <div className="">
-                                                    {
-                                                        TransferMoneyToPhoneNumberRequest.request_data.failedRequest==="savebeneficiary" &&
-                                                        <ErrorMessage errorMessage={TransferMoneyToPhoneNumberRequest.request_data.error} canRetry={false} retryFunc={()=>this.confirmTransfer(payload, true)} />
-                                                    }
-                                                    {
-                                                        TransferMoneyToPhoneNumberRequest.request_data.failedRequest==="transfer" &&
-                                                        <ErrorMessage errorMessage={TransferMoneyToPhoneNumberRequest.request_data.error} 
-                                                                    // canRetry={TransferMoneyToPhoneNumberRequest.request_data.error!=="Insufficient balance."? true: false} 
-                                                                    retryFunc={()=>this.confirmTransfer(payload, false)} />
-                                                    }
-                                                    
-                                                </div>
-                                            }
+                                            
 
                                             
                                         </Form>

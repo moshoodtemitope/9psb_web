@@ -354,7 +354,7 @@ class BankTransferDetails extends React.Component{
                                                             value={values.amountToSend}
                                                             className={errors.amountToSend && touched.amountToSend ? "is-invalid" : null}
                                                             required />
-                                                            <div className="forminput-helptext">This Pin will be required at the ATM</div>
+                                                            <div className="forminput-helptext">This PIN will be required at the ATM</div>
                                                         {errors.amountToSend && touched.amountToSend ? (
                                                             <span className="invalid-feedback">{errors.amountToSend}</span>
                                                         ) : null}
@@ -364,7 +364,12 @@ class BankTransferDetails extends React.Component{
                                                     
                                                 </div>
                                             </div>
-
+                                            {confirmBeneficiaryRequest.request_status ===paymentsConstants.CONFIRM_ACCOUNT_FAILURE && 
+                                                <div className="">
+                                                    <ErrorMessage errorMessage={confirmBeneficiaryRequest.request_data.error} canRetry={false} retryFunc={()=>this.proceedWithBeneficiary(BeneficiaryData, "new")} />
+                                                </div>
+                                                
+                                            }
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
                                                     <Button variant="secondary"
@@ -385,12 +390,7 @@ class BankTransferDetails extends React.Component{
 
                                                 </div>
                                             </div>
-                                            {confirmBeneficiaryRequest.request_status ===paymentsConstants.CONFIRM_ACCOUNT_FAILURE && 
-                                                <div className="">
-                                                    <ErrorMessage errorMessage={confirmBeneficiaryRequest.request_data.error} canRetry={false} retryFunc={()=>this.proceedWithBeneficiary(BeneficiaryData, "new")} />
-                                                </div>
-                                                
-                                            }
+                                            
                                         </Form>
                                     )}
                             </Formik>

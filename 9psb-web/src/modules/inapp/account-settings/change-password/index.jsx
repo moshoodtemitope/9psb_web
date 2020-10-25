@@ -214,7 +214,7 @@ class ChangePassword extends React.Component{
                                                             <span className="invalid-feedback">{errors.newPassword}</span>
                                                         ) : null}
 
-                                                        {(passwordValid || password==="") && <div className="pw-hint">Your password must contain an <b>upper-case letter</b>, a <b>number</b> and a <b>special character</b> and must be between 8 to 16 characters.</div>}
+                                                        {(passwordValid || password==="") && <div className="pw-hint">Your password must contain an <b>upper-case letter</b>, a <b>number</b>, a <b>special character</b> and must be between 8 to 16 characters.</div>}
                                                         {(!passwordValid && password!=="") &&
                                                             <div className="text-danger error-txt">{passwordInvalidMessage}</div>
                                                         }
@@ -238,7 +238,11 @@ class ChangePassword extends React.Component{
                                                  
                                                 </div>
                                             </div>
+                                            {changePasswordRequest.request_status ===onboardingConstants.CHANGE_PASSWORD_FAILURE && 
+                                                
+                                                <ErrorMessage errorMessage={changePasswordRequest.request_data.error} canRetry={false} retryFunc={()=>this.changePassword(payload)} />
                                             
+                                            }
 
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
@@ -260,11 +264,7 @@ class ChangePassword extends React.Component{
 
                                                 </div>
                                             </div>
-                                            {changePasswordRequest.request_status ===onboardingConstants.CHANGE_PASSWORD_FAILURE && 
-                                                
-                                                <ErrorMessage errorMessage={changePasswordRequest.request_data.error} canRetry={false} retryFunc={()=>this.changePassword(payload)} />
                                             
-                                            }
                                             
                                         </Form>
                                     )}

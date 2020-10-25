@@ -282,6 +282,160 @@ class Dashboard extends React.Component{
         )
     }
 
+    renderDefaultAccountSummary= ()=>{
+        const{screenWidthSize, 
+                showSiderBar, 
+                psbuser, 
+                selectedAccount,
+                isAccountCopied,
+                selectedAccountIndex} = this.state;
+        let customerAccounts = psbuser.allAccounts,
+        defaultAccount= selectedAccount!==""?selectedAccount: customerAccounts[0];
+        let accounstList =[
+            
+        ];
+
+        const selectStyle = {
+            control: base => ({
+                ...base,
+                border: 0,
+                // This line disable the blue border
+                boxShadow: "none"
+            })
+        };
+
+        
+
+        customerAccounts.map((eachAcount, index)=>{
+            accounstList.push({
+                label:`${eachAcount.walletNumber} - ${eachAcount.productName}`,
+                value:eachAcount.walletNumber,
+                accountIndex: index+1,
+                walletBalance: eachAcount.walletBalance,
+                walletNumber: eachAcount.walletNumber,
+            })
+        })
+
+
+        return (
+            <div className="account-summary-wrap">
+                {screenWidthSize >=1024 &&
+                    <div className="account-summary">
+                        <div className="wallet-balance">
+                            <div className="each-summary-title">Your Wallet balance</div>
+                            <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
+                        </div>
+                        <div className="accounts-list">
+                            {accounstList.length>=2 &&
+                                <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
+                            }  
+
+                            {accounstList.length<2 &&
+                                <div className="each-summary-title">Account</div> 
+                            }
+                            <Select
+                               defaultValue={{label:`${defaultAccount.walletNumber} - ${defaultAccount.productName}`}}
+                                options={accounstList}
+                                styles={selectStyle}
+                                onChange={(selectedAccount)=>{
+                                    this.setState({
+                                        selectedAccount,
+                                        selectedAccountIndex: selectedAccount.accountIndex
+                                    })
+                                    this.loadHistoryForAWallet(selectedAccount.value)
+                                    
+                                }}
+                                noOptionsMessage ={()=>`No account found`}
+                                placeholder="choose account"
+                            />
+                        </div>
+                        <div className="account-num-wrap">
+                            <div>
+                                <div className="each-summary-title">Account Number</div>
+                                <div className="seleceted-account">
+                                    <span className="account-to-copy">{defaultAccount.walletNumber}</span>
+                                    
+                                    {
+                                        document.queryCommandSupported('copy') &&
+                                        <span className="copy-icon" onClick={this.copyAccountNumber}>
+                                            <img src={CopyImg} alt="" />
+                                        </span>
+                                    }
+                                </div>
+                               {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
+                            </div>
+                        </div>
+                        <div className="fund-wallet-cta">
+                            <Button variant="primary"
+                                type="button"
+                                className="ml-0 fundwallet-btn"
+                                onClick={()=>history.push("/app/fund-wallet")}
+                            >  Fund Wallet
+                            </Button>
+                        </div>
+                    </div>
+                }
+
+                {screenWidthSize < 1024 &&
+                    <div className="account-summary mobilesummary">
+                        <div className="wallet-balance">
+                            <div className="each-summary-title">Your Wallet balance</div>
+                            <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
+                        </div>
+                        <div className="fund-wallet-cta">
+                            <Button variant="primary"
+                                type="button"
+                                className="ml-0 fundwallet-btn"
+                                onClick={()=>history.push("/app/fund-wallet")}
+                            >  Fund Wallet
+                            </Button>
+                        </div>
+                        <div className="account-num-wrap">
+                            <div>
+                                <div className="each-summary-title">Account Number</div>
+                                <div className="seleceted-account">
+                                    <span className="account-to-copy">{defaultAccount.walletNumber}</span>
+                                    {
+                                        document.queryCommandSupported('copy') &&
+                                        <span className="copy-icon" onClick={this.copyAccountNumber}>
+                                            <img src={CopyImg} alt="" />
+                                        </span>
+                                    }
+                                    
+                                </div>
+                               {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
+                            </div>
+                        </div>
+                        <div className="accounts-list">
+                            {accounstList.length>=2 &&
+                                <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
+                            }  
+
+                            {accounstList.length<2 &&
+                                <div className="each-summary-title">Account</div> 
+                            }
+                            <Select 
+                                defaultValue={{label:`${defaultAccount.walletNumber} - ${defaultAccount.productName}`}}
+                                options={accounstList}
+                                styles={selectStyle}
+                                onChange={(selectedAccount)=>{
+                                    this.setState({
+                                        selectedAccount,
+                                        selectedAccountIndex: selectedAccount.accountIndex
+                                    })
+                                    this.loadHistoryForAWallet(selectedAccount.value)
+                                }}
+                                noOptionsMessage ={()=>`No account found`}
+                                placeholder="choose account"
+                            />
+                        </div>
+                    </div>
+                }
+
+            </div>
+        )
+    }
+
     searchQuickActions = (searchText)=>{
         let allActions = document.querySelectorAll('.slick-list .actions h4');
         let searchTerm = searchText.target.value.trim();
@@ -650,7 +804,18 @@ class Dashboard extends React.Component{
                
 
                 {GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_PENDING && 
-                   <PageLoader/>
+                    <div>
+                        {
+                            psbuser.allAccounts!==undefined && 
+                            this.renderDefaultAccountSummary()
+                        }
+                        {
+                            psbuser.allAccounts===undefined && 
+                            <PageLoader/>
+                        }
+                        
+                        {this.renderQuickActions()}
+                    </div>
                 }
 
                 

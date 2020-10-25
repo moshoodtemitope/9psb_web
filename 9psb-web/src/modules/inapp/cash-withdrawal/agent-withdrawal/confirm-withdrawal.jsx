@@ -178,7 +178,14 @@ class ConfirmAgentCashWithdrawal extends React.Component{
                                                 </div>
                                             </div>
 
-                                            
+                                            {
+                                                AgentWithdrawalStep2ReducerRequest.request_status === paymentsConstants.AGENT_WITHDRAWAL_STEP2_FAILURE &&
+                                                
+                                                    <ErrorMessage errorMessage={AgentWithdrawalStep2ReducerRequest.request_data.error} 
+                                                        canRetry={false} 
+                                                        retryFunc={() => this.confirmWithdrawal(payload)} />
+                                                
+                                            }
                                             
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
@@ -203,14 +210,7 @@ class ConfirmAgentCashWithdrawal extends React.Component{
                                                 </div>
                                             </div>
 
-                                            {
-                                                AgentWithdrawalStep2ReducerRequest.request_status === paymentsConstants.AGENT_WITHDRAWAL_STEP2_FAILURE &&
-                                                
-                                                    <ErrorMessage errorMessage={AgentWithdrawalStep2ReducerRequest.request_data.error} 
-                                                        canRetry={false} 
-                                                        retryFunc={() => this.confirmWithdrawal(payload)} />
-                                                
-                                            }
+                                            
                                             
                                         </Form>
                                     )}

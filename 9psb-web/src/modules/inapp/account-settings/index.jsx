@@ -155,24 +155,24 @@ class AccountSettings extends React.Component{
                                         </div>
                                         <div className="each-info">
                                             <div className="info-title">BVN</div>
-                                            <div className="info-data"> 
-                                                {(GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS && 
-                                                    GetCustomerDashboardDataRequest.request_data.response.profileData!==undefined &&
-                                                    GetCustomerDashboardDataRequest.request_data.response.profileData!==null &&
-                                                    GetCustomerDashboardDataRequest.request_data.response.profileData!=="") &&
-                                                    <span>{GetCustomerDashboardDataRequest.request_data.response.profileData.bvn}</span>
-                                                }
-                                            </div>
-                                            <div className="info-data"> 
-                                                {((GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS
-                                                    || GetCustomerDashboardDataRequest.request_status!== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS) && 
-                                                    (GetCustomerDashboardDataRequest.request_data.response.profileData===undefined ||
-                                                    GetCustomerDashboardDataRequest.request_data.response.profileData===null ||
-                                                    GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===null ||
-                                                    GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===undefined)) &&
-                                                    <span>N/A</span>
-                                                }
-                                            </div>
+                                             
+                                            {(GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS && 
+                                                GetCustomerDashboardDataRequest.request_data.response.profileData!==undefined &&
+                                                GetCustomerDashboardDataRequest.request_data.response.profileData!==null &&
+                                                GetCustomerDashboardDataRequest.request_data.response.profileData!=="") &&
+                                                <div className="info-data">
+                                                <span>{GetCustomerDashboardDataRequest.request_data.response.profileData.bvn}</span></div>
+                                            }
+                                            
+                                            
+                                            {((GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS
+                                                || GetCustomerDashboardDataRequest.request_status!== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS) && 
+                                                (GetCustomerDashboardDataRequest.request_data.response.profileData===undefined ||
+                                                GetCustomerDashboardDataRequest.request_data.response.profileData===null ||
+                                                GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===null ||
+                                                GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===undefined)) &&
+                                                <div className="info-data"> <span>N/A</span> </div>
+                                            }
                                         </div>
                                     </div>
                                     <div className="blocked-list">
@@ -186,15 +186,15 @@ class AccountSettings extends React.Component{
                                             </div>
                                             <div  className="blocked-bar-link" onClick={() => history.push(`/app/account-settings/change-pin`)}>
                                                 <div>
-                                                    <div className="main-text">Forgot Pin</div>
-                                                    <div className="sub-text">Can't remember pin</div>
+                                                    <div className="main-text">Change PIN</div>
+                                                    <div className="sub-text">Can remember but want to change my PIN</div>
                                                 </div>
                                                 <img src={RightCaret} alt="" />
                                             </div>
                                             <div  className="blocked-bar-link" onClick={() => history.push(`/app/account-settings/reset-pin`)}>
                                                 <div>
-                                                    <div className="main-text">Change Pin</div>
-                                                    <div className="sub-text">Can remember but want to reset</div>
+                                                    <div className="main-text">Reset/Unblock PIN</div>
+                                                    <div className="sub-text">PIN is blocked or cannot remember PIN</div>
                                                 </div>
                                                 <img src={RightCaret} alt="" />
                                             </div>

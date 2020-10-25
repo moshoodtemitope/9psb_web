@@ -78,7 +78,8 @@ class BuyData extends React.Component{
         providerDataPlans.map(eachPlan=>{
             formattedPlans.push({
                 label:`${eachPlan.network}- ${eachPlan.description}`,
-                value:eachPlan.amount
+                value:eachPlan.amount,
+                productId: eachPlan.productId
             })
         })
 
@@ -199,7 +200,8 @@ class BuyData extends React.Component{
                                     recipient: values.recipient,
                                     network: values.network,
                                     transactionType: 1,
-                                    amount: parseFloat(values.amount)
+                                    amount: parseFloat(values.amount),
+                                    productId:this.state.productId
                                 }
                                 this.setState(({ payload }));
 
@@ -316,7 +318,7 @@ class BuyData extends React.Component{
 
                                                     options={selectedProviderDataPlans}
                                                     onChange={(selected) => {
-                                                        
+                                                        this.setState({productId:selected.productId})
                                                         setFieldValue('amount', selected.value)
                                                     }}
                                                     onBlur={() => setFieldTouched('amount', true)}

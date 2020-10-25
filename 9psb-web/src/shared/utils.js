@@ -40,7 +40,7 @@ export const handleRequestErrors = (error)=>{
             //     return error.message;
             // }
             
-            return "Something went wrong. Please try again";
+            // return "Something went wrong. Please try again";
         }
 
         if(error.toString()==="Error: Network Error"){

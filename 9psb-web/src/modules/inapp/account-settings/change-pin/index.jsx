@@ -64,15 +64,15 @@ class ChangePin extends React.Component{
        
         let validationChangeSchema = Yup.object().shape({
                 oldPin: Yup.string()
-                    .length(4, '4 Digits pin')
+                    .length(4, '4 Digits PIN')
                     .required('Required'),
                 newPin: Yup.string()
-                    .length(4, '4 Digits pin')
+                    .length(4, '4 Digits PIN')
                     .required('Required'),
                 conmfirmNewPin: Yup.string()
-                    .length(4, '4 digits pin')
+                    .length(4, '4 digits PIN')
                     .required('Required')
-                    .oneOf([Yup.ref('newPin'), null], 'new pin must match'),
+                    .oneOf([Yup.ref('newPin'), null], 'new PIN must match'),
         });   
 
         let changeTransactionPinRequest = this.props.ChangeTransactionPinReducer;
@@ -139,7 +139,7 @@ class ChangePin extends React.Component{
                                                         
                                                  
                                                     <Form.Group className="poppedinput">
-                                                        <Form.Label className="block-level">Old Pin</Form.Label>
+                                                        <Form.Label className="block-level">Old PIN</Form.Label>
                                                         <Form.Control type="password"
                                                             name="oldPin"
                                                             onChange={(e)=> setFieldValue('oldPin', e.target.value)}
@@ -153,7 +153,7 @@ class ChangePin extends React.Component{
 
                                                     </Form.Group>
                                                     <Form.Group className="poppedinput">
-                                                        <Form.Label className="block-level">New Pin</Form.Label>
+                                                        <Form.Label className="block-level">New PIN</Form.Label>
                                                         <Form.Control type="password"
                                                             name="newPin"
                                                             onChange={(e)=> setFieldValue('newPin', e.target.value)}
@@ -167,7 +167,7 @@ class ChangePin extends React.Component{
 
                                                     </Form.Group>
                                                     <Form.Group className="poppedinput">
-                                                        <Form.Label className="block-level">Retype New Pin</Form.Label>
+                                                        <Form.Label className="block-level">Retype New PIN</Form.Label>
                                                         <Form.Control type="password"
                                                             name="conmfirmNewPin"
                                                             onChange={(e)=> setFieldValue('conmfirmNewPin', e.target.value)}
@@ -184,7 +184,11 @@ class ChangePin extends React.Component{
                                                  
                                                 </div>
                                             </div>
+                                            {changeTransactionPinRequest.request_status ===onboardingConstants.CHANGE_PIN_FAILURE && 
+                                                
+                                                <ErrorMessage errorMessage={changeTransactionPinRequest.request_data.error} canRetry={false} retryFunc={()=>this.changePin(payload)} />
                                             
+                                            }
 
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
@@ -207,11 +211,7 @@ class ChangePin extends React.Component{
                                                 </div>
                                             </div>
 
-                                            {changeTransactionPinRequest.request_status ===onboardingConstants.CHANGE_PIN_FAILURE && 
-                                                
-                                                <ErrorMessage errorMessage={changeTransactionPinRequest.request_data.error} canRetry={false} retryFunc={()=>this.changePin(payload)} />
                                             
-                                            }
                                             
                                         </Form>
                                     )}
@@ -242,7 +242,7 @@ class ChangePin extends React.Component{
         return (
             <Fragment>
                 <Helmet>
-                <title>9PSB - Change Pin</title>
+                <title>9PSB - Change PIN</title>
                 </Helmet>
                 <InAppContainer>
                 <div className="inapp-page">

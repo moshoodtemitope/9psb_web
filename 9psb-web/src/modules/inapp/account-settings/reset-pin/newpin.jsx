@@ -81,12 +81,12 @@ class NewTxtPin extends React.Component{
                     .length(6, '6 Digits OTP')
                     .required('Required'),
                 newPin: Yup.string()
-                    .length(4, '4 Digits pin')
+                    .length(4, '4 Digits PIN')
                     .required('Required'),
                 conmfirmNewPin: Yup.string()
-                    .length(4, '4 Digits pin')
+                    .length(4, '4 Digits PIN')
                     .required('Required')
-                    .oneOf([Yup.ref('newPin'), null], 'new pin must match'),
+                    .oneOf([Yup.ref('newPin'), null], 'new PIN must match'),
         });   
 
         let completePinResetRequest = this.props.CompletePinResetReducer,
@@ -169,7 +169,7 @@ class NewTxtPin extends React.Component{
 
                                                     </Form.Group>
                                                     <Form.Group className="poppedinput">
-                                                        <Form.Label className="block-level">New Pin</Form.Label>
+                                                        <Form.Label className="block-level">New PIN</Form.Label>
                                                         <Form.Control type="password"
                                                             name="newPin"
                                                             onChange={(e)=> setFieldValue('newPin', e.target.value)}
@@ -183,7 +183,7 @@ class NewTxtPin extends React.Component{
 
                                                     </Form.Group>
                                                     <Form.Group className="poppedinput">
-                                                        <Form.Label className="block-level">Retype New Pin</Form.Label>
+                                                        <Form.Label className="block-level">Retype New PIN</Form.Label>
                                                         <Form.Control type="password"
                                                             name="conmfirmNewPin"
                                                             onChange={(e)=> setFieldValue('conmfirmNewPin', e.target.value)}
@@ -200,26 +200,7 @@ class NewTxtPin extends React.Component{
                                                  
                                                 </div>
                                             </div>
-                                            <div className="app-panel inpage">
-                                                <div className="footer-with-cta toleft m-0 ">
-                                                    <Button variant="secondary"
-                                                        type="button"
-                                                        disabled={completePinResetRequest.is_request_processing || resendRegOtpRequest.is_request_processing}
-                                                        className="ml-0 onboarding-btn light"
-                                                        onClick={()=>history.goBack()}
-                                                    > Back
-                                                     {/* {CreateAccountStep1Request.is_request_processing?'Please wait...' :'Continue'} */}
-                                                    </Button>
-                                                    <Button variant="secondary"
-                                                        type="submit"
-                                                        disabled={completePinResetRequest.is_request_processing || resendRegOtpRequest.is_request_processing}
-                                                        className="ml-10 onboarding-btn"
-                                                    > 
-                                                     {completePinResetRequest.is_request_processing?'Please wait...' :'Update'}
-                                                    </Button>
-
-                                                </div>
-                                            </div>
+                                            
                                             {completePinResetRequest.request_status ===onboardingConstants.COMPLETE_PIN_RESET_FAILURE && 
                                                
                                                     <ErrorMessage errorMessage={completePinResetRequest.request_data.error} 
@@ -250,6 +231,27 @@ class NewTxtPin extends React.Component{
                                                 />
                                             
                                             }
+
+                                            <div className="app-panel inpage">
+                                                <div className="footer-with-cta toleft m-0 ">
+                                                    <Button variant="secondary"
+                                                        type="button"
+                                                        disabled={completePinResetRequest.is_request_processing || resendRegOtpRequest.is_request_processing}
+                                                        className="ml-0 onboarding-btn light"
+                                                        onClick={()=>history.goBack()}
+                                                    > Back
+                                                     {/* {CreateAccountStep1Request.is_request_processing?'Please wait...' :'Continue'} */}
+                                                    </Button>
+                                                    <Button variant="secondary"
+                                                        type="submit"
+                                                        disabled={completePinResetRequest.is_request_processing || resendRegOtpRequest.is_request_processing}
+                                                        className="ml-10 onboarding-btn"
+                                                    > 
+                                                     {completePinResetRequest.is_request_processing?'Please wait...' :'Update'}
+                                                    </Button>
+
+                                                </div>
+                                            </div>
 
                                             
                                             

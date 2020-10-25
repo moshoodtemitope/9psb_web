@@ -67,7 +67,7 @@ class PinResetSuccess extends React.Component{
                                 
                                
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                    You have successfully changed your transaction pin
+                                    You have successfully changed your transaction PIN
                                 </div>
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                     Thank you for using 9PSB.

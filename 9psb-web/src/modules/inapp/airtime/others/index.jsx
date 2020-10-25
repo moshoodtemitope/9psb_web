@@ -339,7 +339,12 @@ class BuyAirtimeOthers extends React.Component{
                                                     
                                                 </div>
                                             </div>
-
+                                            {AddAirtimeBeneficiaryRequest.request_status ===paymentsConstants.SAVE_AIRTIME_BENEFICIARY_FAILURE && 
+                                                        
+                                                    <ErrorMessage errorMessage={AddAirtimeBeneficiaryRequest.request_data.error} canRetry={false} retryFunc={()=>this.proceedWithDetails("beneficiary", payload)} />
+                                                
+                                                
+                                            }
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
                                                     {values.saveBeneficiary===true &&
@@ -372,12 +377,7 @@ class BuyAirtimeOthers extends React.Component{
 
                                                 </div>
                                             </div>
-                                            {AddAirtimeBeneficiaryRequest.request_status ===paymentsConstants.SAVE_AIRTIME_BENEFICIARY_FAILURE && 
-                                                        
-                                                    <ErrorMessage errorMessage={AddAirtimeBeneficiaryRequest.request_data.error} canRetry={false} retryFunc={()=>this.proceedWithDetails("beneficiary", payload)} />
-                                                
-                                                
-                                            }
+                                            
                                         </Form>
                                     )}
                             </Formik>

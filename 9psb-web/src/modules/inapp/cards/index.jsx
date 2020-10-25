@@ -79,7 +79,7 @@ class ManageCards extends React.Component{
                                         </div>
                                         <div className="blocked-bar-link" >
                                             <div>
-                                                <div className="main-text">Activate Card and Set Pin</div>
+                                                <div className="main-text">Activate Card and Set PIN</div>
                                                  <div className="sub-text">Received your card, Set it up</div>
                                             </div>
                                             <img src={RightCaret} alt=""/>

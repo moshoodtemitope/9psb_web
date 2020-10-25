@@ -212,7 +212,11 @@ class ConfirmCardDetails extends React.Component{
                                             </div>
 
                                             
+                                            {ValidateACardRequest.request_status ===dashboardConstants.VALIDATE_A_CARD_FAILURE && 
+                                                
+                                                <ErrorMessage errorMessage={ValidateACardRequest.request_data.error} canRetry={false} retryFunc={()=>this.handleCardValidationRequest(payload)} />
                                             
+                                            }
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
                                                     <Button variant="secondary"
@@ -235,11 +239,7 @@ class ConfirmCardDetails extends React.Component{
 
                                                 </div>
                                             </div>
-                                            {ValidateACardRequest.request_status ===dashboardConstants.VALIDATE_A_CARD_FAILURE && 
-                                                
-                                                <ErrorMessage errorMessage={ValidateACardRequest.request_data.error} canRetry={false} retryFunc={()=>this.handleCardValidationRequest(payload)} />
                                             
-                                            }
                                             
                                         </Form>
                                     )}
@@ -357,7 +357,11 @@ class ConfirmCardDetails extends React.Component{
                                             </div>
 
                                             
-                                            
+                                            {ValidateACardRequest.request_status ===dashboardConstants.VALIDATE_A_CARD_FAILURE && 
+                                                
+                                                    <ErrorMessage errorMessage={ValidateACardRequest.request_data.error} canRetry={false} retryFunc={()=>this.handleCardValidationRequest(payload)} />
+                                                
+                                            }
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
                                                     <Button variant="secondary"
@@ -380,11 +384,7 @@ class ConfirmCardDetails extends React.Component{
 
                                                 </div>
                                             </div>
-                                            {ValidateACardRequest.request_status ===dashboardConstants.VALIDATE_A_CARD_FAILURE && 
-                                                
-                                                    <ErrorMessage errorMessage={ValidateACardRequest.request_data.error} canRetry={false} retryFunc={()=>this.handleCardValidationRequest(payload)} />
-                                                
-                                            }
+                                            
                                             
                                         </Form>
                                     )}
@@ -503,7 +503,11 @@ class ConfirmCardDetails extends React.Component{
                                             </div>
 
                                             
-                                            
+                                            {ValidateACardRequest.request_status ===dashboardConstants.VALIDATE_A_CARD_FAILURE && 
+                                                
+                                                <ErrorMessage errorMessage={ValidateACardRequest.request_data.error} canRetry={false} retryFunc={()=>this.handleCardValidationRequest(payload)} />
+                                                
+                                            }
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
                                                     <Button variant="secondary"
@@ -527,11 +531,7 @@ class ConfirmCardDetails extends React.Component{
                                                 </div>
                                             </div>
 
-                                            {ValidateACardRequest.request_status ===dashboardConstants.VALIDATE_A_CARD_FAILURE && 
-                                                
-                                                <ErrorMessage errorMessage={ValidateACardRequest.request_data.error} canRetry={false} retryFunc={()=>this.handleCardValidationRequest(payload)} />
-                                                
-                                            }
+                                            
                                             
                                         </Form>
                                     )}

@@ -179,7 +179,14 @@ class ConfirmCashWithdrawal extends React.Component{
                                                 </div>
                                             </div>
 
-                                            
+                                            {
+                                                CardlessWithdrawalStep2Request.request_status === paymentsConstants.CARDLESS_WITHDRAWAL_STEP2_FAILURE &&
+                                                
+                                                    <ErrorMessage errorMessage={CardlessWithdrawalStep2Request.request_data.error} 
+                                                        // canRetry={CardlessWithdrawalStep2Request.request_data.error!=="Cardless withdrawal feature is coming soon."? true: false} 
+                                                        retryFunc={() => this.confirmWithdrawal(payload)} />
+                                                
+                                            }
                                             
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
@@ -208,14 +215,7 @@ class ConfirmCashWithdrawal extends React.Component{
 
                                                 </div>
                                             </div>
-                                            {
-                                                CardlessWithdrawalStep2Request.request_status === paymentsConstants.CARDLESS_WITHDRAWAL_STEP2_FAILURE &&
-                                                
-                                                    <ErrorMessage errorMessage={CardlessWithdrawalStep2Request.request_data.error} 
-                                                        // canRetry={CardlessWithdrawalStep2Request.request_data.error!=="Cardless withdrawal feature is coming soon."? true: false} 
-                                                        retryFunc={() => this.confirmWithdrawal(payload)} />
-                                                
-                                            }
+                                            
                                             
                                         </Form>
                                     )}

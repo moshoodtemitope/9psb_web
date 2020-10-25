@@ -152,7 +152,14 @@ class FindAnAgent extends React.Component{
                                             </div>
 
                                             
-
+                                            {
+                                                GetAgentsRequest.request_status === paymentsConstants.GET_AGENTS_FAILURE &&
+                                                
+                                                    <ErrorMessage errorMessage={GetAgentsRequest.request_data.error} 
+                                                        canRetry={false} 
+                                                        retryFunc={() => this.fetchAgents(payload)} />
+                                                
+                                            }
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
                                                     {/* <Button variant="secondary"
@@ -173,14 +180,7 @@ class FindAnAgent extends React.Component{
 
                                                 </div>
                                             </div>
-                                            {
-                                                GetAgentsRequest.request_status === paymentsConstants.GET_AGENTS_FAILURE &&
-                                                
-                                                    <ErrorMessage errorMessage={GetAgentsRequest.request_data.error} 
-                                                        canRetry={false} 
-                                                        retryFunc={() => this.fetchAgents(payload)} />
-                                                
-                                            }
+                                            
                                         </Form>
                                     )}
                             </Formik>

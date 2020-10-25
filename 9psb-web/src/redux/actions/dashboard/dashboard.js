@@ -29,6 +29,12 @@ function GetCustomerDashboardData   (){
                             // startDate= new Date(endDate.getFullYear(), endDate.getMonth(), 1),
                             today = new Date(),
                             startDate = new Date (new Date().setDate(today.getDate()-30));
+
+                            let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+
+                            psbAuth.allAccounts = response.data;
+
+                            localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
                             // historyQueryString = `StartDate=""&EndDate=""&Channel=3&PageSize=5&CurrentPage=1`
                             // historyQueryString = `WalletNumber=${defaultAccount.walletNumber}&StartDate=${startDate.toISOString()}&EndDate=${endDate.toISOString()}&Channel=3&PageSize=5&CurrentPage=1`
                         let consume5 = ApiService.request(`${routes.TRANSACTION_HISTORY}`, "GET", null);
@@ -92,7 +98,13 @@ function GetCustomerAccounts   (requestPayload){
             dispatch(request(consume));
             return consume
                 .then(response =>{
-                    
+                    if(response.data.length>=1){
+                        let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+
+                        psbAuth.allAccounts = response.data;
+
+                        localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                    }
                     dispatch(success(response.data));
                    
                     

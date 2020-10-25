@@ -72,7 +72,7 @@ class PinChangeSuccess extends React.Component{
                                 
                                
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                    You have successfully changed your transaction pin
+                                    You have successfully changed your transaction PIN
                                 </div>
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                     Thank you for using 9PSB.
@@ -119,7 +119,7 @@ class PinChangeSuccess extends React.Component{
         return (
             <Fragment>
                 <Helmet>
-                    <title>9PSB - Change Pin success</title>
+                    <title>9PSB - Change PIN success</title>
                 </Helmet>
                 <InAppContainer>
                 <div className="inapp-page">

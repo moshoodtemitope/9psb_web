@@ -343,7 +343,7 @@ class GetCustomerDetails extends React.Component{
                                                 {errors.password && touched.password ? (
                                                     <span className="invalid-feedback">{errors.password}</span>
                                                 ) : null}
-                                                {(passwordValid || password==="") && <div className="pw-hint">Your password must contain an <b>upper-case letter</b>, a <b>number</b> and a <b>special character</b> and must be between 8 to 16 characters.</div>}
+                                                {(passwordValid || password==="") && <div className="pw-hint">Your password must contain an <b>upper-case letter</b>, a <b>number</b>, a <b>special character</b> and must be between 8 to 16 characters.</div>}
                                                 {(!passwordValid && password!=="") &&
                                                     <div className="text-danger error-txt">{passwordInvalidMessage}</div>
                                                     }
@@ -395,7 +395,7 @@ class GetCustomerDetails extends React.Component{
                             </Formik>
                         </div>
                         <div className="signup-info">
-                           Alrready have an account? <Link to='/'>Sign In</Link> 
+                           Already have an account? <Link to='/'>Sign In</Link> 
                         </div>
                     </div>
                 </div>

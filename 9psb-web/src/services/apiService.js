@@ -178,7 +178,7 @@ export class ApiService {
                         walletObj = urlParams.split("&")[0];
                         walletNumber = walletObj.split("=")[1];
 
-                    console.log("yuyuyuyuyu", walletNumber);
+                    
                     // if(payload.walletNumber!==undefined){
                     //     walletNumber = payload.walletNumber
                     // }
@@ -348,7 +348,7 @@ export class ApiService {
 
                     return tokenService.then(function (response) {
                         // console.log("was here")
-                        if(response.status===200){
+                        if(response.status>=200 && response.status<210){
                             if(response.data.message!==undefined){
                                 
                                 let userData = JSON.parse(localStorage.getItem("psb-auth"));
@@ -367,7 +367,11 @@ export class ApiService {
                                 
                                 return service.then((response3)=>{
 
-                                    return service;
+                                    // return service;
+                                    if(response3.status>=200 && response3.status < 210){
+                                        // console.log("success in token")
+                                        return service;
+                                    }
                                 })
                                 .catch((error2)=>{
                                     return service;
@@ -384,7 +388,14 @@ export class ApiService {
                        
                     }).catch(function (error) {
                         // console.log("logs out now",service, routes.REFRESH_TOKEN)
-                        dispatch(onboardingActions.Logout())
+                        // dispatch(onboardingActions.Logout())
+
+                        let responseData= error.response;
+                        if(responseData.config.url.indexOf("Identity/refreshtoken")>-1){
+                            dispatch(onboardingActions.Logout())
+                        }else{
+                             return tokenService;
+                        }
                         
                         
                         
@@ -405,7 +416,11 @@ export class ApiService {
             
             return service.then(function (response) {
                 
-                return service;
+                // return service;
+                if(response.status>=200 && response.status < 210){
+                    // console.log("success outside token")
+                    return service;
+                }
             }).catch(function (error) {
                 if (error.response) {
                     

@@ -160,7 +160,13 @@ class ConfirmAirtimeTopUp extends React.Component{
                                                     </Form.Group>
                                                 </div>
                                             </div>
-
+                                            
+                                            {
+                                                AirtimeTopUpRequest.request_status ===paymentsConstants.BUY_AIRTIME_FAILURE && 
+                                                
+                                                    <ErrorMessage errorMessage={AirtimeTopUpRequest.request_data.error} canRetry={false} retryFunc={()=>this.confirmRecharge(payload)} />
+                                                
+                                            }
                                             
 
                                             <div className="app-panel inpage">
@@ -184,12 +190,7 @@ class ConfirmAirtimeTopUp extends React.Component{
                                                 </div>
                                             </div>
 
-                                            {
-                                                AirtimeTopUpRequest.request_status ===paymentsConstants.BUY_AIRTIME_FAILURE && 
-                                                
-                                                    <ErrorMessage errorMessage={AirtimeTopUpRequest.request_data.error} canRetry={false} retryFunc={()=>this.confirmRecharge(payload)} />
-                                                
-                                            }
+                                            
                                         </Form>
                                     )}
                             </Formik>

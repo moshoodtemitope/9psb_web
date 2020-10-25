@@ -187,7 +187,11 @@ class LocateAgents extends React.Component{
                                                   
                                                 </div>
                                             </div>
+                                            {LocateAnAgentRequest.request_status ===dashboardConstants.LOCATE_AGENTS_FAILURE && 
+                                                
+                                                <ErrorMessage errorMessage={LocateAnAgentRequest.request_data.error} canRetry={true} retryFunc={()=>this.handleDeposit(payload)} />
                                             
+                                            }
 
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
@@ -203,11 +207,7 @@ class LocateAgents extends React.Component{
                                                 </div>
                                             </div>
 
-                                            {LocateAnAgentRequest.request_status ===dashboardConstants.LOCATE_AGENTS_FAILURE && 
-                                                
-                                                <ErrorMessage errorMessage={LocateAnAgentRequest.request_data.error} canRetry={true} retryFunc={()=>this.handleDeposit(payload)} />
                                             
-                                            }
                                             
                                         </Form>
                                     )}

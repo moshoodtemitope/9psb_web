@@ -263,7 +263,7 @@ class CashDeposit extends React.Component{
                                                     </Form.Group>
 
                                                     {/* <Form.Group className="poppedinput">
-                                                        <Form.Label className="block-level">Enter Security Pin (optional)</Form.Label>
+                                                        <Form.Label className="block-level">Enter Security PIN (optional)</Form.Label>
                                                         
                                                         <Form.Control type="password"
                                                             name="transactionPin"

@@ -195,7 +195,7 @@ class SetNewPassword extends React.Component{
                                                 {errors.newPw && touched.newPw ? (
                                                     <span className="invalid-feedback">{errors.newPw}</span>
                                                 ) : null}
-                                                {(passwordValid || password==="") && <div className="pw-hint">Your password must contain an <b>upper-case letter</b>, a <b>number</b> and a <b>special character</b> and must be between 8 to 16 characters.</div>}
+                                                {(passwordValid || password==="") && <div className="pw-hint">Your password must contain an <b>upper-case letter</b>, a <b>number</b>, a <b>special character</b> and must be between 8 to 16 characters.</div>}
                                                 {!passwordValid &&
                                                     <div className="text-danger error-txt">{passwordInvalidMessage}</div>
                                                     }

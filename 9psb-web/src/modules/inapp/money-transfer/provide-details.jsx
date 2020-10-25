@@ -256,7 +256,7 @@ class MoneyTransferDetails extends React.Component{
                                                             value={values.amountToSend}
                                                             className={errors.amountToSend && touched.amountToSend ? "is-invalid" : null}
                                                             required />
-                                                            <div className="forminput-helptext">This Pin will be required at the ATM</div>
+                                                            <div className="forminput-helptext">This PIN will be required at the ATM</div>
                                                         {errors.amountToSend && touched.amountToSend ? (
                                                             <span className="invalid-feedback">{errors.amountToSend}</span>
                                                         ) : null}
@@ -265,7 +265,11 @@ class MoneyTransferDetails extends React.Component{
                                                 </div>
                                             </div>
                                             
-
+                                            {TransferMoneyToPhoneSTEP1Request.request_status ===paymentsConstants.TRANSFER_TO_PHONE_STEP1_FAILURE && 
+                                                
+                                                    <ErrorMessage errorMessage={TransferMoneyToPhoneSTEP1Request.request_data.error} canRetry={false} retryFunc={()=>this.verifyAccount(payload)} />
+                                                
+                                            }
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
                                                     <Button variant="secondary"
@@ -286,11 +290,7 @@ class MoneyTransferDetails extends React.Component{
 
                                                 </div>
                                             </div>
-                                            {TransferMoneyToPhoneSTEP1Request.request_status ===paymentsConstants.TRANSFER_TO_PHONE_STEP1_FAILURE && 
-                                                
-                                                    <ErrorMessage errorMessage={TransferMoneyToPhoneSTEP1Request.request_data.error} canRetry={false} retryFunc={()=>this.verifyAccount(payload)} />
-                                                
-                                            }
+                                            
                                             
                                         </Form>
                                     )}

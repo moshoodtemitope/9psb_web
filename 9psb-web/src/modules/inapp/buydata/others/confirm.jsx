@@ -178,7 +178,12 @@ class BuyDataOthersConfirm extends React.Component{
                                                 </div>
                                             </div>
 
-                                            
+                                            {
+                                                DataTopUpTopUpRequest.request_status ===paymentsConstants.BUY_DATATOPUP_FAILURE && 
+                                                
+                                                    <ErrorMessage errorMessage={DataTopUpTopUpRequest.request_data.error} canRetry={false} retryFunc={()=>this.confirmRecharge(payload)} />
+                                                
+                                            }
 
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
@@ -200,12 +205,7 @@ class BuyDataOthersConfirm extends React.Component{
 
                                                 </div>
                                             </div>
-                                            {
-                                                DataTopUpTopUpRequest.request_status ===paymentsConstants.BUY_DATATOPUP_FAILURE && 
-                                                
-                                                    <ErrorMessage errorMessage={DataTopUpTopUpRequest.request_data.error} canRetry={false} retryFunc={()=>this.confirmRecharge(payload)} />
-                                                
-                                            }
+                                            
                                         </Form>
                                     )}
                             </Formik>

@@ -321,7 +321,7 @@ class FundWallet extends React.Component{
                                                     
 
                                                     {/* <Form.Group className="poppedinput">
-                                                        <Form.Label className="block-level">Enter Security Pin (optional)</Form.Label>
+                                                        <Form.Label className="block-level">Enter Security PIN (optional)</Form.Label>
                                                         
                                                         <Form.Control type="password"
                                                             name="transactionPin"
@@ -416,7 +416,10 @@ class FundWallet extends React.Component{
                                                 
                                             </div>
                                             
-                                            
+                                            {
+                                                ChargeACardRequest.request_status=== dashboardConstants.CHARGE_A_CARD_FAILURE &&
+                                                <ErrorMessage errorMessage={ChargeACardRequest.request_data.error} canRetry={false} retryFunc={()=>this.sendfundWalletInfo(payload)} />
+                                            }
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
                                                     <Button variant="secondary"
@@ -429,10 +432,7 @@ class FundWallet extends React.Component{
 
                                                 </div>
                                             </div>
-                                            {
-                                                ChargeACardRequest.request_status=== dashboardConstants.CHARGE_A_CARD_FAILURE &&
-                                                <ErrorMessage errorMessage={ChargeACardRequest.request_data.error} canRetry={false} retryFunc={()=>this.sendfundWalletInfo(payload)} />
-                                            }
+                                            
                                             
                                         </Form>
                                     )}

@@ -161,6 +161,13 @@ class InitateResetTxtPin extends React.Component{
                                                     </div>
                                                 }
                                             </div>
+                                            {initiatePinResetRequest.request_status ===onboardingConstants.INITIATE_PIN_RESET_FAILURE && 
+                                                
+                                                    <ErrorMessage errorMessage={initiatePinResetRequest.request_data.error} 
+                                                            // canRetry={initiatePinResetRequest.request_data.error!=="Security Answer is Wrong!! please try again"?true:false} 
+                                                            retryFunc={()=>this.submitSecurityQuestion(payload)} />
+                                                
+                                            }
                                             
 
                                             {getSecurityQuestionsRequest.request_status === onboardingConstants.GET_SECURITY_QUESTIONS_SUCCESS &&
@@ -186,13 +193,7 @@ class InitateResetTxtPin extends React.Component{
                                                 </div>
                                             }
 
-                                            {initiatePinResetRequest.request_status ===onboardingConstants.INITIATE_PIN_RESET_FAILURE && 
-                                                
-                                                    <ErrorMessage errorMessage={initiatePinResetRequest.request_data.error} 
-                                                            // canRetry={initiatePinResetRequest.request_data.error!=="Security Answer is Wrong!! please try again"?true:false} 
-                                                            retryFunc={()=>this.submitSecurityQuestion(payload)} />
-                                                
-                                            }
+                                            
                                             
                                         </Form>
                                     )}

@@ -212,7 +212,7 @@ class CashWithdrawal extends React.Component{
                                                         {errors.withdrawalPin && touched.withdrawalPin ? (
                                                             <span className="invalid-feedback">{errors.withdrawalPin}</span>
                                                         ) : null}
-                                                        <div className="forminput-helptext">This Pin will be required at the ATM</div>
+                                                        <div className="forminput-helptext">This PIN will be required at the ATM</div>
 
                                                     </Form.Group>
                                                 </div>

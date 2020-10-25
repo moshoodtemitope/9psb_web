@@ -165,7 +165,11 @@ class ConfirmCashDeposit extends React.Component{
                                                 </div> */}
                                             </div>
 
-                                            
+                                            {DepositCashWithAgentRequest.request_status ===dashboardConstants.DEPOSIT_USING_AGENT_FAILURE && 
+                                                
+                                                    <ErrorMessage errorMessage={DepositCashWithAgentRequest.request_data.error} canRetry={false} retryFunc={()=>this.handleDeposit(payload)} />
+                                                
+                                            }
                                             
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
@@ -190,11 +194,7 @@ class ConfirmCashDeposit extends React.Component{
                                                 </div>
                                             </div>
 
-                                            {DepositCashWithAgentRequest.request_status ===dashboardConstants.DEPOSIT_USING_AGENT_FAILURE && 
-                                                
-                                                    <ErrorMessage errorMessage={DepositCashWithAgentRequest.request_data.error} canRetry={false} retryFunc={()=>this.handleDeposit(payload)} />
-                                                
-                                            }
+                                            
                                             
                                         </Form>
                                     )}

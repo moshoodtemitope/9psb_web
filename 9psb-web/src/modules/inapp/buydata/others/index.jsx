@@ -92,7 +92,8 @@ class BuyDataOthers extends React.Component{
         providerDataPlans.map(eachPlan=>{
             formattedPlans.push({
                 label:`${eachPlan.network}- ${eachPlan.description}`,
-                value:eachPlan.amount
+                value:eachPlan.amount,
+                productId: eachPlan.productId
             })
         })
 
@@ -181,6 +182,7 @@ class BuyDataOthers extends React.Component{
                                             mobileNumber: values.recipient,
                                             displayName: (values.beneficiaryAlias!=="" && values.saveBeneficiary)?values.beneficiaryAlias: null,
                                             lastAmount: amount,
+                                            productId:this.state.productId
                                         }
                                         this.setState(({payload}))
                                         this.proceedWithDetails("beneficiary", payload)
@@ -198,7 +200,8 @@ class BuyDataOthers extends React.Component{
                                                     recipient: values.recipient,
                                                     network: values.network,
                                                     transactionType: 2,
-                                                    amount:parseFloat(values.amount)
+                                                    amount:parseFloat(values.amount),
+                                                    productId:this.state.productId
                                                 }
                                                 this.setState(({payload}));
 
@@ -301,7 +304,7 @@ class BuyDataOthers extends React.Component{
                                                                 }}
                                                                 options={selectedProviderDataPlans}
                                                                 onChange={(selected) => {
-                                                                    
+                                                                    this.setState({productId:selected.productId})
                                                                     setFieldValue('amount', selected.value)
                                                                 }}
                                                                 onBlur={()=> setFieldTouched('amount', true)}
@@ -343,6 +346,12 @@ class BuyDataOthers extends React.Component{
                                                     
                                                 </div>
                                             </div>
+                                            {AddDataTopUpBeneficiaryRequest.request_status ===paymentsConstants.SAVE_DATATOPUP_BENEFICIARY_FAILURE && 
+                                                        
+                                                    <ErrorMessage errorMessage={AddDataTopUpBeneficiaryRequest.request_data.error} canRetry={false} retryFunc={()=>this.proceedWithDetails("beneficiary", payload)} />
+                                                
+                                                
+                                            }
 
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">
@@ -377,12 +386,7 @@ class BuyDataOthers extends React.Component{
                                                 </div>
                                             </div>
 
-                                            {AddDataTopUpBeneficiaryRequest.request_status ===paymentsConstants.SAVE_DATATOPUP_BENEFICIARY_FAILURE && 
-                                                        
-                                                    <ErrorMessage errorMessage={AddDataTopUpBeneficiaryRequest.request_data.error} canRetry={false} retryFunc={()=>this.proceedWithDetails("beneficiary", payload)} />
-                                                
-                                                
-                                            }
+                                            
                                         </Form>
                                     )}
                             </Formik>
