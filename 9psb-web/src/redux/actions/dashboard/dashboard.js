@@ -31,10 +31,22 @@ function GetCustomerDashboardData   (){
                             startDate = new Date (new Date().setDate(today.getDate()-30));
 
                             let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+                            if(response.status===200 && response.headers['content-type'].indexOf('application/json')>-1){
+                                if(response.data.length>=1){
+                                    let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+        
+                                    psbAuth.allAccounts = response.data;
+        
+                                    localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                                }
+                                
+                            }else{
+                                dispatch(failure(handleRequestErrors("An error occured. Please try again")));
+                            }
 
-                            psbAuth.allAccounts = response.data;
+                            // psbAuth.allAccounts = response.data;
 
-                            localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                            // localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
                             // historyQueryString = `StartDate=""&EndDate=""&Channel=3&PageSize=5&CurrentPage=1`
                             // historyQueryString = `WalletNumber=${defaultAccount.walletNumber}&StartDate=${startDate.toISOString()}&EndDate=${endDate.toISOString()}&Channel=3&PageSize=5&CurrentPage=1`
                         let consume5 = ApiService.request(`${routes.TRANSACTION_HISTORY}`, "GET", null);

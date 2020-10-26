@@ -110,7 +110,7 @@ class ConfirmDataTopUp extends React.Component{
                                     txtPin:"",
                                 }}
 
-                                // validationSchema={loginValidationSchema}
+                                validationSchema={validationSchema}
                                 onSubmit={(values, { resetForm }) => {
 
                                     let payload = {
