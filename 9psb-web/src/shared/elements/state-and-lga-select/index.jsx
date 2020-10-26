@@ -65,6 +65,14 @@ class SelectStateAndLga extends React.Component{
         await dispatch(onboardingActions.GetStates());
     }
 
+    titleCase=(str)=> {
+        str = str.toLowerCase().split(' ');
+        for (var i = 0; i < str.length; i++) {
+          str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+        }
+        return str.join(' ');
+      }
+
     renderStates = (
         stateLabel= this.props.stateLabel,
         lgaLabel= this.props.lgaLabel,
@@ -77,7 +85,7 @@ class SelectStateAndLga extends React.Component{
 
             allStates.map((eachState, index)=>{
                 allStatesList.push({value:eachState.code, 
-                                    label: eachState.stateName,
+                                    label: this.titleCase(eachState.stateName),
                                     stateId: eachState.stateId,
                                 })
             })

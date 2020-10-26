@@ -122,7 +122,7 @@ class ResetPwValidateOtp extends React.Component{
                         <div className="cardpanel">
                             <div className="card-heading mb-10">We sent you a code</div>
                             <div className="card-text">
-                                Just to be sure it is you, please enter the code below
+                                Just to be sure it is you. please enter the code below
                             </div>
                             <Formik
                                 initialValues={{

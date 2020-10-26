@@ -22,7 +22,8 @@ class AppLogin extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            user:""
+            user:"",
+            passwordType: "password",
         }
    
     
@@ -48,11 +49,22 @@ class AppLogin extends React.Component{
         dispatch(onboardingActions.Login("CLEAR"));
     }
 
+    showPassword = () => {
+        let { passwordType } = this.state
+
+        if (passwordType === "password") {
+            this.setState({ passwordType: "text" })
+
+        } else {
+            this.setState({ passwordType: "password" })
+        }
+    }
+
 
 
     renderLogin=()=>{
         let loginRequest = this.props.LoginReducer;
-            
+        let {passwordType} = this.state;
         let loginValidationSchema = Yup.object().shape({
             phoneNumber: Yup.string()
                 .required('Required')
@@ -152,7 +164,7 @@ class AppLogin extends React.Component{
                                             <Form.Group className="onboardinginput">
 
                                                 <Form.Label className="block-level">Password</Form.Label>
-                                                <Form.Control type="password"
+                                                <Form.Control type={passwordType}
                                                     name="password"
                                                     onChange={handleChange}
                                                     value={values.password}
@@ -164,6 +176,8 @@ class AppLogin extends React.Component{
                                                 ) : null}
 
                                             </Form.Group>
+                                            <label htmlFor="showPassword" className="show-pw">Show Password</label>
+                                            <input type="checkbox" id="showPassword" onChange={this.showPassword} />
                                             <div className="login-extras">
                                                 {/* <div className="remember-me">
                                                     <input type="checkbox" name="" id="remember-me"/>

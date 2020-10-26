@@ -8,6 +8,21 @@
     justify-content: space-between;
     margin: 10px 0;
 }
+#showPassword{
+    display: none;
+    opacity: 0;
+}
+label.show-pw{
+    font-size: 11px;
+    display: block;
+    margin-bottom: 0;
+    position: relative;
+    top: -9px;
+    text-align: right;
+    color: #A3C23D;
+    font-weight: 600;
+    cursor: pointer;
+}
 .remember-me {
     display: flex;
     align-items: center;

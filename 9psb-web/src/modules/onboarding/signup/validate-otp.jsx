@@ -148,7 +148,7 @@ class ValidateSignUpOtp extends React.Component{
                             </div>
                             <div className="card-heading mb-10">We sent you a code</div>
                             <div className="card-text">
-                                Just to be sure it is you, a code has been sent to <span>{existingCustomerInfo.indexOf('+')==-1?'+':''}{existingCustomerInfo}</span>  please enter the code below
+                                Just to be sure it is you, a code has been sent to <span>{existingCustomerInfo.indexOf('+')==-1?'+':''}{existingCustomerInfo}</span>. Please enter the code below
                             </div>
                             <Formik
                                 initialValues={{

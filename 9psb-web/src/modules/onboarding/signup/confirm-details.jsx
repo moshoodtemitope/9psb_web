@@ -42,6 +42,7 @@ class ConfirmDetailsFromOtp extends React.Component{
             customerInfo:"",
             docuploaded:'',
             isDocAdded: null,
+            invalidImageUpload:false,
             previewStyles:{}
         }
 
@@ -85,34 +86,46 @@ class ConfirmDetailsFromOtp extends React.Component{
             
         }
     }
+    isFileImage=(file)=> {
+        const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+     
+        return file && acceptedImageTypes.includes(file['type'])
+    }
 
     
     HandleFileUpLoad = (event) => {
-        
-        this.setState({docuploaded: event.target.files[0], 
+        const file = document.getElementById('photo-upload').files[0];
+        if(this.isFileImage(file)){
+            this.setState({docuploaded: event.target.files[0], 
                         isDocAdded:true});
         
-        const file = document.getElementById('photo-upload').files[0];
-        const reader = new FileReader();
         
-        let preViewStyle;
-        reader.addEventListener("load",  ()=> {
-            
+       
+            this.setState({invalidImageUpload:false})
+            const reader = new FileReader();
 
-            preViewStyle = {
-                background: `url(${reader.result})`,
-                height:'60px',
-                backgroundSize: `100% 100%`,
-                backgroundPosition: `center center`,
-                backgroundRepeat: `no-repeat`
+            
+            let preViewStyle;
+            reader.addEventListener("load",  ()=> {
+                
+
+                preViewStyle = {
+                    background: `url(${reader.result})`,
+                    height:'60px',
+                    backgroundSize: `100% 100%`,
+                    backgroundPosition: `center center`,
+                    backgroundRepeat: `no-repeat`
+                }
+                
+                this.setState({previewStyles:preViewStyle})
+            }, false);
+
+            
+            if (file) {
+                reader.readAsDataURL(file);
             }
-            
-            this.setState({previewStyles:preViewStyle})
-        }, false);
-
-        
-        if (file) {
-            reader.readAsDataURL(file);
+        }else{
+            this.setState({invalidImageUpload:true})
         }
         
     }
@@ -175,13 +188,19 @@ class ConfirmDetailsFromOtp extends React.Component{
             uploadAFileRequest =  this.props.UploadAFileReducer,
             GetLgasRequest      = this.props.GetLgasReducer;
 
-        const {customerInfo,existingCustomerInfo, docuploaded, previewStyles, lgaList, psbuser} = this.state;
+        const {customerInfo,existingCustomerInfo, docuploaded, previewStyles, lgaList, psbuser, invalidImageUpload} = this.state;
         
         let loginValidationSchema = Yup.object().shape({
                 firstName: Yup.string()
-                    .required('Required'),
+                    .required('Required')
+                    .test('alphabets', 'Please provide a valid name', (value) => {
+                        return /^[A-Za-z]+$/.test(value);
+                    }),
                 lastName: Yup.string()
-                    .required('Required'),
+                    .required('Required')
+                    .test('alphabets', 'Please provide a valid name', (value) => {
+                        return /^[A-Za-z]+$/.test(value);
+                    }),
                 homeAddress: Yup.string()
                     .required('Required'),
                 homeAddress2: Yup.string()
@@ -254,10 +273,15 @@ class ConfirmDetailsFromOtp extends React.Component{
                                     <div className="" 
                                             className={uploadAFileRequest.is_request_processing?"photo-upload disabled-item" :"photo-upload"} >
                                         <label htmlFor="photo-upload" className="upload-photo" style={previewStyles}></label>
-                                        <input type="file" name="" id="photo-upload"  onChange={this.HandleFileUpLoad}/>
+                                        <input type="file" accept="image/*" name="" id="photo-upload"  onChange={this.HandleFileUpLoad}/>
                                     </div>
                                 Upload a picture of yourself
                             </div>
+                            {invalidImageUpload &&
+                                <Alert variant="danger">
+                                    Please upload a valid image
+                                </Alert>
+                            }
                             {uploadAFileRequest.request_status === onboardingConstants.UPLOAD_A_FILE_FAILURE &&
                                 <Alert variant="danger">
                                     {uploadAFileRequest.request_data.error !== undefined ? uploadAFileRequest.request_data.error : null}

@@ -11,7 +11,7 @@ import  InAppContainer from '../../../shared/templates/inapp-container'
 import  DownloadApp from '../../../shared/elements/downloadapp-box'
 import RightCaret from '../../../assets/images/right-caret.svg';
 
-
+import Alert from 'react-bootstrap/Alert';
 import ErrorMessage from '../../../shared/elements/errormessage'
 
 import {dashboardConstants} from '../../../redux/actiontypes/dashboard/dashboard.constants';
@@ -32,6 +32,7 @@ class AccountSettings extends React.Component{
                             } :
                              {},
             docuploaded:'',
+            invalidImageUpload:false,
             isDocAdded: null,
         }
 
@@ -61,9 +62,16 @@ class AccountSettings extends React.Component{
         await dispatch(onboardingActions.UploadAFile(payload));
     }
 
+    isFileImage=(file)=> {
+        const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+     
+        return file && acceptedImageTypes.includes(file['type'])
+    }
+
     HandleFileUpLoad = (event) => {
-        
-        this.setState({docuploaded: event.target.files[0], 
+        const file = document.getElementById('photo-upload').files[0];
+        if(this.isFileImage(file)){
+            this.setState({docuploaded: event.target.files[0], 
                         isDocAdded:true}, ()=>{
                             
                             if(this.state.docuploaded!==''){
@@ -75,34 +83,39 @@ class AccountSettings extends React.Component{
                             }
                         });
         
-        const file = document.getElementById('photo-upload').files[0];
-        const reader = new FileReader();
         
-        let preViewStyle;
-        reader.addEventListener("load",  ()=> {
+        
+            this.setState({invalidImageUpload:false})
+            const reader = new FileReader();
             
+            let preViewStyle;
+            reader.addEventListener("load",  ()=> {
+                
 
-            preViewStyle = {
-                background: `url(${reader.result})`,
-                // height:'60px',
-                backgroundSize: `100% 100%`,
-                backgroundPosition: `center center`,
-                backgroundRepeat: `no-repeat`
+                preViewStyle = {
+                    background: `url(${reader.result})`,
+                    // height:'60px',
+                    backgroundSize: `100% 100%`,
+                    backgroundPosition: `center center`,
+                    backgroundRepeat: `no-repeat`
+                }
+                
+                this.setState({previewStyles:preViewStyle})
+            }, false);
+
+            
+            if (file) {
+                reader.readAsDataURL(file);
             }
-            
-            this.setState({previewStyles:preViewStyle})
-        }, false);
-
-        
-        if (file) {
-            reader.readAsDataURL(file);
+        }else{
+            this.setState({invalidImageUpload:true})
         }
         
     }
     
 
     renderPageContent = ()=>{
-       let {psbuser, previewStyles} = this.state;
+       let {psbuser, previewStyles, invalidImageUpload} = this.state;
        let GetCustomerDashboardDataRequest = this.props.GetCustomerDashboardDataReducer;
        
     //    let dpPreViewStyle = {
@@ -129,7 +142,7 @@ class AccountSettings extends React.Component{
                                             psbuser.profilePix ==="no file" && */}
                                             <div className="">
                                                 <label htmlFor="photo-upload" className="dp-placeholder" style={previewStyles}></label>
-                                                <input type="file" name="" id="photo-upload"  onChange={this.HandleFileUpLoad}/>
+                                                <input type="file" name="" accept="image/*" id="photo-upload"  onChange={this.HandleFileUpLoad}/>
                                             </div>
                                         {/* } */}
 
@@ -143,6 +156,11 @@ class AccountSettings extends React.Component{
                                         <div className="helptext">Update photo</div>
 
                                     </div>
+                                    {invalidImageUpload &&
+                                        <Alert variant="danger">
+                                            Please upload a valid image
+                                        </Alert>
+                                    }
                                     <div className="customer-name-text">{psbuser.customerName.toLowerCase()}</div>
                                     <div className="customer-data-summary">
                                         <div className="each-info">
@@ -153,27 +171,38 @@ class AccountSettings extends React.Component{
                                             <div className="info-title">Phone number</div>
                                             <div className="info-data">{psbuser.mobileNumber}</div>
                                         </div>
-                                        <div className="each-info">
-                                            <div className="info-title">BVN</div>
-                                             
-                                            {(GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS && 
-                                                GetCustomerDashboardDataRequest.request_data.response.profileData!==undefined &&
-                                                GetCustomerDashboardDataRequest.request_data.response.profileData!==null &&
-                                                GetCustomerDashboardDataRequest.request_data.response.profileData!=="") &&
-                                                <div className="info-data">
-                                                <span>{GetCustomerDashboardDataRequest.request_data.response.profileData.bvn}</span></div>
-                                            }
+                                        {GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS &&
+                                            <div className="each-info">
                                             
-                                            
-                                            {((GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS
-                                                || GetCustomerDashboardDataRequest.request_status!== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS) && 
-                                                (GetCustomerDashboardDataRequest.request_data.response.profileData===undefined ||
-                                                GetCustomerDashboardDataRequest.request_data.response.profileData===null ||
-                                                GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===null ||
-                                                GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===undefined)) &&
-                                                <div className="info-data"> <span>N/A</span> </div>
-                                            }
-                                        </div>
+                                                <div className="info-title">BVN</div>
+                                                
+                                                {(GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS && 
+                                                    GetCustomerDashboardDataRequest.request_data.response !==undefined &&
+                                                    GetCustomerDashboardDataRequest.request_data.response.profileData!==undefined &&
+                                                    GetCustomerDashboardDataRequest.request_data.response.profileData!==null &&
+                                                    GetCustomerDashboardDataRequest.request_data.response.profileData!=="") &&
+                                                    <div className="info-data">
+                                                        {GetCustomerDashboardDataRequest.request_data.response !==undefined &&
+                                                            <span>{GetCustomerDashboardDataRequest.request_data.response.profileData.bvn}</span>
+                                                        }
+                                                    </div>
+                                                }
+                                                
+                                                
+                                                {((GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS
+                                                    || GetCustomerDashboardDataRequest.request_status!== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS) && 
+                                                        (   
+                                                            GetCustomerDashboardDataRequest.request_data.response !==undefined &&
+                                                            GetCustomerDashboardDataRequest.request_data.response.profileData===undefined ||
+                                                            GetCustomerDashboardDataRequest.request_data.response.profileData===null ||
+                                                            GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===null ||
+                                                            GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===undefined
+                                                        )
+                                                    ) &&
+                                                    <div className="info-data"> <span>N/A</span> </div>
+                                                }
+                                            </div>
+                                        }
                                     </div>
                                     <div className="blocked-list">
                                         <div className="all-blocked-list">

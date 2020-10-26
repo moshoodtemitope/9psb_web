@@ -27,6 +27,7 @@ class GetCustomerDetails extends React.Component{
         this.state={
             user:"",
             password:"",
+            passwordType: "password",
             existingCustomerCheck: (Object.keys(getExistingInfo).length>=1 && getExistingInfo.request_data.phoneNumber!==undefined && getExistingInfo.request_data.phoneNumber!==null)
                                     ? getExistingInfo.request_data.phoneNumber: '' 
         }
@@ -69,6 +70,17 @@ class GetCustomerDetails extends React.Component{
         const {dispatch} = this.props;
 
         await dispatch(onboardingActions.CreateAccountStep1(payload));
+    }
+
+    showPassword = () => {
+        let { passwordType } = this.state
+
+        if (passwordType === "password") {
+            this.setState({ passwordType: "text" })
+
+        } else {
+            this.setState({ passwordType: "password" })
+        }
     }
 
     checkPwd =()=>{
@@ -118,6 +130,7 @@ class GetCustomerDetails extends React.Component{
         const {existingCustomerCheck,
                 passwordValid,
                 password,
+                passwordType,
                 passwordInvalidMessage} = this.state;
         
         
@@ -325,7 +338,7 @@ class GetCustomerDetails extends React.Component{
                                             </Form.Group>
 
                                             <Form.Group className="inputfield">
-                                                <Form.Control type="password"
+                                                <Form.Control type={passwordType}
                                                     name="password"
                                                     placeholder="Set Password"
                                                     // onChange={handleChange}
@@ -349,6 +362,8 @@ class GetCustomerDetails extends React.Component{
                                                     }
 
                                             </Form.Group>
+                                            <label htmlFor="showPassword" className="show-pw">Show Password</label>
+                                            <input type="checkbox" id="showPassword" onChange={this.showPassword} />
 
                                             <Form.Group className="inputfield">
                                                 <Form.Control 
