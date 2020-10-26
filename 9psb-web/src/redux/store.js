@@ -35,7 +35,7 @@ export const store = createStore(
     peristedState,
     applyMiddleware(
         thunkMiddleware,
-        loggerMiddleware
+        // loggerMiddleware
     )
 );
 
