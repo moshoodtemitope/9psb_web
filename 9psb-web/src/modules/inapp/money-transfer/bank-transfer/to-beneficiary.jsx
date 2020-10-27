@@ -138,7 +138,8 @@ class TransferToBankBeneficiaryDetails extends React.Component{
 
                                     if(accountNumber!==""){
                                         let amount = parseFloat(values.amountToSend.replace(/,/g, ''));
-                                        if(customerData.accountNumber !==accountNumber && customerData.bankCode==="000"){
+                                        if(customerData.accountNumber !==accountNumber){
+                                            // if(customerData.accountNumber !==accountNumber && customerData.bankCode==="000"){
                                             if( parseFloat(selectedAccount.walletBalance)>= amount){
                                                 this.setState({isAccountError:false,sameAccountError:false, lesserAccountBalanceError: false})
 
@@ -157,6 +158,7 @@ class TransferToBankBeneficiaryDetails extends React.Component{
                                                 this.setState({lesserAccountBalanceError:true})
                                             }
                                         }else{
+                                            // console.log("dsmd sdsdsdsd",customerData.accountNumber, accountNumber, customerData.bankCode)
                                             this.setState({sameAccountError:true})
                                         }
                                     }

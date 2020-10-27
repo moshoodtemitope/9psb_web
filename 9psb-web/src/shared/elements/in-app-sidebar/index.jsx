@@ -124,10 +124,10 @@ class InAppSideBar extends React.Component{
                         <img src={History} alt=""/>
                         <span>Transaction history</span>
                     </NavLink>
-                    <NavLink  to="/app/fund-wallet">
+                    {/* <NavLink  to="/app/fund-wallet">
                         <img src={Money} alt=""/>
                         <span>Fund Wallet</span>
-                    </NavLink>
+                    </NavLink> */}
                     <NavLink  to="/app/cash-deposit">
                         <img src={Money} alt=""/>
                         <span>Cash Deposit</span>

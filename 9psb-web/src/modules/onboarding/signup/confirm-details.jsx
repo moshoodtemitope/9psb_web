@@ -181,6 +181,14 @@ class ConfirmDetailsFromOtp extends React.Component{
             })
     }
 
+    titleCase = (str) => {
+        str = str.toLowerCase().split(' ');
+        for (var i = 0; i < str.length; i++) {
+            str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+        }
+        return str.join(' ');
+    }
+
 
 
     renderSignUpStep3=()=>{
@@ -223,7 +231,7 @@ class ConfirmDetailsFromOtp extends React.Component{
           
           if(customerInfo.states!==null && customerInfo.states!==undefined){
             customerInfo.states.map((eachState, index)=>{
-                stateLists.push({value:eachState.code, label: eachState.stateName})
+                stateLists.push({value:eachState.code, label: this.titleCase(eachState.stateName)})
             })
 
             

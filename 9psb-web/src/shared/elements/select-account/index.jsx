@@ -141,7 +141,7 @@ class SelectAnAccount extends React.Component{
             accounstList =[],
             {screenWidthSize}= this.state;
             // walletCurrency
-            console.log("dsdsdsdsd", customerAccounts);
+            // console.log("dsdsdsdsd", customerAccounts);
             if(screenWidthSize >= 425){
                 customerAccounts.map((eachAcount, index)=>{
                     accounstList.push({

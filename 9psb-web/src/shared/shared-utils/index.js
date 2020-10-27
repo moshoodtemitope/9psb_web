@@ -133,7 +133,7 @@ export const createTransactionSigner = (itemToSign)=>{
 // }
 
 export const verifyCustomerState = (loggedInData)=>{
-    console.log("dsdsdsdsds",loggedInData)
+    // console.log("dsdsdsdsds",loggedInData)
     if(loggedInData.isProfileSet===false){
         history.push("/app/confirm-details");     
     }else{

@@ -163,7 +163,7 @@ class GetCustomerDetails extends React.Component{
           });
 
         let IdOptions =[
-            {value: 1, label: 'Bvn'},
+            {value: 1, label: 'BVN'},
             // {value: 2, label: 'Drivers Licence'},
             // {value: 3, label: 'International Passport'},
             // {value: 4, label: 'Permanent Voters Card'},

@@ -211,14 +211,14 @@ class Dashboard extends React.Component{
                                {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
                             </div>
                         </div>
-                        <div className="fund-wallet-cta">
+                        {/* <div className="fund-wallet-cta">
                             <Button variant="primary"
                                 type="button"
                                 className="ml-0 fundwallet-btn"
                                 onClick={()=>history.push("/app/fund-wallet")}
                             >  Fund Wallet
                             </Button>
-                        </div>
+                        </div> */}
                     </div>
                 }
 
@@ -228,14 +228,14 @@ class Dashboard extends React.Component{
                             <div className="each-summary-title">Your Wallet balance</div>
                             <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
                         </div>
-                        <div className="fund-wallet-cta">
+                        {/* <div className="fund-wallet-cta">
                             <Button variant="primary"
                                 type="button"
                                 className="ml-0 fundwallet-btn"
                                 onClick={()=>history.push("/app/fund-wallet")}
                             >  Fund Wallet
                             </Button>
-                        </div>
+                        </div> */}
                         <div className="account-num-wrap">
                             <div>
                                 <div className="each-summary-title">Account Number</div>
@@ -365,14 +365,14 @@ class Dashboard extends React.Component{
                                {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
                             </div>
                         </div>
-                        <div className="fund-wallet-cta">
+                        {/* <div className="fund-wallet-cta">
                             <Button variant="primary"
                                 type="button"
                                 className="ml-0 fundwallet-btn"
                                 onClick={()=>history.push("/app/fund-wallet")}
                             >  Fund Wallet
                             </Button>
-                        </div>
+                        </div> */}
                     </div>
                 }
 
@@ -382,14 +382,14 @@ class Dashboard extends React.Component{
                             <div className="each-summary-title">Your Wallet balance</div>
                             <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
                         </div>
-                        <div className="fund-wallet-cta">
+                        {/* <div className="fund-wallet-cta">
                             <Button variant="primary"
                                 type="button"
                                 className="ml-0 fundwallet-btn"
                                 onClick={()=>history.push("/app/fund-wallet")}
                             >  Fund Wallet
                             </Button>
-                        </div>
+                        </div> */}
                         <div className="account-num-wrap">
                             <div>
                                 <div className="each-summary-title">Account Number</div>

@@ -206,9 +206,9 @@ class AuthenticatedRoutes extends React.Component {
                         <PrivateRoute exact path='/app/locate-agents' {...this.props} authed={this.props.psbuser} component={LocateAgents} />  
                         <PrivateRoute exact path='/app/locate-agents/locations' {...this.props} authed={this.props.psbuser} component={AgentsLocations} />  
 
-                        <PrivateRoute exact path='/app/fund-wallet' {...this.props} authed={this.props.psbuser} component={FundWallet} />  
+                        {/* <PrivateRoute exact path='/app/fund-wallet' {...this.props} authed={this.props.psbuser} component={FundWallet} />  
                         <PrivateRoute exact path='/app/fund-wallet/confirm-details' {...this.props} authed={this.props.psbuser} component={ConfirmCardDetails} />  
-                        <PrivateRoute exact path='/app/fund-wallet/success' {...this.props} authed={this.props.psbuser} component={SuccessFulFundWallet} />  
+                        <PrivateRoute exact path='/app/fund-wallet/success' {...this.props} authed={this.props.psbuser} component={SuccessFulFundWallet} />   */}
 
                         <PrivateRoute exact path='/app/cash-withdrawal' {...this.props} authed={this.props.psbuser} component={CashWithdrawal} />  
                         <PrivateRoute exact path='/app/cash-withdrawal/confirm' {...this.props} authed={this.props.psbuser} component={ConfirmCashWithdrawal} />  

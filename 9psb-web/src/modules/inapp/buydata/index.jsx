@@ -5,7 +5,7 @@ import {Fragment} from "react";
 
 
 import {history} from '../../../_helpers/history'
-
+import Alert from 'react-bootstrap/Alert';
 import Select from 'react-select';
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
@@ -331,6 +331,9 @@ class BuyData extends React.Component{
                                                 ) : null}
 
                                             </Form.Group>
+                                        }
+                                        {lesserAccountBalanceError &&
+                                            <Alert variant="danger mt-20">Insufficient account balance</Alert>
                                         }
                                     </div>
                                 }
