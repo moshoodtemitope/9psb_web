@@ -112,6 +112,7 @@ class BankTransferDetails extends React.Component{
         let banksList = [],
             allbanks = GetBanksRequest.request_data.response;
 
+            allbanks.sort((a, b) => a.bankName.localeCompare(b.bankName))
             allbanks.map((eachbank,index)=>{
                 banksList.push({
                     label: eachbank.bankName,
