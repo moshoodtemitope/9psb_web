@@ -10,6 +10,13 @@ import { numberWithCommas} from '../shared/utils';
 
 
 const axios = require('axios');
+const instance = axios.create({
+    validateStatus: function (status)
+    {
+        // return (status >= 200 && status <210);
+        return (status >= 200 && status <210);
+    }
+});
 
 export class ApiService {
 
@@ -36,15 +43,15 @@ export class ApiService {
                 "Identity/refreshtoken",
             ];
 
-        axios.defaults.headers.common['CS'] = 2;
+        instance.defaults.headers.common['CS'] = 2;
 
         if(localStorage.getItem("psb-auth") === null){
-            // if(localStorage.getItem("psb-auth") === null && axios.defaults.headers.common["Token"]){
+            // if(localStorage.getItem("psb-auth") === null && instance.defaults.headers.common["Token"]){
             
-            delete axios.defaults.headers.common.Authorization;
+            delete instance.defaults.headers.common.Authorization;
         }
         // if (binaryUploadUrls.indexOf(serviceToTest) === -1) {
-            axios.defaults.headers.common['Content-Type'] = 'application/json';
+            instance.defaults.headers.common['Content-Type'] = 'application/json';
         // }
         
         
@@ -55,9 +62,9 @@ export class ApiService {
               
             //Exclude urlsWithoutAuthentication urls from Authenticated requests with Token
            if (urlsWithoutAuthentication.indexOf(serviceToTest) === -1) {
-            //    axios.defaults.headers.common['Token'] = user.token;
-            //    axios.defaults.headers.common['Authorization'] = `Bearer ddsdsdiysdij`;
-               axios.defaults.headers.common['Authorization'] = `Bearer ${user.accessToken}`;
+            //    instance.defaults.headers.common['Token'] = user.token;
+            //    instance.defaults.headers.common['Authorization'] = `Bearer ddsdsdiysdij`;
+               instance.defaults.headers.common['Authorization'] = `Bearer ${user.accessToken}`;
             
                 
                 
@@ -67,18 +74,18 @@ export class ApiService {
 
            if (binaryUploadUrls.indexOf(serviceToTest) === -1) {
            
-               axios.defaults.headers.common['Content-Type'] = 'application/json';
+               instance.defaults.headers.common['Content-Type'] = 'application/json';
            }
            if (binaryUploadUrls.indexOf(serviceToTest) > -1) {
            
-               axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+               instance.defaults.headers.common['Content-Type'] = 'multipart/form-data';
            }
 
            
            
             
             
-            axios.defaults.headers.common['Accept'] = 'application/json';
+            instance.defaults.headers.common['Accept'] = 'application/json';
 
             
        }
@@ -115,19 +122,19 @@ export class ApiService {
 
             if(localStorage.getItem("psb-auth") === null){
                 
-                delete axios.defaults.headers.common.transactionAuth;
+                delete instance.defaults.headers.common.transactionAuth;
             }else{
 
                 serviceToTest = url.split("api/")[1];
                 let userData = JSON.parse(localStorage.getItem("psb-auth"));
 
-                // console.log("ajajaja", serviceToTest);
+                
                 if(transferUrls.indexOf(serviceToTest)===-1
                     && airtmeUrls.indexOf(serviceToTest)===-1
                     && dataUrls.indexOf(serviceToTest)===-1
                     && billsUrls.indexOf(serviceToTest)===-1){
 
-                        delete axios.defaults.headers.common.transactionAuth;
+                        delete instance.defaults.headers.common.transactionAuth;
                 }
 
                 
@@ -142,10 +149,10 @@ export class ApiService {
                     amount = numberWithCommas(payload.amount, true).replace(/,/g, '')
 
                     transactionAuth  = createTransactionSigner(`${userData.cif}|${payload.sourceAccountNumber}|${destination}|${amount}`);
-                    // axios.defaults.headers.common['transactionAuth'] = ;
-                    // console.log("jkjkjk", createTransactionSigner(`${userData.cif}|${payload.sourceAccountNumber}|${destination}|${amount}`));
+                    // instance.defaults.headers.common['transactionAuth'] = ;
+                    
 
-                    axios.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${payload.sourceAccountNumber}|${destination}|${amount}`);
+                    instance.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${payload.sourceAccountNumber}|${destination}|${amount}`);
                 }
                 if(withdrawalUrls.indexOf(serviceToTest)>-1){
                     let withdrawalAmount, walletNumber;
@@ -156,8 +163,8 @@ export class ApiService {
                         withdrawalAmount = numberWithCommas(payload.withdrawalAmount, true).replace(/,/g, '')
                     }
                     transactionAuth  = createTransactionSigner(`${userData.cif}|${walletNumber}|${userData.mobileNumber}|${withdrawalAmount}`);
-                    // axios.defaults.headers.common['transactionAuth'] = ;
-                    axios.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}|${userData.mobileNumber}|${withdrawalAmount}`);
+                    // instance.defaults.headers.common['transactionAuth'] = ;
+                    instance.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}|${userData.mobileNumber}|${withdrawalAmount}`);
                 }
 
                 // if(historyUrls.indexOf(serviceToTest)>-1){
@@ -168,8 +175,8 @@ export class ApiService {
                 //     }
                     
                 //     transactionAuth  = createTransactionSigner(`${userData.cif}|${walletNumber}`);
-                //     // axios.defaults.headers.common['transactionAuth'] = ;
-                //     axios.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}`);
+                //     // instance.defaults.headers.common['transactionAuth'] = ;
+                //     instance.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}`);
                 // }
 
                 if(serviceToTest.indexOf(historyUrls)>-1){
@@ -182,10 +189,10 @@ export class ApiService {
                     // if(payload.walletNumber!==undefined){
                     //     walletNumber = payload.walletNumber
                     // }
-                    // console.log("unsigned", `${userData.cif}|${walletNumber}`)
+                    
                     transactionAuth  = createTransactionSigner(`${userData.cif}|${walletNumber}`);
-                    // axios.defaults.headers.common['transactionAuth'] = ;
-                    axios.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}`);
+                    // instance.defaults.headers.common['transactionAuth'] = ;
+                    instance.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}`);
                 }
 
                 if(airtmeUrls.indexOf(serviceToTest)>-1){
@@ -196,10 +203,10 @@ export class ApiService {
                     if(payload.amount!==undefined){
                         amount = numberWithCommas(payload.amount, true).replace(/,/g, '')
                     }
-                    // console.log("unsigned is", `${userData.cif}|${walletNumber}|${payload.recipient}|${amount}`);
+                    
                     transactionAuth  = createTransactionSigner(`${userData.cif}|${walletNumber}|${payload.recipient}|${amount}`);
-                    // axios.defaults.headers.common['transactionAuth'] = ;
-                    axios.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}|${payload.recipient}|${amount}`);
+                    // instance.defaults.headers.common['transactionAuth'] = ;
+                    instance.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}|${payload.recipient}|${amount}`);
                 }
 
                 if(cashDepositUrls.indexOf(serviceToTest)>-1){
@@ -210,10 +217,10 @@ export class ApiService {
                     if(payload.depositAmount!==undefined){
                         depositAmount = numberWithCommas(payload.depositAmount, true).replace(/,/g, '')
                     }
-                    // console.log("unsigned is", `${userData.cif}|${walletNumber}|${payload.recipient}|${amount}`);
+                    
                     transactionAuth  = createTransactionSigner(`${userData.cif}|${walletNumber}|${depositAmount}`);
-                    // axios.defaults.headers.common['transactionAuth'] = ;
-                    axios.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}|${depositAmount}`);
+                    // instance.defaults.headers.common['transactionAuth'] = ;
+                    instance.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}|${depositAmount}`);
                 }
 
                 if(dataUrls.indexOf(serviceToTest)>-1){
@@ -225,8 +232,8 @@ export class ApiService {
                         amount = numberWithCommas(payload.amount, true).replace(/,/g, '')
                     }
                     transactionAuth  = createTransactionSigner(`${userData.cif}|${walletNumber}|${payload.recipient}|${amount}`);
-                    // axios.defaults.headers.common['transactionAuth'] = ;
-                    axios.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}|${payload.recipient}|${amount}`);
+                    // instance.defaults.headers.common['transactionAuth'] = ;
+                    instance.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}|${payload.recipient}|${amount}`);
                 }
 
                 if(billsUrls.indexOf(serviceToTest)>-1){
@@ -238,13 +245,13 @@ export class ApiService {
                         amount = numberWithCommas(payload.amount, true).replace(/,/g, '')
                     }
                     transactionAuth  = createTransactionSigner(`${userData.cif}|${walletNumber}|${payload.customerUniqueReference}|${amount}`);
-                    // axios.defaults.headers.common['transactionAuth'] = ;
-                    axios.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}|${payload.customerUniqueReference}|${amount}`);
+                    // instance.defaults.headers.common['transactionAuth'] = ;
+                    instance.defaults.headers.common['transactionAuth'] = createTransactionSigner(`${userData.cif}|${walletNumber}|${payload.customerUniqueReference}|${amount}`);
                 }
 
                 
 
-                // axios.defaults.headers.common['transactionAuth'] = transactionAuth;
+                // instance.defaults.headers.common['transactionAuth'] = transactionAuth;
             }
 
 
@@ -317,7 +324,7 @@ export class ApiService {
            
             else if(headers !== undefined){
                 for (let [key, value] of Object.entries(headers)) {
-                    axios.defaults.headers.common[key] = value;
+                    instance.defaults.headers.common[key] = value;
                 }
             }
             let serviceResponse ="",
@@ -330,11 +337,11 @@ export class ApiService {
                 
 
                 if(parseInt(((currenTimestamp -lastRefreshTime)/60000))>=3){ // If Last Token refresh is more than 3 mins, Pause GET reqeust, refresh token, and resume the GET request
-                    // let tempRequest = axios.get(url, bodyData);
+                    // let tempRequest = instance.get(url, bodyData);
                     let tempRequest = {
                         url,
                         bodyData,
-                        tempHeaders: axios.defaults.headers.common
+                        tempHeaders: instance.defaults.headers.common
                     };
                     
 
@@ -346,10 +353,10 @@ export class ApiService {
                     
                     this.setTokenAuthorization(routes.REFRESH_TOKEN);
 
-                    let tokenService = axios.post(routes.REFRESH_TOKEN, refreshpayload);
+                    let tokenService = instance.post(routes.REFRESH_TOKEN, refreshpayload);
 
                     return tokenService.then(function (response) {
-                        // console.log("was here")
+                        
                         if(response.status>=200 && response.status<210){
                             if(response.data.message!==undefined){
                                 
@@ -358,20 +365,20 @@ export class ApiService {
                                     userData.accessToken = response.data.message;
                                     localStorage.setItem('psb-auth', JSON.stringify(userData));
 
-                                delete axios.defaults.headers.common;
-                                axios.defaults.headers.common ={
+                                delete instance.defaults.headers.common;
+                                instance.defaults.headers.common ={
                                     ...tempRequest.tempHeaders
                                 }
-                                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.message}`;
+                                instance.defaults.headers.common['Authorization'] = `Bearer ${response.data.message}`;
 
-                                service = axios.get(tempRequest.url, tempRequest.bodyData);
+                                service = instance.get(tempRequest.url, tempRequest.bodyData);
 
                                 
                                 return service.then((response3)=>{
 
                                     // return service;
                                     if(response3.status>=200 && response3.status < 210){
-                                        // console.log("success in token")
+                                        
                                         // return service;
                                         if(response3.headers['content-type'].indexOf('application/json')>-1 || response3.headers['content-type'].indexOf('application/octet-stream')>-1){
                                             // return response3;
@@ -398,7 +405,7 @@ export class ApiService {
 
                        
                     }).catch(function (error) {
-                        // console.log("logs out now",service, routes.REFRESH_TOKEN)
+                        
                         // dispatch(onboardingActions.Logout())
 
                         let responseData= error.response;
@@ -416,12 +423,12 @@ export class ApiService {
                    
                 }else{
                    
-                    service = axios.get(url, bodyData);
+                    service = instance.get(url, bodyData);
                    
                 }
             }else{
                 
-                service = axios.get(url, bodyData);
+                service = instance.get(url, bodyData);
             }
 
             
@@ -429,7 +436,7 @@ export class ApiService {
                 
                 // return service;
                 if(response.status>=200 && response.status < 210){
-                    // console.log("success outside token")
+                    
                     // return service;
                     if(response.headers['content-type'].indexOf('application/json')>-1 || response.headers['content-type'].indexOf('application/octet-stream')>-1){
                         // return response;
@@ -461,20 +468,20 @@ export class ApiService {
             //check for header
             if (binaryUploadUrls.indexOf(serviceToTest) === -1) {
                
-                axios.defaults.headers.common['Content-Type'] = 'application/json';
+                instance.defaults.headers.common['Content-Type'] = 'application/json';
             }
             if (binaryUploadUrls.indexOf(serviceToTest) > -1) {
                 
-                axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+                instance.defaults.headers.common['Content-Type'] = 'multipart/form-data';
             }
-            // axios.defaults.headers.common['Content-Type'] = 'application/json';
+            // instance.defaults.headers.common['Content-Type'] = 'application/json';
             if(headers === undefined){
                 this.setTokenAuthorization(url);
                 this.signTransaction(url, bodyData)
             }
             else if(headers !== undefined){
                 for (let [key, value] of Object.entries(headers)) {
-                    axios.defaults.headers.common[key] = value;
+                    instance.defaults.headers.common[key] = value;
                 }
             }
 
@@ -483,12 +490,12 @@ export class ApiService {
                 lastRefreshTime = psbAuth.lastLogForAuth;
                 currenTimestamp = Date.now();
 
-                if(parseInt(((currenTimestamp -lastRefreshTime)/60000))>=3){ // If Last Token refresh is more than 3 mins, Pause GET reqeust, refresh token, and resume the GET request
-                    // let tempRequest = axios.get(url, bodyData);
+                if(parseInt(((currenTimestamp -lastRefreshTime)/40000))>=3){ // If Last Token refresh is more than 3 mins, Pause GET reqeust, refresh token, and resume the GET request
+                    // let tempRequest = instance.get(url, bodyData);
                     let tempRequest = {
                         url,
                         bodyData,
-                        tempHeaders: axios.defaults.headers.common
+                        tempHeaders: instance.defaults.headers.common
                     };
                     
 
@@ -501,11 +508,11 @@ export class ApiService {
                     this.setTokenAuthorization(routes.REFRESH_TOKEN);
                     this.signTransaction(routes.REFRESH_TOKEN);
 
-                    let tokenService = axios.post(routes.REFRESH_TOKEN, refreshpayload);
+                    let tokenService = instance.post(routes.REFRESH_TOKEN, refreshpayload);
 
                     return tokenService.then(function (response) {
                         
-                        if(response.status===200){
+                        if(response.status>=200 && response.status<210){
                             if(response.data.message!==undefined){
                                 
                                 let userData = JSON.parse(localStorage.getItem("psb-auth"));
@@ -513,18 +520,21 @@ export class ApiService {
                                     userData.accessToken = response.data.message;
                                     localStorage.setItem('psb-auth', JSON.stringify(userData));
 
-                                delete axios.defaults.headers.common;
-                                axios.defaults.headers.common ={
+                                delete instance.defaults.headers.common;
+                                instance.defaults.headers.common ={
                                     ...tempRequest.tempHeaders
                                 }
-                                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.message}`;
+                                instance.defaults.headers.common['Authorization'] = `Bearer ${response.data.message}`;
 
-                                service = axios.post(tempRequest.url, tempRequest.bodyData);
+                                service = instance.post(tempRequest.url, tempRequest.bodyData);
 
                                 
                                 return service.then((response3)=>{
 
-                                    return service;
+                                    if(response3.status>=200 && response3.status < 210){
+                                        
+                                        return service;
+                                    }
                                 })
                                 .catch((error2)=>{
                                     return service;
@@ -539,9 +549,12 @@ export class ApiService {
 
                        
                     }).catch(function (error) {
+                        
                         if(url === routes.REFRESH_TOKEN){
                             dispatch(onboardingActions.Logout())
                         }else{
+                            // console.log("failed after token")
+                            // return tokenService;
                             return service;
                         }
                         
@@ -550,10 +563,10 @@ export class ApiService {
 
                    
                 }else{
-                    service = axios.post(url, bodyData);
+                    service = instance.post(url, bodyData);
                 }
             }else{
-                service = axios.post(url, bodyData);
+                service = instance.post(url, bodyData);
             }
             
             

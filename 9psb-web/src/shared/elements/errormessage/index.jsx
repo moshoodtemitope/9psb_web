@@ -45,7 +45,7 @@ class ErrorMessage extends React.Component{
         retryFunc= this.props.retryFunc,
         retryText= this.props.retryText,
     ) =>{
-        console.log("dsddsds", canRetry);
+        // console.log("dsddsds", errorMessage);
         return(
             <div className="app-panel error" >
                 <div className="closeicon" onClick={(e)=>{

@@ -132,7 +132,7 @@ class InitateResetTxtPin extends React.Component{
 
                                                 {getSecurityQuestionsRequest.request_status ===onboardingConstants.GET_SECURITY_QUESTIONS_FAILURE && 
                                                     <div className="all-transactions app-panel">
-                                                        <ErrorMessage errorMessage={initiatePinResetRequest.request_data.error} canRetry={true} retryFunc={()=>this.getSecurityQuestions()} />
+                                                        <ErrorMessage errorMessage={getSecurityQuestionsRequest.request_data.error} canRetry={true} retryFunc={()=>this.getSecurityQuestions()} />
                                                     </div>
                                                 }
 

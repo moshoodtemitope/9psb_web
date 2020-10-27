@@ -750,8 +750,16 @@ function GetSecurityQuestions   (requestPayload,type){
             dispatch(request(consume));
             return consume
                 .then(response =>{
-                    
-                    dispatch(success(response.data));
+                    if(type==="profile"){
+                        if(response.data.message!==null && response.data.message!==""){
+                            dispatch(success(response.data));
+                        }else{
+                            
+                            dispatch(failure("Unable to load your security question"));
+                        }
+                    }else{
+                        dispatch(success(response.data));
+                    }
                     
                     
                 }).catch(error =>{

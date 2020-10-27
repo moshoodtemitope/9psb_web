@@ -188,6 +188,16 @@ class ConfirmNewTransferToBank extends React.Component{
                                                     }
                                                 </div>
                                             </div>
+                                            {TranferToBankAccountRequest.request_status ===paymentsConstants.TRANSFER_TO_BANK_FAILURE && 
+                                                
+                                                    
+                                                        <ErrorMessage errorMessage={TranferToBankAccountRequest.request_data.error} 
+                                                                    // canRetry={TranferToBankAccountRequest.request_data.error!=="Insufficient balance."? true: false} 
+                                                                    retryFunc={()=>this.confirmTransfer(payload)} />
+                                                    
+                                                    
+                                                
+                                            }
 
                                             <div className="app-panel inpage">
                                                 <div className="footer-with-cta toleft m-0 ">

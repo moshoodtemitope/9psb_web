@@ -37,6 +37,7 @@ import {dashboardConstants} from '../../../redux/actiontypes/dashboard/dashboard
 
 import { numberWithCommas, getDateFromISO} from '../../../shared/utils';
 import "./dashboard.scss"; 
+import confirmDeposit from '../cash-deposit/confirm-deposit';
 class Dashboard extends React.Component{
     constructor(props) {
         super(props);
@@ -150,136 +151,139 @@ class Dashboard extends React.Component{
             })
         };
 
-        
-
-        customerAccounts.map((eachAcount, index)=>{
-            accounstList.push({
-                label:`${eachAcount.walletNumber} - ${eachAcount.productName}`,
-                value:eachAcount.walletNumber,
-                accountIndex: index+1,
-                walletBalance: eachAcount.walletBalance,
-                walletNumber: eachAcount.walletNumber,
+        console.log("dsdsdsds", customerAccounts);
+        if(customerAccounts.length){
+            customerAccounts.map((eachAcount, index)=>{
+                accounstList.push({
+                    label:`${eachAcount.walletNumber} - ${eachAcount.productName}`,
+                    value:eachAcount.walletNumber,
+                    accountIndex: index+1,
+                    walletBalance: eachAcount.walletBalance,
+                    walletNumber: eachAcount.walletNumber,
+                })
             })
-        })
 
 
-        return (
-            <div className="account-summary-wrap">
-                {screenWidthSize >=1024 &&
-                    <div className="account-summary">
-                        <div className="wallet-balance">
-                            <div className="each-summary-title">Your Wallet balance</div>
-                            <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
-                        </div>
-                        <div className="accounts-list">
-                            {accounstList.length>=2 &&
-                                <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
-                            }  
-
-                            {accounstList.length<2 &&
-                                <div className="each-summary-title">Account</div> 
-                            }
-                            <Select
-                               defaultValue={{label:`${defaultAccount.walletNumber} - ${defaultAccount.productName}`}}
-                                options={accounstList}
-                                styles={selectStyle}
-                                onChange={(selectedAccount)=>{
-                                    this.setState({
-                                        selectedAccount,
-                                        selectedAccountIndex: selectedAccount.accountIndex
-                                    })
-                                    this.loadHistoryForAWallet(selectedAccount.value)
-                                    
-                                }}
-                                noOptionsMessage ={()=>`No account found`}
-                                placeholder="choose account"
-                            />
-                        </div>
-                        <div className="account-num-wrap">
-                            <div>
-                                <div className="each-summary-title">Account Number</div>
-                                <div className="seleceted-account">
-                                    <span className="account-to-copy">{defaultAccount.walletNumber}</span>
-                                    
-                                    {
-                                        document.queryCommandSupported('copy') &&
-                                        <span className="copy-icon" onClick={this.copyAccountNumber}>
-                                            <img src={CopyImg} alt="" />
-                                        </span>
-                                    }
-                                </div>
-                               {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
+            return (
+                <div className="account-summary-wrap">
+                    {screenWidthSize >=1024 &&
+                        <div className="account-summary">
+                            <div className="wallet-balance">
+                                <div className="each-summary-title">Your Wallet balance</div>
+                                <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
                             </div>
-                        </div>
-                        {/* <div className="fund-wallet-cta">
-                            <Button variant="primary"
-                                type="button"
-                                className="ml-0 fundwallet-btn"
-                                onClick={()=>history.push("/app/fund-wallet")}
-                            >  Fund Wallet
-                            </Button>
-                        </div> */}
-                    </div>
-                }
+                            <div className="accounts-list">
+                                {accounstList.length>=2 &&
+                                    <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
+                                }  
 
-                {screenWidthSize < 1024 &&
-                    <div className="account-summary mobilesummary">
-                        <div className="wallet-balance">
-                            <div className="each-summary-title">Your Wallet balance</div>
-                            <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
-                        </div>
-                        {/* <div className="fund-wallet-cta">
-                            <Button variant="primary"
-                                type="button"
-                                className="ml-0 fundwallet-btn"
-                                onClick={()=>history.push("/app/fund-wallet")}
-                            >  Fund Wallet
-                            </Button>
-                        </div> */}
-                        <div className="account-num-wrap">
-                            <div>
-                                <div className="each-summary-title">Account Number</div>
-                                <div className="seleceted-account">
-                                    <span className="account-to-copy">{defaultAccount.walletNumber}</span>
-                                    {
-                                        document.queryCommandSupported('copy') &&
-                                        <span className="copy-icon" onClick={this.copyAccountNumber}>
-                                            <img src={CopyImg} alt="" />
-                                        </span>
-                                    }
-                                    
-                                </div>
-                               {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
-                            </div>
-                        </div>
-                        <div className="accounts-list">
-                            {accounstList.length>=2 &&
-                                <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
-                            }  
-
-                            {accounstList.length<2 &&
-                                <div className="each-summary-title">Account</div> 
-                            }
-                            <Select 
+                                {accounstList.length<2 &&
+                                    <div className="each-summary-title">Account</div> 
+                                }
+                                <Select
                                 defaultValue={{label:`${defaultAccount.walletNumber} - ${defaultAccount.productName}`}}
-                                options={accounstList}
-                                styles={selectStyle}
-                                onChange={(selectedAccount)=>{
-                                    this.setState({
-                                        selectedAccount,
-                                        selectedAccountIndex: selectedAccount.accountIndex
-                                    })
-                                    this.loadHistoryForAWallet(selectedAccount.value)
-                                }}
-                                noOptionsMessage ={()=>`No account found`}
-                                placeholder="choose account"
-                            />
+                                    options={accounstList}
+                                    styles={selectStyle}
+                                    onChange={(selectedAccount)=>{
+                                        this.setState({
+                                            selectedAccount,
+                                            selectedAccountIndex: selectedAccount.accountIndex
+                                        })
+                                        this.loadHistoryForAWallet(selectedAccount.value)
+                                        
+                                    }}
+                                    noOptionsMessage ={()=>`No account found`}
+                                    placeholder="choose account"
+                                />
+                            </div>
+                            <div className="account-num-wrap">
+                                <div>
+                                    <div className="each-summary-title">Account Number</div>
+                                    <div className="seleceted-account">
+                                        <span className="account-to-copy">{defaultAccount.walletNumber}</span>
+                                        
+                                        {
+                                            document.queryCommandSupported('copy') &&
+                                            <span className="copy-icon" onClick={this.copyAccountNumber}>
+                                                <img src={CopyImg} alt="" />
+                                            </span>
+                                        }
+                                    </div>
+                                {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
+                                </div>
+                            </div>
+                            {/* <div className="fund-wallet-cta">
+                                <Button variant="primary"
+                                    type="button"
+                                    className="ml-0 fundwallet-btn"
+                                    onClick={()=>history.push("/app/fund-wallet")}
+                                >  Fund Wallet
+                                </Button>
+                            </div> */}
                         </div>
-                    </div>
-                }
+                    }
 
-            </div>
-        )
+                    {screenWidthSize < 1024 &&
+                        <div className="account-summary mobilesummary">
+                            <div className="wallet-balance">
+                                <div className="each-summary-title">Your Wallet balance</div>
+                                <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
+                            </div>
+                            {/* <div className="fund-wallet-cta">
+                                <Button variant="primary"
+                                    type="button"
+                                    className="ml-0 fundwallet-btn"
+                                    onClick={()=>history.push("/app/fund-wallet")}
+                                >  Fund Wallet
+                                </Button>
+                            </div> */}
+                            <div className="account-num-wrap">
+                                <div>
+                                    <div className="each-summary-title">Account Number</div>
+                                    <div className="seleceted-account">
+                                        <span className="account-to-copy">{defaultAccount.walletNumber}</span>
+                                        {
+                                            document.queryCommandSupported('copy') &&
+                                            <span className="copy-icon" onClick={this.copyAccountNumber}>
+                                                <img src={CopyImg} alt="" />
+                                            </span>
+                                        }
+                                        
+                                    </div>
+                                {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
+                                </div>
+                            </div>
+                            <div className="accounts-list">
+                                {accounstList.length>=2 &&
+                                    <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
+                                }  
+
+                                {accounstList.length<2 &&
+                                    <div className="each-summary-title">Account</div> 
+                                }
+                                <Select 
+                                    defaultValue={{label:`${defaultAccount.walletNumber} - ${defaultAccount.productName}`}}
+                                    options={accounstList}
+                                    styles={selectStyle}
+                                    onChange={(selectedAccount)=>{
+                                        this.setState({
+                                            selectedAccount,
+                                            selectedAccountIndex: selectedAccount.accountIndex
+                                        })
+                                        this.loadHistoryForAWallet(selectedAccount.value)
+                                    }}
+                                    noOptionsMessage ={()=>`No account found`}
+                                    placeholder="choose account"
+                                />
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            )
+        }else{
+            return ""
+        }
     }
 
     renderDefaultAccountSummary= ()=>{

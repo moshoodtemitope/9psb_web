@@ -1,5 +1,5 @@
-export const handleRequestErrors = (error)=>{
-    
+export const handleRequestErrors = (error, isCustom)=>{
+    // console.log(typeof error, "dvnsdsbdnb")
     if(error.toString().indexOf("'closed' of undefined")>-1  
         // error.toString().indexOf("code 401")>-1
     ){
@@ -12,7 +12,7 @@ export const handleRequestErrors = (error)=>{
     if(error!==undefined && error!==null){
         // if(error!==undefined && error!==null && error.toString().indexOf("'closed' of undefined")===-1){
         
-        if(typeof error.response ==="object"){
+        if(typeof error.response ==="object" && error.response!==undefined){
             
             
                 if(error.response && error.response.data.title!==null && error.response.data.title!==undefined 
@@ -40,11 +40,17 @@ export const handleRequestErrors = (error)=>{
             //     return error.message;
             // }
             
-            // return "Something went wrong. Please try again";
+           
         }
 
         if(error.toString()==="Error: Network Error"){
             return "Please check your network and try again"
+        }
+
+        if(typeof error ==="string" && isCustom){
+            return error
+            // console.log("dvnsdsbdnb")
+            // return 
         }
         
         // return error

@@ -74,7 +74,7 @@ class BillDetails extends React.Component{
                         selectedAccount: selected,
                         isAccountSelected:true})
 
-        if (amountToPay !== "") {
+        if (amountToPay !== "" && amountToPay!=="N/A") {
             if (parseFloat(selected.walletBalance) >= amountToPay) {
                 this.setState({ lesserAccountBalanceError: false })
             } else {
@@ -120,38 +120,50 @@ class BillDetails extends React.Component{
                     chosenBouquet: Yup.string()
                         .required('Required'),
                     amount: Yup.string()
-                        .required('Required'),
+                        .required('Required')
+                        .test('is-incorrect', 'Required', (value) => {
+                            return value !== "N/A";
+                        }),
                     customField: Yup.string()
                         .required('Required'),
                 });  
 
                 allBouquet.map(eachBouquet=>{
-                    if(eachBouquet.currencyCode!==null && eachBouquet.itemFee!==null){
+                    // if(eachBouquet.currencyCode!==null && eachBouquet.itemFee!==null){
                         allBouquetList.push({
-                            label:`${eachBouquet.paymentItemName} -${eachBouquet.currencyCode} ${eachBouquet.itemFee}`,
+                            label:`${eachBouquet.paymentItemName} ${(eachBouquet.currencyCode||eachBouquet.itemFee || eachBouquet.amount)?"-":""}  ${eachBouquet.currencyCode||""} ${((eachBouquet.itemFee ||eachBouquet.amount) && (eachBouquet.currencyCode===null || eachBouquet.currencyCode ==="") )? "₦" :""} ${eachBouquet.itemFee ||eachBouquet.amount || ""}`,
                             value: eachBouquet.paymentCode,
                             isAmountFixed:eachBouquet.isAmountFixed,
-                            itemAmount: eachBouquet.amount
+                            itemAmount: eachBouquet.amount||"N/A"
                         })
-                    }
+                    // }
 
-                    if(eachBouquet.currencyCode===null && eachBouquet.itemFee!==null){
-                        allBouquetList.push({
-                            label:`${eachBouquet.paymentItemName} - ${eachBouquet.itemFee}`,
-                            value: eachBouquet.paymentCode,
-                            isAmountFixed:eachBouquet.isAmountFixed,
-                            itemAmount: eachBouquet.amount
-                        })
-                    }
+                    // if(eachBouquet.currencyCode===null && eachBouquet.itemFee!==null){
+                    //     allBouquetList.push({
+                    //         label:`${eachBouquet.paymentItemName} - ${eachBouquet.itemFee}`,
+                    //         value: eachBouquet.paymentCode,
+                    //         isAmountFixed:eachBouquet.isAmountFixed,
+                    //         itemAmount: eachBouquet.amount
+                    //     })
+                    // }
 
-                    if(eachBouquet.currencyCode!==null && eachBouquet.itemFee===null){
-                        allBouquetList.push({
-                            label:`${eachBouquet.paymentItemName} -${eachBouquet.currencyCode} ${eachBouquet.itemFee}`,
-                            value: eachBouquet.paymentCode,
-                            isAmountFixed:eachBouquet.isAmountFixed,
-                            itemAmount: eachBouquet.amount
-                        })
-                    }
+                    // if(eachBouquet.currencyCode===null && eachBouquet.itemFee===null){
+                    //     allBouquetList.push({
+                    //         label:`${eachBouquet.paymentItemName}`,
+                    //         value: eachBouquet.paymentCode,
+                    //         isAmountFixed:eachBouquet.isAmountFixed,
+                    //         itemAmount: eachBouquet.amount
+                    //     })
+                    // }
+
+                    // if(eachBouquet.currencyCode!==null && eachBouquet.itemFee===null){
+                    //     allBouquetList.push({
+                    //         label:`${eachBouquet.paymentItemName} -${eachBouquet.currencyCode} ${eachBouquet.itemFee}`,
+                    //         value: eachBouquet.paymentCode,
+                    //         isAmountFixed:eachBouquet.isAmountFixed,
+                    //         itemAmount: eachBouquet.amount
+                    //     })
+                    // }
                     
                     // else{
                     //     allBouquetList.push({
@@ -184,8 +196,8 @@ class BillDetails extends React.Component{
                         let payload = {}
                         if(accountNumber!==""){
                             // this.setState({isAccountError:true})
-                            let amount = parseFloat(values.amount.replace(/,/g, ''));
-                            if( parseFloat(selectedAccount.walletBalance)>= amount){
+                            let amount = values.amount!=="N/A"? parseFloat(values.amount.replace(/,/g, '')) : "";
+                            if(parseFloat(selectedAccount.walletBalance)>= amount){
                                 this.setState({isAccountError:false, lesserAccountBalanceError: false})
                                 payload= {
                                     forRequest:{
@@ -202,7 +214,7 @@ class BillDetails extends React.Component{
                                    
                                 }
                                 this.setState(({payload}));
-
+                                
                                 
                                 this.proceedWithDetails(payload);
                             }else{
@@ -257,8 +269,8 @@ class BillDetails extends React.Component{
                                                 onChange={(selected) => {
                                                         setFieldValue('chosenBouquet', selected.value);
                                                         setFieldValue('amount', selected.itemAmount);
-                                                        
-                                                        this.setState({isAmountFixed: selected.isAmountFixed, amountToPay:selected.itemAmount, selectedBouquetName:selected.label})
+                                                        // console.log("kkkk", selected.itemAmount)
+                                                        this.setState({isAmountFixed: selected.isAmountFixed, amountToPay:selected.itemAmount,selectedBouquet:selected, selectedBouquetName:selected.label})
                                                     }
                                                 }
                                                 className={errors.chosenBouquet && touched.chosenBouquet ? "is-invalid" : null}
@@ -288,7 +300,9 @@ class BillDetails extends React.Component{
 
                                                         setFieldValue('amount', e.target.value)
                                                     }}
-                                                    disabled={isAmountFixed.toLowerCase()==="true"?true:false}
+                                                    disabled={
+                                                        (this.state.selectedBouquet.itemAmount!=="N/A" && isAmountFixed.toLowerCase()==="true" )?true:false
+                                                    }
                                                     onBlur={() => setFieldTouched('amount', true)}
                                                     value={numberWithCommas(values.amount)}
                                                     className={((errors.amount && touched.amount) || lesserAccountBalanceError) ? "is-invalid" : null}

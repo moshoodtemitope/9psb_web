@@ -76,7 +76,7 @@ class MoneyTransfer extends React.Component{
                                     </NavLink>
                                 </div>
                                 <div className="panel-helptext mt-20  m-auto">
-                                    Tranfer fund to your wallet or that of another customer
+                                    Transfer fund to your wallet or that of another customer
                                 </div>
                                 <div className="w-80 m-100 m-auto pt-20">
                                     <div className="blocked-bar-link" onClick={()=>history.push("/app/transfer/provide-details")}>

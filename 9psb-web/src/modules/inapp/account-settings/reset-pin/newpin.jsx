@@ -86,7 +86,7 @@ class NewTxtPin extends React.Component{
                 conmfirmNewPin: Yup.string()
                     .length(4, '4 Digits PIN')
                     .required('Required')
-                    .oneOf([Yup.ref('newPin'), null], 'new PIN must match'),
+                    .oneOf([Yup.ref('newPin'), null], 'New PIN must match'),
         });   
 
         let completePinResetRequest = this.props.CompletePinResetReducer,

@@ -240,7 +240,7 @@ class ConfirmDetailsFromOtp extends React.Component{
           }else{
             if(psbuser!==undefined && psbuser.states!==null && psbuser.states!==undefined){
                 psbuser.states.map((eachState, index) => {
-                    stateLists.push({ value: eachState.code, label: eachState.stateName })
+                    stateLists.push({ value: eachState.code, label: this.titleCase(eachState.stateName)})
                 })
             }
             
