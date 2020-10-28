@@ -68,15 +68,15 @@ class ConfirmAgentCashWithdrawal extends React.Component{
         
     }
 
-    confirmWithdrawal = (payload)=>{
+    // confirmWithdrawal = (payload)=>{
 
-        const {dispatch} = this.props;
-        dispatch(paymentActions.AgentWithdrawalStep2(payload));
+    //     const {dispatch} = this.props;
+    //     dispatch(paymentActions.AgentWithdrawalStep2(payload));
         
        
         
         
-    }
+    // }
 
 
 

@@ -473,7 +473,7 @@ function AgentWithdrawalStep2   (requestPayload){
                     
                     dispatch(success(response.data));
                     // dispatch(GetDataTopUpBeneficiaries("CLEAR"))
-                    // history.push("/app/buy-data/others/choose");
+                    history.push("/app/cash-withdrawal/agents/code");
                     
                     
                 }).catch(error =>{

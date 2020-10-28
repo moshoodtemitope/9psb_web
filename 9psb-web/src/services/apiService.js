@@ -93,7 +93,7 @@ export class ApiService {
 
 
     static signTransaction = (url, payload)=>{
-
+        // console.log("was here", url, payload);
         let transferUrls=[
                 "Customer/transfertophonenumber",
                 "Customer/transfertoaccount",
@@ -507,10 +507,10 @@ export class ApiService {
                     
                     this.setTokenAuthorization(routes.REFRESH_TOKEN);
                     this.signTransaction(routes.REFRESH_TOKEN);
-
+                   
                     let tokenService = instance.post(routes.REFRESH_TOKEN, refreshpayload);
 
-                    return tokenService.then(function (response) {
+                    return tokenService.then( (response)=> {
                         
                         if(response.status>=200 && response.status<210){
                             if(response.data.message!==undefined){
@@ -523,9 +523,10 @@ export class ApiService {
                                 delete instance.defaults.headers.common;
                                 instance.defaults.headers.common ={
                                     ...tempRequest.tempHeaders
-                                }
+                                };
                                 instance.defaults.headers.common['Authorization'] = `Bearer ${response.data.message}`;
-
+                                this.setTokenAuthorization(tempRequest.url);
+                                this.signTransaction(tempRequest.url, tempRequest.bodyData);
                                 service = instance.post(tempRequest.url, tempRequest.bodyData);
 
                                 
