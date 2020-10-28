@@ -323,7 +323,7 @@ class BuyDataOthers extends React.Component{
                                                         <Alert variant="danger mt-20">Insufficient account balance</Alert>
                                                     }
 
-                                                    {existingCustomerInfo==="" &&
+                                                    {/* {existingCustomerInfo==="" &&
                                                         <Form.Group className="checkbox-input centered">
                                                             <input type="checkbox"
                                                             name="saveBeneficiary" 
@@ -333,7 +333,7 @@ class BuyDataOthers extends React.Component{
                                                             id="save-benficiary"/>
                                                             <label htmlFor="save-benficiary">Save as beneficiary</label>
                                                         </Form.Group>
-                                                    }
+                                                    } */}
                                                     {values.saveBeneficiary===true &&
                                                         <Form.Group className="poppedinput">
                                                             <Form.Label className="block-level">Beneficiary Alias(optional)</Form.Label>

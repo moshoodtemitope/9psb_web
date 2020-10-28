@@ -182,7 +182,7 @@ class ConfirmTransferToPhone extends React.Component{
                                                         ) : null}
 
                                                     </Form.Group>
-                                                    <Form.Group className="checkbox-input centered">
+                                                    {/* <Form.Group className="checkbox-input centered">
                                                         <input type="checkbox"
                                                          name="saveBeneficiary" 
                                                          checked={values.saveBeneficiary? values.saveBeneficiary:null}
@@ -190,7 +190,7 @@ class ConfirmTransferToPhone extends React.Component{
                                                          value={values.saveBeneficiary}
                                                          id="save-benficiary"/>
                                                         <label htmlFor="save-benficiary">Save as beneficiary</label>
-                                                    </Form.Group>
+                                                    </Form.Group> */}
                                                     {values.saveBeneficiary===true &&
                                                         <Form.Group className="poppedinput">
                                                             <Form.Label className="block-level">Beneficiary Alias(optional)</Form.Label>

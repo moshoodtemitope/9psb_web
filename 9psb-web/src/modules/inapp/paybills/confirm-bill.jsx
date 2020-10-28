@@ -138,9 +138,9 @@ class ConfirmBillPayment extends React.Component{
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                                     You are about to pay { existingCustomerInfo.requestPayload.amount!=="" && <span>&#8358;{existingCustomerInfo.requestPayload.amount}</span> }  from your account/Wallet {existingCustomerInfo.requestPayload.walletNumber}  to {existingCustomerInfo.requestPayload.billerName} for {existingCustomerInfo.requestPayload.selectedBouquetName}.
                                                 </div>
-                                                <div className="panel-helptext mt-20 centered m-auto pt-20">
+                                                {/* <div className="panel-helptext mt-20 centered m-auto pt-20">
                                                     This payment has been set to reoccur once every month.
-                                                </div>
+                                                </div> */}
                                                 <div className="form-wrap w-70 mt-40 m-auto pt-20">
                                                    
 
