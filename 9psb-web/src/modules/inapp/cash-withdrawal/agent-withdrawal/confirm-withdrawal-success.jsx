@@ -77,9 +77,7 @@ class ConfirmAgentWithdrawalSuccess extends React.Component{
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                     Hi {psbuser.firstName}
                                 </div>
-                                <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                    Hi Seyi
-                                </div>
+                               
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                     Your agent withdrawal code is {existingCustomerInfo.code}. Please visit any of our agent locations &amp; handover the code to the agent to get cash.
                                 </div>
