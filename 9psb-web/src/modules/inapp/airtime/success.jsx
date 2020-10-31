@@ -130,7 +130,7 @@ class AirtimePurchaseSuccess extends React.Component{
                 <InAppContainer>
                 <div className="inapp-page">
                     <div className="page-heading">
-                        <h3>Self Airtime Top Up</h3>
+                        <h3>Airtime Top Up</h3>
                     </div>
                    {this.renderPageWrap()}
                 </div>
