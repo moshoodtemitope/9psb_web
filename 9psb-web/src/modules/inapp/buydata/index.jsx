@@ -167,7 +167,8 @@ class BuyData extends React.Component{
         
               let validationSchema = Yup.object().shape({
                   recipient: Yup.string()
-                      .required('Required'),
+                      .required('Required')
+                      .length('11','Enter valid phone number'),
                   network: Yup.string()
                       .required('Required'),
                   amount: Yup.string()
@@ -281,8 +282,8 @@ class BuyData extends React.Component{
                                                 name="recipient"
                                                 onChange={handleChange}
                                                 placeholder=""
-                                                maxLength="13"
-                                                value={values.recipient}
+                                                maxLength="11"
+                                                value={allowNumbersOnly(values.recipient)}
                                                 className={errors.recipient && touched.recipient ? "is-invalid" : null}
                                                 required />
                                             {errors.recipient && touched.recipient ? (
