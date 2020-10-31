@@ -80,7 +80,7 @@ class DataTopUpSuccess extends React.Component{
                                     Hi {psbuser.firstName}
                                 </div>
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                    Your Date purchase of  {getDataPlanNameCode(existingCustomerInfo.amount, existingCustomerInfo.network, dataPlansInfo)} was successful. 
+                                    Your Data purchase of  {getDataPlanNameCode(existingCustomerInfo.amount, existingCustomerInfo.network, dataPlansInfo)} was successful. 
                                 </div>
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                     An SMS has been sent to you with details.

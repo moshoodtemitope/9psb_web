@@ -304,7 +304,7 @@ class GetCustomerDetails extends React.Component{
                                                 ) : null}
                                             </Form.Group>
                                             <div className="bvn-info">
-                                                Dial *345*10# to get you BVN
+                                                Dial *565*0# to get you BVN
                                             </div>
 
                                             {values.meansOfId!==0 &&
