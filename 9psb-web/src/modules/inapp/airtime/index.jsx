@@ -99,7 +99,7 @@ class BuyAirtime extends React.Component{
         let validationSchema = Yup.object().shape({
             recipient: Yup.string()
                 .required('Required')
-                .length('11','Enter valid phone number'),
+                .min('11','Enter valid phone number'),
             network: Yup.string()
                 .required('Required'),
             amount: Yup.string()
@@ -203,7 +203,7 @@ class BuyAirtime extends React.Component{
                                                             onChange={handleChange}
                                                             placeholder=""
                                                             maxLength="11"
-                                                            value={allowNumbersOnly(values.recipient)}
+                                                            value={allowNumbersOnly(values.recipient, 11)}
                                                             className={errors.recipient && touched.recipient ? "is-invalid" : null}
                                                             required />
                                                         {errors.recipient && touched.recipient ? (
