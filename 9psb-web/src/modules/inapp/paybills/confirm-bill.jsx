@@ -63,7 +63,7 @@ class ConfirmBillPayment extends React.Component{
           {existingCustomerInfo,
             psbuser,
             payload} = this.state;
-
+        
         let makeCustomerPaymentForBillRequest = this.props.makeCustomerPaymentForBillReducer;
 
         let validationSchema = Yup.object().shape({
@@ -136,7 +136,7 @@ class ConfirmBillPayment extends React.Component{
                                                     Hi {psbuser.firstName}
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                                    You are about to pay { existingCustomerInfo.requestPayload.amount!=="" && <span>&#8358;{existingCustomerInfo.requestPayload.amount}</span> }  from your account/Wallet {existingCustomerInfo.requestPayload.walletNumber}  to {existingCustomerInfo.requestPayload.billerName} for {existingCustomerInfo.requestPayload.selectedBouquetName}.
+                                    You are about to pay { existingCustomerInfo.requestPayload.amount!=="" && <span>&#8358;{existingCustomerInfo.requestPayload.amount}</span> }  from your account/Wallet {existingCustomerInfo.requestPayload.walletNumber}  to {existingCustomerInfo.requestPayload.billerName} {(existingCustomerInfo.fullName && existingCustomerInfo.fullName!=="") && <span>(Recipient: {existingCustomerInfo.fullName} {(existingCustomerInfo.customerId && existingCustomerInfo.customerId!=="") && <span>-{existingCustomerInfo.customerId}</span>}) </span>} for {existingCustomerInfo.requestPayload.selectedBouquetName}.
                                                 </div>
                                                 {/* <div className="panel-helptext mt-20 centered m-auto pt-20">
                                                     This payment has been set to reoccur once every month.
