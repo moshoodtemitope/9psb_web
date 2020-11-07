@@ -52,6 +52,8 @@ class ForgotPassword extends React.Component{
         let forgotPwValidationSchema = Yup.object().shape({
             phoneNumber: Yup.string()
                 .required('Required')
+                .min(10,'Valid phone numbers only')
+                .max(13,'Valid phone numbers only')
           });
           
         return(
@@ -73,10 +75,13 @@ class ForgotPassword extends React.Component{
 
                                 validationSchema={forgotPwValidationSchema}
                                 onSubmit={(values, { resetForm }) => {
-
+                                    let phoneNum = values.phoneNumber;
+                                    if(values.phoneNumber.length===10){
+                                        phoneNum = `0${values.phoneNumber}`
+                                    }
                                     let payload = {
                                         // phoneNumber: values.phoneNumber,
-                                        reference: values.phoneNumber,
+                                        reference: phoneNum,
                                         resetOption: 0,
                                         customerType: 1
                                     }
