@@ -86,7 +86,7 @@ class BuyAirtime extends React.Component{
                             {label:"Airtel", value: 1}, 
                             {label:"9Mobile", value: 2}, 
                             {label:"Globacom", value: 3}, 
-                            {label:"Mtn", value: 4}];
+                            {label:"MTN", value: 4}];
         const selectStyle = {
             control: base => ({
                 ...base,

@@ -159,7 +159,7 @@ class ConfirmTransferToPhone extends React.Component{
                                                     Hi {psbuser.firstName}
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                                    You are about to transfer &#8358;{numberWithCommas(existingCustomerInfo.amount, true)} from your wallet/nuban account to {existingCustomerInfo.displayName} with Phone/Wallet number - {existingCustomerInfo.accountNumber}.
+                                                    You are about to transfer &#8358;{numberWithCommas(existingCustomerInfo.amount, true)} from your wallet account to {existingCustomerInfo.displayName} with Phone - {existingCustomerInfo.accountNumber}.
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                                     Please confirm.

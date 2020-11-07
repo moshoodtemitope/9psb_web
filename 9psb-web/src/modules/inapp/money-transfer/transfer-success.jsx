@@ -74,7 +74,7 @@ class TransferToPhoneSuccess extends React.Component{
                         <div className="dashboard-section">
                             <div className="app-panel inpage centered">
                                 <img className="done-icon" src={Done} alt="" />
-                                <h3 className="centered">Transfer Succesful</h3>
+                                <h3 className="centered">Transfer Successful</h3>
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                     Hi {psbuser.firstName}
                                 </div>

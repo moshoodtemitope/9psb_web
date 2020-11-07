@@ -135,7 +135,7 @@ class ConfirmAirtimeTopUp extends React.Component{
                                                     Hi {psbuser.firstName}
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                                    You are about to purchase &#8358;{numberWithCommas(existingCustomerInfo.amount, true)} airtime from your wallet/account {existingCustomerInfo.walletNumber} to your phone number - {existingCustomerInfo.recipient} {getNetworkProviderWithCode(existingCustomerInfo.network, providersList)}.
+                                                    You are about to purchase &#8358;{numberWithCommas(existingCustomerInfo.amount, true)} airtime from your wallet {existingCustomerInfo.walletNumber} to your phone number - {existingCustomerInfo.recipient} {getNetworkProviderWithCode(existingCustomerInfo.network, providersList)}.
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                                     Please confirm.

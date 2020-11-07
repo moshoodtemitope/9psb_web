@@ -24,7 +24,7 @@ class BillPaymentSuccess extends React.Component{
             psbuser:JSON.parse(localStorage.getItem('psb-auth')),
             existingCustomerInfo: (Object.keys(getExistingInfo).length >= 1 && getExistingInfo.request_status === paymentsConstants.PAY_FOR_BILL_SUCCESS)
                         ? getExistingInfo.request_data.response : '',
-            existingCustomerInfo2: (Object.keys(getExistingInfo2).length >= 1 && getExistingInfo.request_status === paymentsConstants.VALIDATE_CUSTOMER_FOR_BILL_SUCCESS)
+            existingCustomerInfo2: (Object.keys(getExistingInfo2).length >= 1 && getExistingInfo2.request_status === paymentsConstants.VALIDATE_CUSTOMER_FOR_BILL_SUCCESS)
                     ? getExistingInfo2.request_data.response : '',
         }
    
@@ -69,7 +69,7 @@ class BillPaymentSuccess extends React.Component{
                                     Hi {psbuser.firstName}
                                 </div>
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                    Your payment of &#8358;{existingCustomerInfo2.requestPayload.amount} from your account/Wallet {existingCustomerInfo2.requestPayload.walletNumber}  to {existingCustomerInfo2.requestPayload.billerName} for {existingCustomerInfo2.requestPayload.selectedBouquetName} was successful.
+                                    Your payment of &#8358;{existingCustomerInfo2.requestPayload.amount} from your wallet {existingCustomerInfo2.requestPayload.walletNumber}  to {existingCustomerInfo2.requestPayload.billerName} for {existingCustomerInfo2.requestPayload.selectedBouquetName} was successful.
                                 </div>
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                     An SMS has been sent  you  with details.

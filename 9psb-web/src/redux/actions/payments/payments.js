@@ -1267,7 +1267,7 @@ function makeCustomerPaymentForBill   (requestPayload){
                 .then(response =>{
                     
                     dispatch(success(response.data));
-                    
+                    history.push("/app/pay-bills/success");
                     
                 }).catch(error =>{
                     dispatch(failure(handleRequestErrors(error)));

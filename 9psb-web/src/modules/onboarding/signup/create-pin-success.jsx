@@ -63,7 +63,7 @@ class SignUpCreatePinSuccess extends React.Component{
                 <div className="eachsection ">
                     <div className="onboarding-info">
                     <div className="cardpanel">
-                            <div className="card-heading mb-10 text-center">PIN Created Succesfully</div>
+                            <div className="card-heading mb-10 text-center">PIN Created Successfully</div>
                             <div className="success-icon">
                                 <img src={SuccessImg} alt=""/>
                             </div>

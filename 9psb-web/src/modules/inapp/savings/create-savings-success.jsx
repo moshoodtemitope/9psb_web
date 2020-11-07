@@ -71,7 +71,7 @@ class CreateSavingsSuccess extends React.Component{
                         <div className="dashboard-section">
                             <div className="app-panel inpage centered">
                                 <img className="done-icon" src={Done} alt="" />
-                                <h2 className="fz-20">Savings added and locked succesfully</h2>
+                                <h2 className="fz-20">Savings added and locked Successfully</h2>
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                     Hi {psbuser.firstName}
                                 </div>
