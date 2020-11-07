@@ -25,7 +25,7 @@ class CashWithdrawalLocations extends React.Component{
         let getExistingInfo2 = this.props.GetAgentsReducer;
         this.state={
             user:"",
-            existingCustomerInfo: (Object.keys(getExistingInfo).length >= 1 && getExistingInfo.request_status === paymentsConstants.CARDLESS_WITHDRAWAL_STEP2_SUCCESS)
+            existingCustomerInfo: (Object.keys(getExistingInfo).length >= 1 && getExistingInfo.request_status === paymentsConstants.AGENT_WITHDRAWAL_STEP2_SUCCESS)
                         ? getExistingInfo.request_data.response : '',
             existingCustomerInfo2: (Object.keys(getExistingInfo2).length >= 1 && getExistingInfo2.request_status === paymentsConstants.GET_AGENTS_SUCCESS)
                         ? getExistingInfo2.request_data.response : '',

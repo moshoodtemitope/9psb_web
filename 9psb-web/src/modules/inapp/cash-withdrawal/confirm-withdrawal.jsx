@@ -152,8 +152,8 @@ class ConfirmCashWithdrawal extends React.Component{
                                                 Hi {psbuser.firstName}
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                                    {/* You are about to withdraw &#8358;{numberWithCommas(this.withdrawalAmount, true)} from your wallet/account number {this.walletNumber} via ATM (Cardless Withdrawal). */}
-                                                    You are about to withdraw &#8358;{numberWithCommas(this.withdrawalAmount, true)} from your wallet/account number {this.walletNumber} via ATM (Cardless Withdrawal).
+                                                    
+                                                    You are about to withdraw &#8358;{numberWithCommas(this.withdrawalAmount, true)} from your wallet {this.walletNumber} via ATM (Cardless Withdrawal).
                                                 </div>
                                                 {/* <div className="panel-helptext mt-20 centered m-auto pt-20">
                                                     You will be charged an additional N50 VAT plus N2.50 on tax.

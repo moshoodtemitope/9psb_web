@@ -58,31 +58,67 @@ function Login   (requestPayload){
                     
                     localStorage.setItem('psb-auth', JSON.stringify(userInfoData));
                     if(userInfoData.isPinSet===true && userInfoData.isProfileSet===true){
-                        let consume2 = ApiService.request(routes.GET_PROFILE_PIX, "GET", null);
-                        dispatch(request(consume2));
-                        return consume2
-                            .then(response2 =>{
-                                let profilePix = response2.data.base64String
-                                let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+                        let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+                        let consume6 = ApiService.request(routes.GET_ACCOUNTS, "GET", null);
+                        dispatch(request(consume6));
+                        return consume6
+                            .then(response6 => {
+                                psbAuth.savings = response6.data.savings;
+                                let consume2 = ApiService.request(routes.GET_PROFILE_PIX, "GET", null);
+                                dispatch(request(consume2));
+                                return consume2
+                                    .then(response2 => {
+                                        let profilePix = response2.data.base64String
+                                        
 
-                                psbAuth.profilePix = profilePix;
+                                        psbAuth.profilePix = profilePix;
+                                        
+                                        localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                                        // dispatch(accountActions.GetCustomerDashboardData());
+                                        dispatch(success(response.data))
+                                        history.push("/app/dashboard");
+                                    })
+                                    .catch(error => {
+                                        let profilePix = "no file";
+                                        // let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
 
-                                localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
-                                // dispatch(accountActions.GetCustomerDashboardData());
-                                dispatch(success(response.data))
-                                history.push("/app/dashboard");
+                                        psbAuth.profilePix = profilePix;
+
+                                        localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                                        // dispatch(accountActions.GetCustomerDashboardData());
+                                        dispatch(success(response.data))
+                                        history.push("/app/dashboard");
+                                    });
                             })
-                            .catch(error =>{
-                                let profilePix = "no file";
-                                let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+                            .catch(error6 => {
+                                let consume2 = ApiService.request(routes.GET_PROFILE_PIX, "GET", null);
+                                dispatch(request(consume2));
+                                return consume2
+                                    .then(response2 => {
+                                        let profilePix = response2.data.base64String
+                                        let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
 
-                                psbAuth.profilePix = profilePix;
+                                        psbAuth.profilePix = profilePix;
 
-                                localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
-                                // dispatch(accountActions.GetCustomerDashboardData());
-                                dispatch(success(response.data))
-                                history.push("/app/dashboard");
+                                        localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                                        // dispatch(accountActions.GetCustomerDashboardData());
+                                        dispatch(success(response.data))
+                                        history.push("/app/dashboard");
+                                    })
+                                    .catch(error => {
+                                        let profilePix = "no file";
+                                        let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+
+                                        psbAuth.profilePix = profilePix;
+
+                                        localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                                        // dispatch(accountActions.GetCustomerDashboardData());
+                                        dispatch(success(response.data))
+                                        history.push("/app/dashboard");
+                                    });
                             });
+
+                        
 
                         
 
@@ -652,6 +688,7 @@ function UpgradeSendDetails   (requestPayload, requestTrackingId){
                     }
                     
                 }).catch(error =>{
+                    console.log("papapa", error.response)
                     dispatch(failure(handleRequestErrors(error)));
                 });
             

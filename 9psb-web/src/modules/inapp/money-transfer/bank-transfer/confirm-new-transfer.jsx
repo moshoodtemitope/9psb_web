@@ -141,7 +141,7 @@ class ConfirmNewTransferToBank extends React.Component{
                                                     Hi {psbuser.firstName}
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                                    You are about to transfer &#8358;{numberWithCommas(existingCustomerInfo.amount, true)} from your wallet/account ({existingCustomerInfo.sourceAccountNumber}) to {existingCustomerInfo.displayName}, {existingCustomerInfo.bankName}, {existingCustomerInfo.accountNumber}.
+                                                    You are about to transfer &#8358;{numberWithCommas(existingCustomerInfo.amount, true)} from your wallet ({existingCustomerInfo.sourceAccountNumber}) to {existingCustomerInfo.displayName}, {existingCustomerInfo.bankName}, {existingCustomerInfo.accountNumber}.
                                                 </div>
                                                 {/* <div className="panel-helptext mt-20 centered m-auto pt-20">
                                                     You will be charged an additional N50 VAT plus N2.50 on tax.

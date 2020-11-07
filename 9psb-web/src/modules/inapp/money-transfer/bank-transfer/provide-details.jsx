@@ -278,7 +278,7 @@ class BankTransferDetails extends React.Component{
                                                         ) : null}
 
                                                         {sameAccountError &&
-                                                            <span className="error-txt">Source and recipient wallet/account number cannot be the same</span>
+                                                            <span className="error-txt">Source and recipient wallet cannot be the same</span>
                                                         }
 
                                                     </Form.Group>

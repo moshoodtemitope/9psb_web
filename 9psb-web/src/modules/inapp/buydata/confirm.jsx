@@ -144,7 +144,7 @@ class ConfirmDataTopUp extends React.Component{
                                                 Hi {psbuser.firstName}
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                                    You are about to purchase <span> {getDataPlanNameCode(existingCustomerInfo.amount, existingCustomerInfo.network, dataPlansInfo)}</span> Data from your wallet/account <span>{existingCustomerInfo.walletNumber}</span> to phone number - <span> {existingCustomerInfo.recipient}</span>.
+                                                    You are about to purchase <span> {getDataPlanNameCode(existingCustomerInfo.amount, existingCustomerInfo.network, dataPlansInfo)}</span> Data from your wallet <span>{existingCustomerInfo.walletNumber}</span> to phone number - <span> {existingCustomerInfo.recipient}</span>.
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                                     Please confirm.

@@ -424,7 +424,7 @@ class ConfirmDetailsFromOtp extends React.Component{
                                                 <Col>
                                                     <Form.Group controlId="debitLocation" className={errors.dateOfBirth && touched.dateOfBirth ? "has-invaliderror fullwidthdate" : "fullwidthdate"}>
                                                         
-                                                        <DatePicker placeholderText="Choose  date"
+                                                        <DatePicker 
 
                                                             // onChange={this.handleDatePicker}
                                                             // onChangeRaw={(e) => this.handleDateChange(e)}
@@ -434,6 +434,7 @@ class ConfirmDetailsFromOtp extends React.Component{
                                                             showMonthDropdown
                                                             showYearDropdown
                                                             dropdownMode="select"
+                                                            placeholderText="Choose Date of Birth"
                                                             name="dateOfBirth"
                                                             disabled={values.isDateOfBirthReturned}
                                                             value={values.dateOfBirth}

@@ -420,14 +420,15 @@ class ConfirmUpgradeDetails extends React.Component{
 
                                                     <Form.Row>
                                                         <Col>
-                                                            <Form.Group controlId="debitLocation" className={errors.dateOfBirth && touched.dateOfBirth ? "has-invaliderror fullwidthdate" : "fullwidthdate"}>
-
-                                                                <DatePicker placeholderText="Choose  date"
+                                                            <Form.Group controlId="debitLocation" className={errors.dateOfBirth && touched.dateOfBirth ? "has-invaliderror fullwidthdate " : "fullwidthdate "}>
+                                                                
+                                                                <DatePicker 
                                                                     dateFormat="d MMMM, yyyy"
                                                                     className="form-control form-control-sm"
                                                                     peekNextMonth
                                                                     showMonthDropdown
                                                                     showYearDropdown
+                                                                    placeholderText="Choose Date of Birth"
                                                                     dropdownMode="select"
                                                                     name="dateOfBirth"
                                                                     disabled={values.isDateOfBirthReturned}
@@ -477,7 +478,7 @@ class ConfirmUpgradeDetails extends React.Component{
                                             </div>
                                             {upgradeSendDetailsRequest.request_status ===onboardingConstants.UPGRADE_SEND_DETAILS_FAILURE && 
                                                 
-                                                <ErrorMessage errorMessage={upgradeSendDetailsRequest.request_data.error} canRetry={true} retryFunc={()=>this.updateCustomerDetails(dpFormData)} />
+                                                <ErrorMessage errorMessage={upgradeSendDetailsRequest.request_data.error} canRetry={false} retryFunc={()=>this.updateCustomerDetails(dpFormData)} />
                                             
                                             }
 

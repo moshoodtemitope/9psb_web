@@ -187,7 +187,7 @@ class ConfirmCardDetails extends React.Component{
                                                 Hi {psbuser.firstName}
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                                    You are about to deposit &#8358;{numberWithCommas(this.depositAmount, true)} from your wallet/account number {this.walletNumber} via agent.
+                                                    You are about to deposit &#8358;{numberWithCommas(this.depositAmount, true)} from your wallet {this.walletNumber} via agent.
                                                 </div>
                                                
                                                 <div className="form-wrap w-70 mt-40 m-auto pt-20">

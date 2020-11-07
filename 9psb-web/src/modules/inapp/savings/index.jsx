@@ -218,11 +218,11 @@ class GetAllSavings extends React.Component{
                                             <div className="form-text mb-10">
                                                 <div className="light-text mb-10">Hi {psbuser.firstName}</div>
                                                 <div className="light-text mb-10">
-                                                    You are about to withdraw &#x20A6;{numberWithCommas(savingsDetails.amount, true)} from your account wallet {payload.savingsAccount}.
+                                                    You are about to withdraw &#x20A6;{numberWithCommas(savingsDetails.amount, true)} from your account to your wallet {payload.savingsAccount}.
 
                                                 </div>
                                                 <div>
-                                                    You will be charged {numberWithCommas(savingsDetails.penaltyRate, true)}% liquidation fee of &#x20A6;{numberWithCommas(savingsDetails.penaltyAmount, true)} because it’s before mayurity date
+                                                    You will be charged {numberWithCommas(savingsDetails.penaltyRate, true)}% liquidation fee of &#x20A6;{numberWithCommas(savingsDetails.penaltyAmount, true)} because it’s before maturity date
                                                 </div>
                                             </div>
                                             <Form.Group className=" poppedinput inputfield mb-0">
@@ -268,7 +268,7 @@ class GetAllSavings extends React.Component{
                                                 type="submit"
                                                 disabled={cashoutSavingsRequest.is_request_processing}
                                                 className=" onboarding-btn"
-                                            >  {cashoutSavingsRequest.is_request_processing ? 'Please wait...' : 'Continue'}
+                                            >  {cashoutSavingsRequest.is_request_processing ? 'Please wait...' : 'Withdraw'}
                                             </Button>
 
                                         </div>
@@ -526,8 +526,8 @@ class GetAllSavings extends React.Component{
                                                                 <Button variant="secondary"
                                                                     type="button"
                                                                     className="ml-0 onboarding-btn light"
-                                                                    onClick={() => history.goBack()}
-                                                                > Cancel Plan
+                                                                    onClick={() => history.push("/app/dashboard")}
+                                                                > Cancel 
                                                         
                                                                 </Button>
                                                                 <Button variant="secondary"

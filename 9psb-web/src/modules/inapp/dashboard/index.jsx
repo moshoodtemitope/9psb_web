@@ -194,6 +194,7 @@ class Dashboard extends React.Component{
                     label:`${eachAcount.walletNumber} - ${eachAcount.productName}`,
                     value:eachAcount.walletNumber,
                     accountIndex: index+1,
+                    productName:eachAcount.productName,
                     walletBalance: eachAcount.walletBalance,
                     walletNumber: eachAcount.walletNumber,
                     accountType: eachAcount.accountType,
@@ -381,6 +382,7 @@ class Dashboard extends React.Component{
             accounstList.push({
                 label:`${eachAcount.walletNumber} - ${eachAcount.productName}`,
                 value:eachAcount.walletNumber,
+                productName:eachAcount.productName,
                 accountIndex: index+1,
                 walletBalance: eachAcount.walletBalance,
                 walletNumber: eachAcount.walletNumber,
@@ -414,6 +416,7 @@ class Dashboard extends React.Component{
                                         selectedAccount,
                                         selectedAccountIndex: selectedAccount.accountIndex
                                     })
+                                    console.log("was here", selectedAccount)
                                     this.loadHistoryForAWallet(selectedAccount.value)
                                     
                                 }}
@@ -703,7 +706,7 @@ class Dashboard extends React.Component{
     }
 
     renderUpgradeOptions = () => {
-        let { showUpgradePrompt, bvnDetailsPayload } = this.state;
+        let { showUpgradePrompt, bvnDetailsPayload, psbuser } = this.state;
 
         let checkValidationSchema = Yup.object().shape({
             upgradeOption: Yup.string()
@@ -721,11 +724,20 @@ class Dashboard extends React.Component{
                 
           });
 
-        let upgradeOptions = [
+        let upgradeOptions,
+            UpgradeFetchDetailsRequest =  this.props.UpgradeFetchDetailsReducer;
+
+        if (psbuser.isBvnLinked === true) {
+            upgradeOptions = [
+                { value: "0", label: 'Provide your details instead' },
+            ];
+        }else{
+            upgradeOptions = [
                 { value: "1", label: 'BVN' },
                 { value: "0", label: 'Provide your details instead' },
-            ],
-            UpgradeFetchDetailsRequest =  this.props.UpgradeFetchDetailsReducer
+            ];
+        }
+            
         return (
             <Modal show={showUpgradePrompt} onHide={this.handleCloseUpgradeOptions} size="lg" centered="true" dialogClassName="modal-40w" animation={false}>
                 <Modal.Header className="txt-header modal-bg modal-header">
