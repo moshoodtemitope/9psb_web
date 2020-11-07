@@ -23,40 +23,41 @@ function GetCustomerDashboardData   (){
             dispatch(request(consume));
             return consume
                 .then(response =>{
-                    if(response.data.length>=1){
-                        let defaultAccount = response.data[0],
-                            endDate= new Date(),
-                            // startDate= new Date(endDate.getFullYear(), endDate.getMonth(), 1),
-                            today = new Date(),
-                            startDate = new Date (new Date().setDate(today.getDate()-30));
+                    if(response.status===200 && response.headers['content-type'].indexOf('application/json')>-1){
+                       
 
-                            let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
-                            if(response.status===200 && response.headers['content-type'].indexOf('application/json')>-1){
-                                if(response.data.length>=1){
-                                    let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
-        
-                                    psbAuth.allAccounts = response.data;
-        
-                                    localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
-                                }
+                            
+                            if(response.data.accounts.length>=1){
+                                
+                                let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+    
+                                psbAuth.allAccounts = response.data.accounts;
+                                psbAuth.kycLevel = response.data.kycLevel;
+                                psbAuth.savings = response.data.savings;
+    
+                                localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                                
                                 
                             }else{
                                 dispatch(failure(handleRequestErrors("An error occured. Please try again")));
                             }
 
-                            // psbAuth.allAccounts = response.data;
+                  
 
-                            // localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
-                            // historyQueryString = `StartDate=""&EndDate=""&Channel=3&PageSize=5&CurrentPage=1`
-                            // historyQueryString = `WalletNumber=${defaultAccount.walletNumber}&StartDate=${startDate.toISOString()}&EndDate=${endDate.toISOString()}&Channel=3&PageSize=5&CurrentPage=1`
+                            
                         let consume5 = ApiService.request(`${routes.TRANSACTION_HISTORY}`, "GET", null);
                         // let consume5 = ApiService.request(`${routes.WALLET_HISTORY}?${historyQueryString}`, "GET", null);
                         dispatch(request(consume5));
                         return consume5
                             .then(response5 =>{
-                                let allData;        
+                                let allData,
+                                    allAccounts = [...response.data.accounts];
+
+                                    if(response.data.savings!==null && response.data.savings !==undefined){
+                                        allAccounts.push(response.data.savings)
+                                    }
                                  allData = {
-                                    accounts:response.data,
+                                    accounts:allAccounts,
                                     historydata:response5.data
                                 }
                                 // dispatch(success(allData));
@@ -77,7 +78,7 @@ function GetCustomerDashboardData   (){
                                 dispatch(failure(handleRequestErrors(error)));
                             })
                     }else{
-                        dispatch(success({accounts:response.data}))
+                        dispatch(success({accounts:response.data.accounts}))
                     }
                     
                     // dispatch(success({accounts:response.data}));
@@ -111,14 +112,14 @@ function GetCustomerAccounts   (requestPayload){
             return consume
                 .then(response =>{
                     if(response.status===200 && response.headers['content-type'].indexOf('application/json')>-1){
-                        if(response.data.length>=1){
+                        if(response.data.accounts.length>=1){
                             let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
 
-                            psbAuth.allAccounts = response.data;
-
+                            psbAuth.allAccounts = response.data.accounts;
+                            psbAuth.kycLevel = response.data.kycLevel;
                             localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
                         }
-                        dispatch(success(response.data));
+                        dispatch(success(response.data.accounts));
                     }else{
                         dispatch(failure(handleRequestErrors("An error occured. Please try again")));
                     }

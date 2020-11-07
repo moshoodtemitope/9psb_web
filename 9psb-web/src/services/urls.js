@@ -42,6 +42,12 @@ export const routes = {
     COMPLETE_PASSWORD_RESET: BASEURL + 'Onboarding/api/App/completepasswordreset',
     CHANGE_PASSWORD: BASEURL + 'Onboarding/api/Identity/changepassword',
 
+    //Account Upgrade
+    GET_BVN_INFO: BASEURL + 'Onboarding/api/Identity/bvnupgrade',
+    UPGRADE_SEND_DETAILS: BASEURL + 'Onboarding/api/Identity/idupgrade',
+    UPGRADE_VALIDATE_OTP: BASEURL + 'Onboarding/api/App/validateupgradeotp',
+    UPGRADE_COMPLETION: BASEURL + 'Onboarding/api/Identity/completeupgrade',
+
     //Security Question
     GET_SECURITY_QUESTIONS: BASEURL + 'WalletManager/api/Customer/questions',
     GET_PROFILE_SECURITY_QUESTION: BASEURL + 'WalletManager/api/Customer/profilequestion',
@@ -60,7 +66,8 @@ export const routes = {
 
     //Customer Apis,
 
-    GET_ACCOUNTS: BASEURL + 'WalletManager/api/Customer/accounts',
+    GET_ACCOUNTS: BASEURL + 'WalletManager/api/Customer/savings',
+    // GET_ACCOUNTS: BASEURL + 'WalletManager/api/Customer/accounts',
     TRANSACTION_HISTORY: BASEURL + 'WalletManager/api/Customer/transactionhistory',
     WALLET_HISTORY: BASEURL + 'WalletManager/api/Customer/wallethistory',
 
@@ -78,6 +85,14 @@ export const routes = {
 
     CARDLESS_WITHDRAWAL: BASEURL + 'Transfers/api/Customer/transfertoatm',
     AGENT_WITHDRAWAL: BASEURL + 'Transfers/api/Customer/transfertoagent',
+
+    //Savings
+
+    GET_SAVINGS_INTEREST: BASEURL + 'Savings/api/Customer/depositInterest',
+    CREATE_SAVINGS: BASEURL + 'Savings/api/Customer/addtermdeposit',
+    GET_SAVINGS: BASEURL + 'Savings/api/Customer/savings',
+    CHECK_SAVINGS_CASHOUT: BASEURL + 'Savings/api/Customer/checkcashout',
+    COMPLETE_SAVINGS_CASHOUT: BASEURL + 'Savings/api/Customer/cashout',
 
     //Airtime
     AIRTIME_RECHARGE: BASEURL + 'AirtimeRecharge/api/Customer/recharge',

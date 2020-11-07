@@ -20,7 +20,11 @@ import{
     InitiatePinResetReducer,
     CompletePinResetReducer,
     GetAllStatesReducer,
-    GetLgasReducer
+    GetLgasReducer,
+    UpgradeFetchDetailsReducer,
+    UpgradeSendDetailsReducer,
+    UpgradeValidateOtpReducer,
+    UpgradeCompletionReducer
 } from './onboarding/onboarding.reducer'
 
 
@@ -70,7 +74,13 @@ import{
     GetBillersByCategoryReducer,
     GetAllBillerPaymentItemReducer,
     validateCustomerForBillPaymentReducer,
-    makeCustomerPaymentForBillReducer
+    makeCustomerPaymentForBillReducer,
+
+    GetSavingsInterestReducer,
+    CreateSavingsReducer,
+    GetSavingsReducer,
+    CashoutSavingsReducer,
+    CheckSavingsCashoutReducer
 } from './payments/payments.reducer'
 
 
@@ -94,7 +104,11 @@ export const onboarding = {
     InitiatePinResetReducer,
     CompletePinResetReducer,
     GetAllStatesReducer,
-    GetLgasReducer
+    GetLgasReducer,
+    UpgradeFetchDetailsReducer,
+    UpgradeSendDetailsReducer,
+    UpgradeValidateOtpReducer,
+    UpgradeCompletionReducer
     // ValidateBusinessNameReducer,
     // RegBusinessReducer,
     // forgotPasswordReducer,
@@ -149,5 +163,11 @@ export const payments ={
     GetBillersByCategoryReducer,
     GetAllBillerPaymentItemReducer,
     validateCustomerForBillPaymentReducer,
-    makeCustomerPaymentForBillReducer
+    makeCustomerPaymentForBillReducer,
+
+    GetSavingsInterestReducer,
+    CreateSavingsReducer,
+    GetSavingsReducer,
+    CashoutSavingsReducer,
+    CheckSavingsCashoutReducer
 }

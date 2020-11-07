@@ -4,6 +4,183 @@ let user = JSON.parse(localStorage.getItem("psb-auth"));
 const initialState = (user) ? { loggedIn: true, user } : {};
 
 
+//SAVINGS
+export function GetSavingsInterestReducer(state=initialState, action) {
+    
+    switch (action.type) {
+        case paymentsConstants.GET_SAVINGS_INTEREST_PENDING:
+            return {
+                request_status: paymentsConstants.GET_SAVINGS_INTEREST_PENDING,
+                is_request_processing: true,
+                request_data: action
+            };
+        case paymentsConstants.GET_SAVINGS_INTEREST_SUCCESS:
+            return {
+                request_status: paymentsConstants.GET_SAVINGS_INTEREST_SUCCESS,
+                loggedIn: true,
+                is_request_processing: false,
+                request_data: action
+            };
+        case paymentsConstants.GET_SAVINGS_INTEREST_FAILURE:
+            return {
+                request_status: paymentsConstants.GET_SAVINGS_INTEREST_FAILURE,
+                is_request_processing: false,
+                request_data: action
+            };
+
+        case paymentsConstants.GET_SAVINGS_INTEREST_RESET:
+            return {
+                request_status: paymentsConstants.GET_SAVINGS_INTEREST_RESET,
+                is_request_processing: false,
+                request_data: {},
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function CreateSavingsReducer(state=initialState, action) {
+    
+    switch (action.type) {
+        case paymentsConstants.CREATE_SAVINGS_PENDING:
+            return {
+                request_status: paymentsConstants.CREATE_SAVINGS_PENDING,
+                is_request_processing: true,
+                request_data: action
+            };
+        case paymentsConstants.CREATE_SAVINGS_SUCCESS:
+            return {
+                request_status: paymentsConstants.CREATE_SAVINGS_SUCCESS,
+                loggedIn: true,
+                is_request_processing: false,
+                request_data: action
+            };
+        case paymentsConstants.CREATE_SAVINGS_FAILURE:
+            return {
+                request_status: paymentsConstants.CREATE_SAVINGS_FAILURE,
+                is_request_processing: false,
+                request_data: action
+            };
+
+        case paymentsConstants.CREATE_SAVINGS_RESET:
+            return {
+                request_status: paymentsConstants.CREATE_SAVINGS_RESET,
+                is_request_processing: false,
+                request_data: {},
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function GetSavingsReducer(state=initialState, action) {
+    
+    switch (action.type) {
+        case paymentsConstants.GET_ALL_SAVINGS_PENDING:
+            return {
+                request_status: paymentsConstants.GET_ALL_SAVINGS_PENDING,
+                is_request_processing: true,
+                request_data: action
+            };
+        case paymentsConstants.GET_ALL_SAVINGS_SUCCESS:
+            return {
+                request_status: paymentsConstants.GET_ALL_SAVINGS_SUCCESS,
+                loggedIn: true,
+                is_request_processing: false,
+                request_data: action
+            };
+        case paymentsConstants.GET_ALL_SAVINGS_FAILURE:
+            return {
+                request_status: paymentsConstants.GET_ALL_SAVINGS_FAILURE,
+                is_request_processing: false,
+                request_data: action
+            };
+
+        case paymentsConstants.GET_ALL_SAVINGS_RESET:
+            return {
+                request_status: paymentsConstants.GET_ALL_SAVINGS_RESET,
+                is_request_processing: false,
+                request_data: {},
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function CashoutSavingsReducer(state=initialState, action) {
+    
+    switch (action.type) {
+        case paymentsConstants.CASHOUT_SAVINGS_PENDING:
+            return {
+                request_status: paymentsConstants.CASHOUT_SAVINGS_PENDING,
+                is_request_processing: true,
+                request_data: action
+            };
+        case paymentsConstants.CASHOUT_SAVINGS_SUCCESS:
+            return {
+                request_status: paymentsConstants.CASHOUT_SAVINGS_SUCCESS,
+                loggedIn: true,
+                is_request_processing: false,
+                request_data: action
+            };
+        case paymentsConstants.CASHOUT_SAVINGS_FAILURE:
+            return {
+                request_status: paymentsConstants.CASHOUT_SAVINGS_FAILURE,
+                is_request_processing: false,
+                request_data: action
+            };
+
+        case paymentsConstants.CASHOUT_SAVINGS_RESET:
+            return {
+                request_status: paymentsConstants.CASHOUT_SAVINGS_RESET,
+                is_request_processing: false,
+                request_data: {},
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function CheckSavingsCashoutReducer(state=initialState, action) {
+    
+    switch (action.type) {
+        case paymentsConstants.CHECK_SAVINGS_CASHOUT_PENDING:
+            return {
+                request_status: paymentsConstants.CHECK_SAVINGS_CASHOUT_PENDING,
+                is_request_processing: true,
+                request_data: action
+            };
+        case paymentsConstants.CHECK_SAVINGS_CASHOUT_SUCCESS:
+            return {
+                request_status: paymentsConstants.CHECK_SAVINGS_CASHOUT_SUCCESS,
+                loggedIn: true,
+                is_request_processing: false,
+                request_data: action
+            };
+        case paymentsConstants.CHECK_SAVINGS_CASHOUT_FAILURE:
+            return {
+                request_status: paymentsConstants.CHECK_SAVINGS_CASHOUT_FAILURE,
+                is_request_processing: false,
+                request_data: action
+            };
+
+        case paymentsConstants.CHECK_SAVINGS_CASHOUT_RESET:
+            return {
+                request_status: paymentsConstants.CHECK_SAVINGS_CASHOUT_RESET,
+                is_request_processing: false,
+                request_data: {},
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+
 //MONEY TRANSFER
 export function TransferMoneyToPhoneSTEP1Reducer(state=initialState, action) {
     

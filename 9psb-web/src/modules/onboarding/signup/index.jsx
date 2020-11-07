@@ -120,6 +120,12 @@ class AppSignup extends React.Component{
 
                                             </Form.Group>
 
+                                            {CheckIfCustomerExistsRequest.request_status === onboardingConstants.CHECK_EXISTING_USER_FAILURE &&
+                                                <Alert variant="danger mt-20">
+                                                    {CheckIfCustomerExistsRequest.request_data.error !== undefined ? CheckIfCustomerExistsRequest.request_data.error : "An error occured please try again"}
+
+                                                </Alert>
+                                            }
 
                                             <div className="footer-with-cta centered ">
                                                 <Button variant="secondary"
@@ -131,12 +137,7 @@ class AppSignup extends React.Component{
 
                                             </div>
 
-                                            {CheckIfCustomerExistsRequest.request_status === onboardingConstants.CHECK_EXISTING_USER_FAILURE &&
-                                                <Alert variant="danger mt-20">
-                                                    {CheckIfCustomerExistsRequest.request_data.error !== undefined ? CheckIfCustomerExistsRequest.request_data.error : "An error occured please try again"}
-
-                                                </Alert>
-                                            }
+                                            
 
                                         </Form>
                                     )}

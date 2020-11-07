@@ -17,6 +17,20 @@
     font-size: 12px;
     opacity: 0.5;
 }
+.otp-resend{
+    span{
+        font-size: 13px;
+        &.resendotp-cta{
+            font-weight: 400;
+            color: #167557;
+            text-decoration: underline;
+            cursor: pointer;
+            &:hover{
+                font-weight: 500;
+            }
+        }
+    }
+}
 .customer-name-text {
     text-align: center;
     font-weight: 600;
@@ -31,6 +45,19 @@
 }
 .customer-photo{
     text-align: center;
+}
+label.upload-photo {
+    display: block;
+    width: 60px;
+    height: 60px;
+    background: #D8D8D8;
+    border-radius: 50%;
+    margin: 20px auto;
+    cursor: pointer;
+    &.existing{
+        cursor:  not-allowed;
+        pointer-events: none;
+    }
 }
 .each-info {
     display: flex;

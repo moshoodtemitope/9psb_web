@@ -202,7 +202,11 @@ class SignUpCreatePin extends React.Component{
 
 
 
-
+                                {createTransactionPinRequest.request_status === onboardingConstants.CREATE_PIN_FAILURE &&
+                                    <Alert variant="danger">
+                                        {createTransactionPinRequest.request_data.error !== undefined ? createTransactionPinRequest.request_data.error : "An error occured please try again"}
+                                    </Alert>
+                                }
                                   <div className="footer-with-cta centered ">
                                       <Button variant="secondary"
                                           type="submit"
@@ -213,11 +217,7 @@ class SignUpCreatePin extends React.Component{
 
                                   </div>
 
-                                    {createTransactionPinRequest.request_status === onboardingConstants.CREATE_PIN_FAILURE &&
-                                        <Alert variant="danger">
-                                            {createTransactionPinRequest.request_data.error !== undefined ? createTransactionPinRequest.request_data.error : "An error occured please try again"}
-                                        </Alert>
-                                    }
+                                    
 
                               </Form>
                           )}

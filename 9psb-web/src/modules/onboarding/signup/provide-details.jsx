@@ -380,7 +380,12 @@ class GetCustomerDetails extends React.Component{
                                                 ) : null}
 
                                             </Form.Group>
-
+                                            {(CreateAccountStep1Request.request_status === onboardingConstants.CREATE_USER_ACCOUNT_FAILURE) &&
+                                                <Alert variant="danger">
+                                                    
+                                                    {CreateAccountStep1Request.request_data.error !== undefined ? CreateAccountStep1Request.request_data.error : "An error occured please try again"}
+                                                </Alert>
+                                            }
 
                                             <div className="footer-with-cta centered ">
                                                 <Button variant="secondary"
@@ -391,12 +396,7 @@ class GetCustomerDetails extends React.Component{
                                                 </Button>
 
                                             </div>
-                                            {(CreateAccountStep1Request.request_status === onboardingConstants.CREATE_USER_ACCOUNT_FAILURE) &&
-                                                <Alert variant="danger">
-                                                    
-                                                    {CreateAccountStep1Request.request_data.error !== undefined ? CreateAccountStep1Request.request_data.error : "An error occured please try again"}
-                                                </Alert>
-                                            }
+                                            
                                             {/* {loginRequest.request_status === authConstants.LOGIN_USER_FAILURE &&
                                     <Alert variant="danger mt-20">
                                         {loginRequest.request_data.error !== undefined ? loginRequest.request_data.error : null}

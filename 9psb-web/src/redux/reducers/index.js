@@ -39,6 +39,10 @@ const onboardingReducers = combineReducers({
     CompletePinResetReducer: onboarding.CompletePinResetReducer, 
     GetAllStatesReducer: onboarding.GetAllStatesReducer, 
     GetLgasReducer: onboarding.GetLgasReducer, 
+    UpgradeFetchDetailsReducer: onboarding.UpgradeFetchDetailsReducer, 
+    UpgradeSendDetailsReducer: onboarding.UpgradeSendDetailsReducer, 
+    UpgradeValidateOtpReducer: onboarding.UpgradeValidateOtpReducer, 
+    UpgradeCompletionReducer: onboarding.UpgradeCompletionReducer, 
     // ValidateBusinessNameReducer: auth.ValidateBusinessNameReducer, 
     // RegBusinessReducer: auth.RegBusinessReducer, 
     // forgotPasswordReducer: auth.forgotPasswordReducer, 
@@ -101,6 +105,12 @@ const paymentsReducers = combineReducers({
     GetAllBillerPaymentItemReducer: payments.GetAllBillerPaymentItemReducer,
     validateCustomerForBillPaymentReducer: payments.validateCustomerForBillPaymentReducer,
     makeCustomerPaymentForBillReducer: payments.makeCustomerPaymentForBillReducer,
+    
+    GetSavingsInterestReducer: payments.GetSavingsInterestReducer,
+    CreateSavingsReducer: payments.CreateSavingsReducer,
+    GetSavingsReducer: payments.GetSavingsReducer,
+    CashoutSavingsReducer: payments.CashoutSavingsReducer,
+    CheckSavingsCashoutReducer: payments.CheckSavingsCashoutReducer,
    
 
 

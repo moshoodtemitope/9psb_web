@@ -52,6 +52,18 @@
     border-bottom: none;
     display: flex;
     align-items: center;
+    &.modal-bg{
+        background: linear-gradient(215.83deg, #A3C23D 0%, #9DBE3E 4.02%, #1D7454 88.69%, #548E4E 100%);
+        color: #ffffff;
+        h2{
+            font-size: 25px;
+            margin-bottom: 5px !important;
+        }
+        .modal-helptxt {
+            font-size: 14px;
+            font-weight: normal;
+        }
+    }
 }
 .modal .each-transaction .transaction-info{
     max-width: 100%;

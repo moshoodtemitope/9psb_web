@@ -92,6 +92,7 @@ class InAppSideBar extends React.Component{
         //     backgroundPosition: `center center`,
         //     backgroundRepeat: `no-repeat`
         // };
+        
         return(
             <div className="siderbar-wrapper" ref={this.setWrapperRef}>
                 
@@ -140,6 +141,12 @@ class InAppSideBar extends React.Component{
                         <img src={SendMoney} alt=""/>
                         <span>Transfer Money</span>
                     </NavLink>
+                    {(psbuser.savings!==undefined && psbuser.savings!==null && psbuser.savings!=="") && 
+                        <NavLink to="/app/savings">
+                            <img src={SendMoney} alt="" />
+                            <span>Savings</span>
+                        </NavLink>
+                    }
                     <NavLink  to="/app/buy-airtime">
                         <img src={Phone} alt=""/>
                         <span>Buy Airtime</span>

@@ -321,6 +321,8 @@ input.form-control{
 }
 .css-rmzrdg-control, .css-czc34b-control{
     border-color: #548E4E!important;
+    // box-shadow: none;
+    // outline: none;
 }
 .nohistory.app-panel {
     text-align: center;
@@ -742,7 +744,7 @@ input.searchable{
         transition: .5s ease;
         &:focus{
             border-color: $brand-color!important;
-            box-shadow: none;
+            box-shadow: none !important;
         }
     }
     &.withselect{

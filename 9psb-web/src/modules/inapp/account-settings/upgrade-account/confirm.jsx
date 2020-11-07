@@ -24,7 +24,7 @@ import {getImagePreview} from '../../../shared/shared-utils/index';
 import {onboardingActions} from '../../../redux/actions/onboarding/onboarding';
 import {onboardingConstants} from '../../../redux/actiontypes/onboarding/onboarding.constants';
 
-import "./signup.scss"; 
+
 class ConfirmDetailsFromOtp extends React.Component{
     constructor(props) {
         super(props);
@@ -557,13 +557,7 @@ class ConfirmDetailsFromOtp extends React.Component{
                                            
                                             
                                             
-                                            {updateCustomerDetailsRequest.request_status === onboardingConstants.UPDATE_PROFILE_FAILURE &&
-                                                <Alert variant="danger mt-20">
-                                                    
-                                                    {updateCustomerDetailsRequest.request_data.error !== undefined ? updateCustomerDetailsRequest.request_data.error : "An error occured please try again"}
-
-                                                </Alert>
-                                            }
+                                            
 
                                             <div className="footer-with-cta centered ">
                                                 <Button variant="secondary"
@@ -575,7 +569,13 @@ class ConfirmDetailsFromOtp extends React.Component{
 
                                             </div>
 
-                                            
+                                            {updateCustomerDetailsRequest.request_status === onboardingConstants.UPDATE_PROFILE_FAILURE &&
+                                                <Alert variant="danger mt-20">
+                                                    
+                                                    {updateCustomerDetailsRequest.request_data.error !== undefined ? updateCustomerDetailsRequest.request_data.error : "An error occured please try again"}
+
+                                                </Alert>
+                                            }
 
                                         </Form>
                                     )}

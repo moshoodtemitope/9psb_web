@@ -1,0 +1,84 @@
+@import "../../../assets/scss/utils";
+
+.modal .txt-header.modal-header {
+    background: #F5F6F8;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+    &.modal-bg{
+        background: linear-gradient(215.83deg, #A3C23D 0%, #9DBE3E 4.02%, #1D7454 88.69%, #548E4E 100%);
+        color: #ffffff;
+        h2{
+            font-size: 25px;
+            margin-bottom: 5px !important;
+        }
+        .modal-helptxt {
+            font-size: 14px;
+            font-weight: normal;
+        }
+    }
+}
+.light-text{
+    font-weight: normal;
+}
+.fz-20{
+    font-size: 20px !important;
+}
+.amount-info {
+    display: flex;
+    justify-content: space-between;
+    .amount-saved {
+        font-size: 16px;
+        font-weight: 800;
+    }
+    .interest-rate {
+        font-size: 16px;
+        font-weight: 500;
+    }
+}
+.date-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    .maturity-date {
+        color: #548E4E;
+    }
+}
+.savings-ctas {
+    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    .savings-status{
+        font-size: 12px;
+        padding: 3px 6px;
+        position: relative;
+        border-radius: 3px;
+        top: -15px;
+        background: #979797;
+        border: 1px solid #979797;
+        color: #ffffff;
+        &.pending{
+            background: #8ED16F;
+            border: 1px solid #548E4E;
+            color: #ffffff;
+        }
+        &.done{
+            background: #167557;
+            border: 1px solid #548E4E;
+            color: #ffffff;
+        }
+    }
+    img{
+        display: block;
+        width: 20px;
+        margin: 0 auto;
+        position: relative;
+        top: -12px;
+    }
+}
+.savings-bar {
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 5px;
+    background-color: rgba(240,242,245,0.5);
+    padding: 20px;
+}

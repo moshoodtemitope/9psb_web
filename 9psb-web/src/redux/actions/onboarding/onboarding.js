@@ -29,7 +29,12 @@ export const onboardingActions = {
     
     GetSecurityQuestions,
     GetLgas,
-    GetStates
+    GetStates,
+
+    UpgradeFetchDetails,
+    UpgradeSendDetails,
+    UpgradeValidateOtp,
+    UpgradeCompletion
 }
 
 function Login   (requestPayload){
@@ -586,6 +591,166 @@ function ChangePassword   (requestPayload){
     function success(response) { return { type: onboardingConstants.CHANGE_PASSWORD_SUCCESS, response } }
     function failure(error) { return { type: onboardingConstants.CHANGE_PASSWORD_FAILURE, error } }
     function clear() { return { type: onboardingConstants.CHANGE_PASSWORD_RESET, clear_data:""} }
+}
+
+function UpgradeFetchDetails   (requestPayload){
+    if(requestPayload!=="CLEAR"){
+        return dispatch =>{
+            let consume = ApiService.request(routes.GET_BVN_INFO, "POST", requestPayload);
+            dispatch(request(consume));
+            return consume
+                .then(response =>{
+                    
+                    dispatch(success(response.data));
+                   history.push('/app/account-settings/account-upgrade/otp');
+                    
+                }).catch(error =>{
+                    dispatch(failure(handleRequestErrors(error)));
+                });
+            
+        }
+        
+    }
+
+    return dispatch =>{
+        
+        dispatch(clear());
+        
+    }
+
+    function request(user) { return { type: onboardingConstants.UPGRADE_FETCH_DETAILS_PENDING, user } }
+    function success(response) { return { type: onboardingConstants.UPGRADE_FETCH_DETAILS_SUCCESS, response } }
+    function failure(error) { return { type: onboardingConstants.UPGRADE_FETCH_DETAILS_FAILURE, error } }
+    function clear() { return { type: onboardingConstants.UPGRADE_FETCH_DETAILS_RESET, clear_data:""} }
+}
+
+function UpgradeSendDetails   (requestPayload, requestTrackingId){
+    if(requestPayload!=="CLEAR"){
+        return dispatch =>{
+        //    dispatch(ValidateRegOtp("CLEAR"));
+            let consume;
+                if(requestTrackingId===""){
+                    consume = ApiService.request(routes.UPGRADE_SEND_DETAILS, "POST", requestPayload);
+                }else{
+                    let payload = {
+                        hash:requestTrackingId
+                    }
+                    consume = ApiService.request(routes.UPGRADE_COMPLETION, "POST", payload);
+                }
+            dispatch(request(consume));
+            return consume
+                .then(response =>{
+                    dispatch(UpgradeFetchDetails("CLEAR"))
+                    dispatch(UpgradeValidateOtp("CLEAR"))
+                    
+                    if(requestTrackingId===""){
+                        dispatch(success({...response.data}));
+                        history.push('/app/account-settings/account-upgrade/otp');
+                    }else{
+                        dispatch(success({...response.data, requestTrackingId}));
+                        history.push('/app/account-settings/account-upgrade/success');
+                    }
+                    
+                }).catch(error =>{
+                    dispatch(failure(handleRequestErrors(error)));
+                });
+            
+        }
+        
+    }
+
+    return dispatch =>{
+        
+        dispatch(clear());
+        
+    }
+
+    function request(user) { return { type: onboardingConstants.UPGRADE_SEND_DETAILS_PENDING, user } }
+    function success(response) { return { type: onboardingConstants.UPGRADE_SEND_DETAILS_SUCCESS, response } }
+    function failure(error) { return { type: onboardingConstants.UPGRADE_SEND_DETAILS_FAILURE, error } }
+    function clear() { return { type: onboardingConstants.UPGRADE_SEND_DETAILS_RESET, clear_data:""} }
+}
+
+function UpgradeValidateOtp   (requestPayload, hashFromSentDetails){
+    if(requestPayload!=="CLEAR"){
+        return dispatch =>{
+           dispatch(ValidateRegOtp("CLEAR"));
+            let consume = ApiService.request(routes.UPGRADE_VALIDATE_OTP, "POST", requestPayload);
+            dispatch(request(consume));
+            return consume
+                .then(response =>{
+                    // 
+                    
+                    if(hashFromSentDetails===""){
+                        dispatch(success({...response.data, hashFromSentDetails}));
+                        history.push('/app/account-settings/account-upgrade');
+                    }else{
+                        let payload = {
+                            hash:hashFromSentDetails
+                        }
+                        let consume2 = ApiService.request(routes.UPGRADE_COMPLETION, "POST", payload);
+                        dispatch(request(consume2));
+                        return consume2
+                            .then(response2 => {
+
+                                dispatch(success({...response2.data, hashFromSentDetails}));
+                                dispatch(UpgradeFetchDetails("CLEAR"))
+                                history.push('/app/account-settings/success');
+
+                            }).catch(error => {
+                                dispatch(failure(handleRequestErrors(error)));
+                            });
+                    }
+                    
+                }).catch(error =>{
+                    dispatch(failure(handleRequestErrors(error)));
+                });
+            
+        }
+        
+    }
+
+    return dispatch =>{
+        
+        dispatch(clear());
+        
+    }
+
+    function request(user) { return { type: onboardingConstants.UPGRADE_VALIDATE_OTP_PENDING, user } }
+    function success(response) { return { type: onboardingConstants.UPGRADE_VALIDATE_OTP_SUCCESS, response } }
+    function failure(error) { return { type: onboardingConstants.UPGRADE_VALIDATE_OTP_FAILURE, error } }
+    function clear() { return { type: onboardingConstants.UPGRADE_VALIDATE_OTP_RESET, clear_data:""} }
+}
+
+function UpgradeCompletion   (requestPayload){
+    if(requestPayload!=="CLEAR"){
+        return dispatch =>{
+            let consume = ApiService.request(routes.UPGRADE_COMPLETION, "POST", requestPayload);
+            dispatch(request(consume));
+            return consume
+                .then(response =>{
+                    
+                    dispatch(success(response.data));
+                //    history.push('/app/account-settings/change-password/success');
+                    
+                }).catch(error =>{
+                    dispatch(failure(handleRequestErrors(error)));
+                });
+            
+        }
+        
+    }
+
+    return dispatch =>{
+        
+        dispatch(clear());
+        
+    }
+
+    function request(user) { return { type: onboardingConstants.UPGRADE_COMPLETION_PENDING, user } }
+    function success(response) { return { type: onboardingConstants.UPGRADE_COMPLETION_SUCCESS, response } }
+    function failure(error) { return { type: onboardingConstants.UPGRADE_COMPLETION_FAILURE, error } }
+    function clear() { return { type: onboardingConstants.UPGRADE_COMPLETION_RESET, clear_data:""} }
 }
 
 function CreateTransactionPin   (requestPayload){

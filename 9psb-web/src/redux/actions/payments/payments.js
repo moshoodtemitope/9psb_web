@@ -42,9 +42,188 @@ export const paymentActions = {
     AgentWithdrawalStep1,
     AgentWithdrawalStep2,
 
-    GetAgents
+    GetAgents,
+
+    GetSavingsInterest,
+    CreateSavings,
+    GetSavings,
+    CashoutSavings,
+    CheckSavingsCashout
 
 }
+
+
+
+//SAVINGS
+function GetSavingsInterest   (requestPayload){
+    if(requestPayload!=="CLEAR"){
+        return dispatch =>{
+           
+            let consume = ApiService.request(`${routes.GET_SAVINGS_INTEREST}`, "POST", requestPayload);
+            dispatch(request(consume));
+            return consume
+                .then(response =>{
+                    
+                    dispatch(success({
+                        ...requestPayload,
+                        ...response.data
+                        }));
+
+                    // history.push("/app/transfer/confirm")
+                    
+                }).catch(error =>{
+                    dispatch(failure(handleRequestErrors(error)));
+                    
+                });
+            
+        }
+        
+    }
+
+    return dispatch =>{
+        
+        dispatch(clear());
+        
+    }
+    function request(user) { return { type: paymentsConstants.GET_SAVINGS_INTEREST_PENDING, user } }
+    function success(response) { return { type: paymentsConstants.GET_SAVINGS_INTEREST_SUCCESS, response } }
+    function failure(error) { return { type: paymentsConstants.GET_SAVINGS_INTEREST_FAILURE, error } }
+    function clear() { return { type: paymentsConstants.GET_SAVINGS_INTEREST_RESET, clear_data:""} }
+}
+
+function CreateSavings   (requestPayload){
+    if(requestPayload!=="CLEAR"){
+        return dispatch =>{
+            
+            let consume = ApiService.request(`${routes.CREATE_SAVINGS}`, "POST", requestPayload);
+            dispatch(request(consume));
+            return consume
+                .then(response =>{
+                    
+                    dispatch(success(response.data));
+
+                    history.push("/app/savings/create/success")
+                    
+                }).catch(error =>{
+                    dispatch(failure(handleRequestErrors(error)));
+                    
+                });
+            
+        }
+        
+    }
+
+    return dispatch =>{
+        
+        dispatch(clear());
+        
+    }
+    function request(user) { return { type: paymentsConstants.CREATE_SAVINGS_PENDING, user } }
+    function success(response) { return { type: paymentsConstants.CREATE_SAVINGS_SUCCESS, response } }
+    function failure(error) { return { type: paymentsConstants.CREATE_SAVINGS_FAILURE, error } }
+    function clear() { return { type: paymentsConstants.CREATE_SAVINGS_RESET, clear_data:""} }
+}
+
+function GetSavings   (requestPayload){
+    if(requestPayload!=="CLEAR"){
+        return dispatch =>{
+            
+            let consume = ApiService.request(`${routes.GET_SAVINGS}`, "POST", requestPayload);
+            dispatch(request(consume));
+            return consume
+                .then(response =>{
+                    
+                    dispatch(success(response.data));
+
+                    // history.push("/app/transfer/confirm")
+                    
+                }).catch(error =>{
+                    dispatch(failure(handleRequestErrors(error)));
+                    
+                });
+            
+        }
+        
+    }
+
+    return dispatch =>{
+        
+        dispatch(clear());
+        
+    }
+    function request(user) { return { type: paymentsConstants.GET_ALL_SAVINGS_PENDING, user } }
+    function success(response) { return { type: paymentsConstants.GET_ALL_SAVINGS_SUCCESS, response } }
+    function failure(error) { return { type: paymentsConstants.GET_ALL_SAVINGS_FAILURE, error } }
+    function clear() { return { type: paymentsConstants.GET_ALL_SAVINGS_RESET, clear_data:""} }
+}
+
+function CashoutSavings   (requestPayload){
+    if(requestPayload!=="CLEAR"){
+        return dispatch =>{
+            
+            let consume = ApiService.request(`${routes.COMPLETE_SAVINGS_CASHOUT}`, "POST", requestPayload);
+            dispatch(request(consume));
+            return consume
+                .then(response =>{
+                    
+                    dispatch(success(response.data));
+
+                    // history.push("/app/transfer/confirm")
+                    
+                }).catch(error =>{
+                    dispatch(failure(handleRequestErrors(error)));
+                    
+                });
+            
+        }
+        
+    }
+
+    return dispatch =>{
+        
+        dispatch(clear());
+        
+    }
+    function request(user) { return { type: paymentsConstants.CASHOUT_SAVINGS_PENDING, user } }
+    function success(response) { return { type: paymentsConstants.CASHOUT_SAVINGS_SUCCESS, response } }
+    function failure(error) { return { type: paymentsConstants.CASHOUT_SAVINGS_FAILURE, error } }
+    function clear() { return { type: paymentsConstants.CASHOUT_SAVINGS_RESET, clear_data:""} }
+}
+
+function CheckSavingsCashout   (requestPayload){
+    if(requestPayload!=="CLEAR"){
+        return dispatch =>{
+            
+            let consume = ApiService.request(`${routes.CHECK_SAVINGS_CASHOUT}`, "POST", requestPayload);
+            dispatch(request(consume));
+            return consume
+                .then(response =>{
+                    
+                    dispatch(success(response.data));
+
+                    // history.push("/app/transfer/confirm")
+                    
+                }).catch(error =>{
+                    dispatch(failure(handleRequestErrors(error)));
+                    
+                });
+            
+        }
+        
+    }
+
+    return dispatch =>{
+        
+        dispatch(clear());
+        
+    }
+    function request(user) { return { type: paymentsConstants.CHECK_SAVINGS_CASHOUT_PENDING, user } }
+    function success(response) { return { type: paymentsConstants.CHECK_SAVINGS_CASHOUT_SUCCESS, response } }
+    function failure(error) { return { type: paymentsConstants.CHECK_SAVINGS_CASHOUT_FAILURE, error } }
+    function clear() { return { type: paymentsConstants.CHECK_SAVINGS_CASHOUT_RESET, clear_data:""} }
+}
+
+
 
 //FUNDS TRANSFER
 function TranferToPhoneStep1   (requestPayload){

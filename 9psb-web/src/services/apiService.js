@@ -37,6 +37,7 @@ export class ApiService {
             
             binaryUploadUrls =[
                 "FileUpload/uploadfile",
+                "Identity/idupgrade",
             ],
 
             skipTokenRefreshForUrls =[

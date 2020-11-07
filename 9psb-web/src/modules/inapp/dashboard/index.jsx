@@ -30,12 +30,17 @@ import DebitIcon from '../../../assets/images/debit-txt.svg';
 import CreditIcon from '../../../assets/images/credit-txt.svg';
 import EmptyIcon from '../../../assets/images/empty.svg';
 import LoadingIcon from '../../../assets/images/loading.gif';
-
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 import {accountActions} from '../../../redux/actions/dashboard/dashboard';
 import {dashboardConstants} from '../../../redux/actiontypes/dashboard/dashboard.constants';
 
-import { numberWithCommas, getDateFromISO} from '../../../shared/utils';
+
+import {onboardingConstants} from '../../../redux/actiontypes/onboarding/onboarding.constants'
+import {onboardingActions} from '../../../redux/actions/onboarding/onboarding';
+
+import { numberWithCommas, getDateFromISO, allowNumbersOnly} from '../../../shared/utils';
 import "./dashboard.scss"; 
 import confirmDeposit from '../cash-deposit/confirm-deposit';
 class Dashboard extends React.Component{
@@ -49,7 +54,8 @@ class Dashboard extends React.Component{
             selectedAccountIndex:1,
             isAccountCopied:false,
             txtDetails: "",
-            showFullDetails: false
+            showFullDetails: false,
+            showUpgradePrompt:false,
         }
    
         window.addEventListener("resize", ()=>
@@ -83,6 +89,9 @@ class Dashboard extends React.Component{
 
     getCustomerDashboardInfo = ()=>{
         const {dispatch} = this.props;
+        dispatch(onboardingActions.UpgradeFetchDetails("CLEAR"));
+        dispatch(onboardingActions.UpgradeValidateOtp("CLEAR"));
+        dispatch(onboardingActions.UpgradeSendDetails("CLEAR"));
         dispatch(accountActions.GetTransactionHistory("CLEAR"));
         dispatch(accountActions.GetCustomerDashboardData());
         
@@ -97,6 +106,33 @@ class Dashboard extends React.Component{
             startDate = new Date (new Date().setDate(today.getDate()-30)),
             historyQueryString = `WalletNumber=${walletNumber}&StartDate=${startDate.toISOString()}&EndDate=${endDate.toISOString()}&Channel=3&PageSize=5&CurrentPage=1`;
             dispatch(accountActions.GetTransactionHistory(historyQueryString));
+    }
+
+    getBVNDetails = (bvnDetailsPayload)=>{
+        const {dispatch} = this.props;
+        dispatch(onboardingActions.UpgradeFetchDetails(bvnDetailsPayload));
+        
+        
+    }
+
+    handleUpgradePrompt = ()=>{
+        let {psbuser} = this.state;
+        const {dispatch} = this.props;
+        dispatch(onboardingActions.UpgradeFetchDetails("CLEAR"));
+
+        
+        if(psbuser.kycLevel===1){
+            history.push("/app/account-settings/account-upgrade")
+        }else{
+            this.setState({showUpgradePrompt: true})
+        }
+    }
+
+    goToNewSavings = ()=>{
+        let {selectedAccount} = this.state;
+       
+        history.push("/app/savings/create", {walletNumber:selectedAccount.walletNumber})
+        
     }
 
     copyAccountNumber = () =>{
@@ -151,7 +187,7 @@ class Dashboard extends React.Component{
             })
         };
 
-        console.log("dsdsdsds", customerAccounts);
+        // console.log("dsdsdsds", customerAccounts);
         if(customerAccounts.length){
             customerAccounts.map((eachAcount, index)=>{
                 accounstList.push({
@@ -160,6 +196,7 @@ class Dashboard extends React.Component{
                     accountIndex: index+1,
                     walletBalance: eachAcount.walletBalance,
                     walletNumber: eachAcount.walletNumber,
+                    accountType: eachAcount.accountType,
                 })
             })
 
@@ -212,14 +249,26 @@ class Dashboard extends React.Component{
                                 {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
                                 </div>
                             </div>
-                            {/* <div className="fund-wallet-cta">
-                                <Button variant="primary"
-                                    type="button"
-                                    className="ml-0 fundwallet-btn"
-                                    onClick={()=>history.push("/app/fund-wallet")}
-                                >  Fund Wallet
-                                </Button>
-                            </div> */}
+                            {(psbuser.kycLevel !==2 && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
+                                <div className="fund-wallet-cta">
+                                    <Button variant="primary"
+                                        type="button"
+                                        className="ml-0 mt-20 fundwallet-btn"
+                                        onClick={()=>this.handleUpgradePrompt()}
+                                    >  Upgrade Account
+                                    </Button>
+                                </div>
+                            }
+                            { (selectedAccount!=="" && selectedAccount.accountType==="002" ) &&
+                                <div className="fund-wallet-cta">
+                                    <Button variant="primary"
+                                        type="button"
+                                        className="ml-0 mt-20 fundwallet-btn"
+                                        onClick={()=>this.goToNewSavings()}
+                                    >  Add Savings
+                                    </Button>
+                                </div>
+                            }
                         </div>
                     }
 
@@ -229,14 +278,26 @@ class Dashboard extends React.Component{
                                 <div className="each-summary-title">Your Wallet balance</div>
                                 <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
                             </div>
-                            {/* <div className="fund-wallet-cta">
-                                <Button variant="primary"
-                                    type="button"
-                                    className="ml-0 fundwallet-btn"
-                                    onClick={()=>history.push("/app/fund-wallet")}
-                                >  Fund Wallet
-                                </Button>
-                            </div> */}
+                            {(psbuser.kycLevel !==2 && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
+                                <div className="fund-wallet-cta">
+                                    <Button variant="primary"
+                                        type="button"
+                                        className="ml-0 fundwallet-btn"
+                                        onClick={()=>this.handleUpgradePrompt()}
+                                    >  Upgrade Account
+                                    </Button>
+                                </div>
+                            }
+                            { (selectedAccount!=="" && selectedAccount.accountType==="002" ) &&
+                                <div className="fund-wallet-cta">
+                                    <Button variant="primary"
+                                        type="button"
+                                        className="ml-0 mt-20 fundwallet-btn"
+                                        onClick={()=>this.goToNewSavings()}
+                                    >  Add Savings
+                                    </Button>
+                                </div>
+                            }
                             <div className="account-num-wrap">
                                 <div>
                                     <div className="each-summary-title">Account Number</div>
@@ -293,11 +354,17 @@ class Dashboard extends React.Component{
                 selectedAccount,
                 isAccountCopied,
                 selectedAccountIndex} = this.state;
-        let customerAccounts = psbuser.allAccounts,
-        defaultAccount= selectedAccount!==""?selectedAccount: customerAccounts[0];
-        let accounstList =[
-            
-        ];
+        let 
+            accounstList =[
+                
+            ],
+        allAccounts = [...psbuser.allAccounts];
+
+            if(psbuser.savings!==null && psbuser.savings !==undefined){
+                allAccounts.push(psbuser.savings)
+            }
+        let customerAccounts = allAccounts,
+            defaultAccount= selectedAccount!==""?selectedAccount: customerAccounts[0];
 
         const selectStyle = {
             control: base => ({
@@ -317,6 +384,7 @@ class Dashboard extends React.Component{
                 accountIndex: index+1,
                 walletBalance: eachAcount.walletBalance,
                 walletNumber: eachAcount.walletNumber,
+                accountType: eachAcount.accountType,
             })
         })
 
@@ -369,14 +437,26 @@ class Dashboard extends React.Component{
                                {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
                             </div>
                         </div>
-                        {/* <div className="fund-wallet-cta">
+                        {(psbuser.kycLevel !==2 && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
+                            <div className="fund-wallet-cta">
+                                <Button variant="primary"
+                                    type="button"
+                                    className="ml-0 mt-20 fundwallet-btn"
+                                    onClick={()=>this.handleUpgradePrompt()}
+                                >  Upgrade Account
+                                </Button>
+                            </div>
+                        }
+                    {(selectedAccount !== "" && selectedAccount.accountType === "002") &&
+                        <div className="fund-wallet-cta">
                             <Button variant="primary"
                                 type="button"
-                                className="ml-0 fundwallet-btn"
-                                onClick={()=>history.push("/app/fund-wallet")}
-                            >  Fund Wallet
-                            </Button>
-                        </div> */}
+                                className="ml-0 mt-20 fundwallet-btn"
+                                onClick={() => this.goToNewSavings()}
+                            >  Add Savings
+                                    </Button>
+                        </div>
+                    }
                     </div>
                 }
 
@@ -386,14 +466,26 @@ class Dashboard extends React.Component{
                             <div className="each-summary-title">Your Wallet balance</div>
                             <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
                         </div>
-                        {/* <div className="fund-wallet-cta">
-                            <Button variant="primary"
-                                type="button"
-                                className="ml-0 fundwallet-btn"
-                                onClick={()=>history.push("/app/fund-wallet")}
-                            >  Fund Wallet
-                            </Button>
-                        </div> */}
+                        {(psbuser.kycLevel !==2 && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
+                            <div className="fund-wallet-cta">
+                                <Button variant="primary"
+                                    type="button"
+                                    className="ml-0 fundwallet-btn"
+                                    onClick={()=>this.handleUpgradePrompt()}
+                                >  Upgrade Account
+                                </Button>
+                            </div>
+                        }
+                        { (selectedAccount!=="" && selectedAccount.accountType==="002" ) &&
+                                <div className="fund-wallet-cta">
+                                    <Button variant="primary"
+                                        type="button"
+                                        className="ml-0 mt-20 fundwallet-btn"
+                                        onClick={()=>this.goToNewSavings()}
+                                    >  Add Savings
+                                    </Button>
+                                </div>
+                            }
                         <div className="account-num-wrap">
                             <div>
                                 <div className="each-summary-title">Account Number</div>
@@ -557,6 +649,10 @@ class Dashboard extends React.Component{
         this.setState({ showFullDetails: false })
     };
 
+    handleCloseUpgradeOptions = () => {
+        this.setState({ showUpgradePrompt: false })
+    };
+
     renderTxtFullDetails = (txtDetails) => {
        let {showFullDetails} = this.state;
         return (
@@ -606,6 +702,165 @@ class Dashboard extends React.Component{
         )
     }
 
+    renderUpgradeOptions = () => {
+        let { showUpgradePrompt, bvnDetailsPayload } = this.state;
+
+        let checkValidationSchema = Yup.object().shape({
+            upgradeOption: Yup.string()
+                .required('Required'),
+            theBVN: Yup.string()
+                .when('upgradeOption',{
+                    is:(value)=>value==="1",
+                    then: Yup.string()
+                        .required('Required')
+                        .min(10, 'Valid BVN only')
+                        .max(11, 'Valid BVN only')
+                        
+                }),
+            
+                
+          });
+
+        let upgradeOptions = [
+                { value: "1", label: 'BVN' },
+                { value: "0", label: 'Provide your details instead' },
+            ],
+            UpgradeFetchDetailsRequest =  this.props.UpgradeFetchDetailsReducer
+        return (
+            <Modal show={showUpgradePrompt} onHide={this.handleCloseUpgradeOptions} size="lg" centered="true" dialogClassName="modal-40w" animation={false}>
+                <Modal.Header className="txt-header modal-bg modal-header">
+                    <Modal.Title>
+                        <div className="modal-bg">
+                            <h2>Update your account</h2>
+                            <div className="modal-helptxt">Increase your transaction limit</div>
+                        </div>
+                    </Modal.Title>
+                    <div className="closeicon" onClick={this.handleCloseUpgradeOptions}>X</div>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <Formik
+                        initialValues={{
+                            upgradeOption: '',
+                            theBVN: ''
+                        }}
+
+                        validationSchema={checkValidationSchema}
+                        onSubmit={(values, { resetForm }) => {
+
+                            // console.log("kalie ded", values.upgradeOption);
+                            if (values.upgradeOption === "1" && values.theBVN!=="") {
+                                let bvnDetails = {
+                                    bvnNumber:   values.theBVN
+                                };
+                                this.setState({bvnDetailsPayload: bvnDetails})
+
+                                
+                                this.getBVNDetails(bvnDetails)
+                                
+
+
+                            }
+                            if(values.upgradeOption === "0"){
+                                history.push("/app/account-settings/account-upgrade")
+                            }
+                        }}
+                    >
+                        {({ handleSubmit,
+                            handleChange,
+                            handleBlur,
+                            resetForm,
+                            setFieldValue,
+                            setFieldTouched,
+                            values,
+                            touched,
+                            isValid,
+                            errors, }) => (
+                                <Form
+                                    noValidate
+                                    onSubmit={handleSubmit}
+                                    className="form-content mt-0 w-70">
+
+
+
+
+                                    <div className="form-wrap">
+                                        <Form.Group className="poppedinput withselect">
+                                            {/* <Form.Group className="onboardinginput withselect"> */}
+                                            <Form.Label className="block-level">Verification method</Form.Label>
+                                            <Select
+                                                options={upgradeOptions}
+                                                onChange={(selected) => setFieldValue('upgradeOption', selected.value)}
+                                                onBlur={() => setFieldTouched('upgradeOption', true)}
+                                                className={errors.upgradeOption && touched.upgradeOption ? "is-invalid" : null}
+                                                name="upgradeOption"
+                                            />
+                                            {errors.upgradeOption && touched.upgradeOption ? (
+                                                <span className="invalid-feedback">{errors.upgradeOption}</span>
+                                            ) : null}
+                                        </Form.Group>
+
+
+                                        {values.upgradeOption === "1" &&
+                                            <Form.Group className="inputfield mb-0">
+                                                <Form.Control type="text"
+                                                        name="theBVN"
+                                                        onChange={handleChange}
+                                                        placeholder="Enter BVN number"
+                                                        value={allowNumbersOnly(values.theBVN,11)}
+                                                        className={errors.theBVN && touched.theBVN ? "is-invalid mb-0" : "mb-0"}
+                                                    />
+                                                {errors.theBVN && touched.theBVN ? (
+                                                    <span className="invalid-feedback">{errors.theBVN}</span>
+                                                ) : null}
+                                                <div className="bvn-info text-left">
+                                                    Dial *565*0# to get you BVN
+                                            </div>
+
+                                            </Form.Group>
+                                        }
+                                    </div>
+
+
+
+
+
+
+                                    
+                                    {(UpgradeFetchDetailsRequest.request_status === onboardingConstants.UPGRADE_FETCH_DETAILS_FAILURE) &&
+
+
+
+                                        <ErrorMessage errorMessage={UpgradeFetchDetailsRequest.request_data.error} canRetry={UpgradeFetchDetailsRequest.request_data.error!=="Your account has already been linked to a BVN"?true:false} retryFunc={() => this.getBVNDetails(bvnDetailsPayload)} />
+
+                                    }
+                                    <div className="footer-with-cta toleft ">
+                                        <Button variant="secondary"
+                                            type="submit"
+                                            disabled={UpgradeFetchDetailsRequest.is_request_processing}
+                                            className="ml-0 onboarding-btn"
+                                        >  {UpgradeFetchDetailsRequest.is_request_processing ? 'Please wait...' : 'Continue'}
+                                        </Button>
+
+                                    </div>
+                                    {/* {loginRequest.request_status === authConstants.LOGIN_USER_FAILURE &&
+                                    <Alert variant="danger mt-20">
+                                        {loginRequest.request_data.error !== undefined ? loginRequest.request_data.error : null}
+
+
+                                    </Alert>
+                                } */}
+
+                                </Form>
+                            )}
+                    </Formik>
+
+                </Modal.Body>
+
+            </Modal>
+        )
+    }
+
 
     renderTxtnHistory = () =>{
         let GetCustomerDashboardDataRequest = this.props.GetCustomerDashboardDataReducer,
@@ -622,7 +877,8 @@ class Dashboard extends React.Component{
         return(
             <div className="each-section mt-60">
                 <div className="twosided">
-                    <div>
+                    { accountHistory!==undefined &&
+                     <div>
                         <div className="dashboard-title-section">
                             <h3>Last 5 transactions</h3>
                             <Link to="/app/transaction-history">View all</Link>
@@ -642,7 +898,7 @@ class Dashboard extends React.Component{
 
                             {((GetTransactionHistoryRequest.request_status ===dashboardConstants.GET_TRANSACTION_HISTORY_SUCCESS ||
                                 GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS)
-                                && GetTransactionHistoryRequest.request_status !==dashboardConstants.GET_TRANSACTION_HISTORY_PENDING) 
+                                && GetTransactionHistoryRequest.request_status !==dashboardConstants.GET_TRANSACTION_HISTORY_PENDING && accountHistory!==undefined) 
                                 &&
                                 <div>
                                     {accountHistory.length>=1 &&
@@ -762,7 +1018,10 @@ class Dashboard extends React.Component{
                            
                         </div>
                     </div>
-                    <DownloadApp/>
+                    }
+                    { accountHistory!==undefined &&
+                        <DownloadApp/>
+                    }
                     {/* <div className="ads-panel">
                         <div className="ad-wrap">
                             <div className="ad-details">
@@ -795,7 +1054,7 @@ class Dashboard extends React.Component{
 
     
     renderDashboardWrap = ()=>{
-        let {psbuser, showFullDetails, txtDetails} = this.state;
+        let {psbuser, showFullDetails, txtDetails, showUpgradePrompt} = this.state;
         let GetCustomerDashboardDataRequest = this.props.GetCustomerDashboardDataReducer;
         return(
             <div className="">
@@ -819,6 +1078,7 @@ class Dashboard extends React.Component{
                         }
                         
                         {this.renderQuickActions()}
+                        {showUpgradePrompt===true && this.renderUpgradeOptions()}
                     </div>
                 }
 
@@ -832,6 +1092,7 @@ class Dashboard extends React.Component{
                         }
                         <ErrorMessage errorMessage={GetCustomerDashboardDataRequest.request_data.error} canRetry={true} retryFunc={this.getCustomerDashboardInfo} />
                         {this.renderQuickActions()}
+                        {showUpgradePrompt===true && this.renderUpgradeOptions()}
                    </div>
                 }
 
@@ -841,6 +1102,7 @@ class Dashboard extends React.Component{
                         {this.renderQuickActions()}
                         {this.renderTxtnHistory()}
                         {showFullDetails===true && this.renderTxtFullDetails(txtDetails)}
+                        {showUpgradePrompt===true && this.renderUpgradeOptions()}
                     </div>
                 }
                 
@@ -882,6 +1144,7 @@ function mapStateToProps(state) {
     return {
         GetCustomerDashboardDataReducer : state.accountsReducers.GetCustomerDashboardDataReducer,
         GetTransactionHistoryReducer : state.accountsReducers.GetTransactionHistoryReducer,
+        UpgradeFetchDetailsReducer : state.onboardingReducers.UpgradeFetchDetailsReducer,
     };
 }
 

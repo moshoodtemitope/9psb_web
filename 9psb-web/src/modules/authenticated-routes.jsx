@@ -83,6 +83,12 @@ import ConfirmCardRequest from './inapp/cards/request/confirm'
 import CardRequestSuccess from './inapp/cards/request/success'
 import ActivateCard from './inapp/cards/activate/activate'
 
+import CreateSavings from './inapp/savings/create-savings'
+import CreateSavingsSuccess from './inapp/savings/create-savings-success'
+import GetAllSavings from './inapp/savings'
+
+
+
 import AccountSettings from './inapp/account-settings'
 import ChangePin from './inapp/account-settings/change-pin'
 import PinChangeSuccess from './inapp/account-settings/change-pin/success'
@@ -93,6 +99,10 @@ import PinResetSuccess from './inapp/account-settings/reset-pin/success'
 
 import ChangePassword from './inapp/account-settings/change-password'
 import PassChangeSuccess from './inapp/account-settings/change-password/success'
+
+import ConfirmUpgradeDetails from './inapp/account-settings/upgrade-account/confirm-details'
+import ValidateAccountUpgradeOtp from './inapp/account-settings/upgrade-account/validate-otp'
+import AccountUpgradeSuccess from './inapp/account-settings/upgrade-account/success'
 
 
 // import {authActions} from '../redux/actions/auth/auth.action';
@@ -254,6 +264,10 @@ class AuthenticatedRoutes extends React.Component {
                         <PrivateRoute exact path='/app/pay-bills/confirm' {...this.props} authed={this.props.psbuser} component={ConfirmBillPayment} />  
                         <PrivateRoute exact path='/app/pay-bills/success' {...this.props} authed={this.props.psbuser} component={BillPaymentSuccess} />  
 
+                        <PrivateRoute exact path='/app/savings' {...this.props} authed={this.props.psbuser} component={GetAllSavings} />  
+                        <PrivateRoute exact path='/app/savings/create' {...this.props} authed={this.props.psbuser} component={CreateSavings} />  
+                        <PrivateRoute exact path='/app/savings/create/success' {...this.props} authed={this.props.psbuser} component={CreateSavingsSuccess} />  
+
                         <PrivateRoute exact path='/app/cards' {...this.props} authed={this.props.psbuser} component={ManageCards} />  
                         <PrivateRoute exact path='/app/cards/request-card' {...this.props} authed={this.props.psbuser} component={CardRequestDetails} />  
                         <PrivateRoute exact path='/app/cards/confirm' {...this.props} authed={this.props.psbuser} component={ConfirmCardRequest} />  
@@ -262,6 +276,10 @@ class AuthenticatedRoutes extends React.Component {
                         <PrivateRoute exact path='/app/account-settings' {...this.props} authed={this.props.psbuser} component={AccountSettings} />  
                         <PrivateRoute exact path='/app/account-settings/change-pin' {...this.props} authed={this.props.psbuser} component={ChangePin} />  
                         <PrivateRoute exact path='/app/account-settings/change-pin/success' {...this.props} authed={this.props.psbuser} component={PinChangeSuccess} />  
+
+                        <PrivateRoute exact path='/app/account-settings/account-upgrade' {...this.props} authed={this.props.psbuser} component={ConfirmUpgradeDetails} />  
+                        <PrivateRoute exact path='/app/account-settings/account-upgrade/otp' {...this.props} authed={this.props.psbuser} component={ValidateAccountUpgradeOtp} />  
+                        <PrivateRoute exact path='/app/account-settings/account-upgrade/success' {...this.props} authed={this.props.psbuser} component={AccountUpgradeSuccess} />  
                         
                         <PrivateRoute exact path='/app/account-settings/reset-pin' {...this.props} authed={this.props.psbuser} component={InitateResetTxtPin} />  
                         <PrivateRoute exact path='/app/account-settings/reset-pin/newpin' {...this.props} authed={this.props.psbuser} component={NewTxtPin} />  

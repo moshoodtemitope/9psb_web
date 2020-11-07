@@ -221,6 +221,142 @@ export function UpdateCustomerDetailsReducer(state=initialState, action) {
     }
 }
 
+export function UpgradeFetchDetailsReducer(state=initialState, action) {
+    
+    switch (action.type) {
+        case onboardingConstants.UPGRADE_FETCH_DETAILS_PENDING:
+            return {
+                request_status: onboardingConstants.UPGRADE_FETCH_DETAILS_PENDING,
+                is_request_processing: true,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_FETCH_DETAILS_SUCCESS:
+            return {
+                request_status: onboardingConstants.UPGRADE_FETCH_DETAILS_SUCCESS,
+                loggedIn: true,
+                is_request_processing: false,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_FETCH_DETAILS_FAILURE:
+            return {
+                request_status: onboardingConstants.UPGRADE_FETCH_DETAILS_FAILURE,
+                is_request_processing: false,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_FETCH_DETAILS_RESET:
+            return {
+                request_status: onboardingConstants.UPGRADE_FETCH_DETAILS_RESET,
+                is_request_processing: false,
+                request_data: {},
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function UpgradeSendDetailsReducer(state=initialState, action) {
+    
+    switch (action.type) {
+        case onboardingConstants.UPGRADE_SEND_DETAILS_PENDING:
+            return {
+                request_status: onboardingConstants.UPGRADE_SEND_DETAILS_PENDING,
+                is_request_processing: true,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_SEND_DETAILS_SUCCESS:
+            return {
+                request_status: onboardingConstants.UPGRADE_SEND_DETAILS_SUCCESS,
+                loggedIn: true,
+                is_request_processing: false,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_SEND_DETAILS_FAILURE:
+            return {
+                request_status: onboardingConstants.UPGRADE_SEND_DETAILS_FAILURE,
+                is_request_processing: false,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_SEND_DETAILS_RESET:
+            return {
+                request_status: onboardingConstants.UPGRADE_SEND_DETAILS_RESET,
+                is_request_processing: false,
+                request_data: {},
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function UpgradeValidateOtpReducer(state=initialState, action) {
+    
+    switch (action.type) {
+        case onboardingConstants.UPGRADE_VALIDATE_OTP_PENDING:
+            return {
+                request_status: onboardingConstants.UPGRADE_VALIDATE_OTP_PENDING,
+                is_request_processing: true,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_VALIDATE_OTP_SUCCESS:
+            return {
+                request_status: onboardingConstants.UPGRADE_VALIDATE_OTP_SUCCESS,
+                loggedIn: true,
+                is_request_processing: false,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_VALIDATE_OTP_FAILURE:
+            return {
+                request_status: onboardingConstants.UPGRADE_VALIDATE_OTP_FAILURE,
+                is_request_processing: false,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_VALIDATE_OTP_RESET:
+            return {
+                request_status: onboardingConstants.UPGRADE_VALIDATE_OTP_RESET,
+                is_request_processing: false,
+                request_data: {},
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function UpgradeCompletionReducer(state=initialState, action) {
+    
+    switch (action.type) {
+        case onboardingConstants.UPGRADE_COMPLETION_PENDING:
+            return {
+                request_status: onboardingConstants.UPGRADE_COMPLETION_PENDING,
+                is_request_processing: true,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_COMPLETION_SUCCESS:
+            return {
+                request_status: onboardingConstants.UPGRADE_COMPLETION_SUCCESS,
+                loggedIn: true,
+                is_request_processing: false,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_COMPLETION_FAILURE:
+            return {
+                request_status: onboardingConstants.UPGRADE_COMPLETION_FAILURE,
+                is_request_processing: false,
+                request_data: action
+            };
+        case onboardingConstants.UPGRADE_COMPLETION_RESET:
+            return {
+                request_status: onboardingConstants.UPGRADE_COMPLETION_RESET,
+                is_request_processing: false,
+                request_data: {},
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
 export function UploadAFileReducer(state=initialState, action) {
     
     switch (action.type) {

@@ -201,7 +201,21 @@ class ValidateSignUpOtp extends React.Component{
                                             </Form.Group>
 
                                             
+                                            {ValidateRegOtpRequest.request_status === onboardingConstants.VALIDATE_OTP_FAILURE &&
+                                                <Alert variant="danger mt-20">
+                                                   
+                                                    {ValidateRegOtpRequest.request_data.error !== undefined ? ValidateRegOtpRequest.request_data.error : "An error occured please try again"}
 
+                                                </Alert>
+                                            }
+
+                                            {ResendRegOtpReducer.request_status === onboardingConstants.RESEND_REG_OTP_FAILURE &&
+                                                <Alert variant="danger mt-20">
+                                                  
+                                                    {ResendRegOtpReducer.request_data.error !== undefined ? ResendRegOtpReducer.request_data.error : "An error occured please try again"}
+
+                                                </Alert>
+                                            }
 
                                             <div className="footer-with-cta centered blocked-style mt-60">
                                                 {((ValidateRegOtpRequest.is_request_processing === false || ValidateRegOtpRequest.is_request_processing === undefined)
@@ -225,21 +239,7 @@ class ValidateSignUpOtp extends React.Component{
 
                                             </div>
 
-                                            {ValidateRegOtpRequest.request_status === onboardingConstants.VALIDATE_OTP_FAILURE &&
-                                                <Alert variant="danger mt-20">
-                                                   
-                                                    {ValidateRegOtpRequest.request_data.error !== undefined ? ValidateRegOtpRequest.request_data.error : "An error occured please try again"}
-
-                                                </Alert>
-                                            }
-
-                                            {ResendRegOtpReducer.request_status === onboardingConstants.RESEND_REG_OTP_FAILURE &&
-                                                <Alert variant="danger mt-20">
-                                                  
-                                                    {ResendRegOtpReducer.request_data.error !== undefined ? ResendRegOtpReducer.request_data.error : "An error occured please try again"}
-
-                                                </Alert>
-                                            }
+                                            
 
                                         </Form>
                                     )}
