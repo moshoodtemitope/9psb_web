@@ -222,12 +222,13 @@ class MoneyTransferDetails extends React.Component{
                                                                     }
                                                                     
                                                                     setFieldValue('amountToSend', e.target.value)
-                                                                }else{
+                                                                }
+                                                                else{
                                                                     setFieldValue('amountToSend', e.target.value)
                                                                 }
                                                             }}
                                                             placeholder=" "
-                                                            value={numberWithCommas(values.amountToSend, true)}
+                                                            value={numberWithCommas(values.amountToSend)}
                                                             className={((errors.amountToSend && touched.amountToSend) || lesserAccountBalanceError) ? "is-invalid" : null}
                                                             required />
                                                         {errors.amountToSend && touched.amountToSend ? (

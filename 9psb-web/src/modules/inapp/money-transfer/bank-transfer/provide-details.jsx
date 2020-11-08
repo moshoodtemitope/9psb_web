@@ -318,7 +318,8 @@ class BankTransferDetails extends React.Component{
                                                                     }
                                                                     
                                                                     setFieldValue('amountToSend', e.target.value)
-                                                                }else{
+                                                                }
+                                                                else{
                                                                     setFieldValue('amountToSend', e.target.value)
                                                                 }
                                                             }}
