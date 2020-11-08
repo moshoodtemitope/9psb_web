@@ -399,7 +399,7 @@ export const numberWithCommas= (amount, isDecimal)=> {
 
             
             if((amountFiltered.match(/\./g) || []).length===1){
-        
+                
                 if(amountFiltered.indexOf('.')>0){
                     splittedDecimal = amountFiltered.trim().split('.');
 
@@ -431,7 +431,7 @@ export const numberWithCommas= (amount, isDecimal)=> {
                 }
             }
             if((amountFiltered.match(/\./g) || []).length>1){
-
+                console.log("kukuku",amountFiltered);
                 var numberParts = amountFiltered.split('.');
                 numberParts =  numberParts.slice(0,-1).join('') + '.' + numberParts.slice(-1)
                 
@@ -446,6 +446,9 @@ export const numberWithCommas= (amount, isDecimal)=> {
             
         
             
+        }
+        if(amount===''){
+            return "";
         }
     }
 

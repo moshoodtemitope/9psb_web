@@ -30,6 +30,7 @@ import {encryptAnItem} from '../../../../shared/shared-utils/index';
 
 import {onboardingConstants} from '../../../../redux/actiontypes/onboarding/onboarding.constants'
 import {onboardingActions} from '../../../../redux/actions/onboarding/onboarding';
+import {  allowNumbersOnly} from '../../../../shared/utils';
 import "../styles.scss"; 
 class NewTxtPin extends React.Component{
     constructor(props) {
@@ -160,7 +161,7 @@ class NewTxtPin extends React.Component{
                                                             name="otp"
                                                             onChange={(e)=> setFieldValue('otp', e.target.value)}
                                                             maxLength="6"
-                                                            value={values.otp}
+                                                            value={allowNumbersOnly(values.otp,4)}
                                                             className={errors.otp && touched.otp ? "is-invalid" : null}
                                                             required />
                                                         {errors.otp && touched.otp ? (
@@ -173,7 +174,7 @@ class NewTxtPin extends React.Component{
                                                         <Form.Control type="password"
                                                             name="newPin"
                                                             onChange={(e)=> setFieldValue('newPin', e.target.value)}
-                                                            value={values.newPin}
+                                                            value={allowNumbersOnly(values.newPin,4)}
                                                             maxLength="4"
                                                             className={errors.newPin && touched.newPin ? "is-invalid" : null}
                                                             required />
@@ -188,7 +189,7 @@ class NewTxtPin extends React.Component{
                                                             name="conmfirmNewPin"
                                                             onChange={(e)=> setFieldValue('conmfirmNewPin', e.target.value)}
                                                             maxLength="4"
-                                                            value={values.conmfirmNewPin}
+                                                            value={allowNumbersOnly(values.conmfirmNewPin,4)}
                                                             className={errors.conmfirmNewPin && touched.conmfirmNewPin ? "is-invalid" : null}
                                                             required />
                                                         {errors.conmfirmNewPin && touched.conmfirmNewPin ? (
