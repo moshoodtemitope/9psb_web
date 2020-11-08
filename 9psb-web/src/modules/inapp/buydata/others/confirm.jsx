@@ -166,7 +166,7 @@ class BuyDataOthersConfirm extends React.Component{
                                                             name="txtPin"
                                                             onChange={handleChange}
                                                             maxLength="4"
-                                                            value={allowNumbersOnly(values.txtPin)}
+                                                            value={allowNumbersOnly(values.txtPin,4)}
                                                             className={errors.txtPin && touched.txtPin ? "is-invalid" : null}
                                                             required />
                                                             

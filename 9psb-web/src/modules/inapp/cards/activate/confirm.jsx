@@ -22,7 +22,9 @@ import Form from 'react-bootstrap/Form';
 import  InAppContainer from '../../../../shared/templates/inapp-container'
 import  DownloadApp from '../../../../shared/elements/downloadapp-box'
 
-import { numberWithCommas} from '../../../../shared/utils';
+
+import { numberWithCommas,
+    allowNumbersOnly} from '../../../../shared/utils';
 import "../styles.scss"; 
 class ConfirmCardRequest extends React.Component{
     constructor(props) {
@@ -140,7 +142,7 @@ class ConfirmCardRequest extends React.Component{
                                                         <Form.Control type="password"
                                                             name="amountToSend"
                                                             onChange={handleChange}
-                                                            value={values.txtPin}
+                                                            value={allowNumbersOnly(values.txtPin,4)}
                                                             className={errors.txtPin && touched.txtPin ? "is-invalid" : null}
                                                             required />
                                                             

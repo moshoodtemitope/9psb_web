@@ -18,7 +18,9 @@ import  DownloadApp from '../../../shared/elements/downloadapp-box'
 import { paymentActions } from '../../../redux/actions/payments/payments';
 import ErrorMessage from '../../../shared/elements/errormessage'
 import { paymentsConstants } from '../../../redux/actiontypes/payments/payments.constants';
-import { numberWithCommas} from '../../../shared/utils';
+
+import { numberWithCommas,
+    allowNumbersOnly} from '../../../shared/utils';
 import "./styles.scss"; 
 class ConfirmBillPayment extends React.Component{
     constructor(props) {
@@ -149,7 +151,7 @@ class ConfirmBillPayment extends React.Component{
                                                         <Form.Control type="password"
                                                             name="txtPin"
                                                             onChange={handleChange}
-                                                            value={values.txtPin}
+                                                            value={allowNumbersOnly(values.txtPin,4)}
                                                             maxLength="4"
                                                             className={errors.txtPin && touched.txtPin ? "is-invalid" : null}
                                                             required />
