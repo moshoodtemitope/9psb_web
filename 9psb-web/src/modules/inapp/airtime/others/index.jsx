@@ -298,6 +298,8 @@ class BuyAirtimeOthers extends React.Component{
                                                                     }
                                                                     
                                                                     setFieldValue('amount', e.target.value)
+                                                                }else{
+                                                                    setFieldValue('amount', e.target.value)
                                                                 }
                                                             }}
                                                             onBlur={() => setFieldTouched('amount', true)}

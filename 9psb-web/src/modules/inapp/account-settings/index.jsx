@@ -176,11 +176,13 @@ class AccountSettings extends React.Component{
                                             
                                                 <div className="info-title">BVN</div>
                                                 
-                                                {(GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS && 
+                                                {(
                                                     GetCustomerDashboardDataRequest.request_data.response !==undefined &&
                                                     GetCustomerDashboardDataRequest.request_data.response.profileData!==undefined &&
                                                     GetCustomerDashboardDataRequest.request_data.response.profileData!==null &&
-                                                    GetCustomerDashboardDataRequest.request_data.response.profileData!=="") &&
+                                                    GetCustomerDashboardDataRequest.request_data.response.profileData!=="" &&
+                                                    GetCustomerDashboardDataRequest.request_data.response.profileData.bvn) &&
+
                                                     <div className="info-data">
                                                         {GetCustomerDashboardDataRequest.request_data.response !==undefined &&
                                                             <span>{GetCustomerDashboardDataRequest.request_data.response.profileData.bvn}</span>
@@ -189,7 +191,7 @@ class AccountSettings extends React.Component{
                                                 }
                                                 
                                                 
-                                                {((GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS
+                                                {/* {((GetCustomerDashboardDataRequest.request_status=== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS
                                                     || GetCustomerDashboardDataRequest.request_status!== dashboardConstants.GET_CUSTOMER_DASHBOARDDATA_SUCCESS) && 
                                                         (   
                                                             GetCustomerDashboardDataRequest.request_data.response !==undefined &&
@@ -198,6 +200,18 @@ class AccountSettings extends React.Component{
                                                             GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===null ||
                                                             GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===undefined
                                                         )
+                                                    ) &&
+                                                    <div className="info-data"> <span>N/A</span> </div>
+                                                } */}
+
+                                                {(    
+                                                            GetCustomerDashboardDataRequest.request_data.response ===undefined ||
+                                                            GetCustomerDashboardDataRequest.request_data.response.profileData===undefined ||
+                                                            GetCustomerDashboardDataRequest.request_data.response.profileData===null ||
+                                                            GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===null ||
+                                                            GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===undefined &&
+                                                            GetCustomerDashboardDataRequest.request_data.response.profileData.bvn===""
+                                                        
                                                     ) &&
                                                     <div className="info-data"> <span>N/A</span> </div>
                                                 }

@@ -318,6 +318,8 @@ class BankTransferDetails extends React.Component{
                                                                     }
                                                                     
                                                                     setFieldValue('amountToSend', e.target.value)
+                                                                }else{
+                                                                    setFieldValue('amountToSend', e.target.value)
                                                                 }
                                                             }}
                                                             onBlur={() => setFieldTouched('amountToSend', true)}

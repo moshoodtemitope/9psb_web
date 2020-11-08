@@ -31,6 +31,7 @@ import {encryptAnItem} from '../../../../shared/shared-utils/index';
 
 import {onboardingConstants} from '../../../../redux/actiontypes/onboarding/onboarding.constants'
 import {onboardingActions} from '../../../../redux/actions/onboarding/onboarding';
+import {  allowNumbersOnly} from '../../../../shared/utils';
 import "../styles.scss"; 
 class ConfirmUpgradeDetails extends React.Component{
     constructor(props) {
@@ -292,7 +293,7 @@ class ConfirmUpgradeDetails extends React.Component{
                                                             name="bvn"
                                                             onChange={values.isBVNReturned===false? handleChange : null}
                                                             placeholder=""
-                                                            value={values.bvn}
+                                                            value={allowNumbersOnly(values.bvn,11)}
                                                             disabled={values.isBVNReturned}
                                                             className={errors.bvn && touched.bvn ? "is-invalid" : null}
                                                             required />

@@ -222,6 +222,8 @@ class MoneyTransferDetails extends React.Component{
                                                                     }
                                                                     
                                                                     setFieldValue('amountToSend', e.target.value)
+                                                                }else{
+                                                                    setFieldValue('amountToSend', e.target.value)
                                                                 }
                                                             }}
                                                             placeholder=" "

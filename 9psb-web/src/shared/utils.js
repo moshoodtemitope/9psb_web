@@ -382,10 +382,11 @@ export const numberWithCommas= (amount, isDecimal)=> {
     // let testSequence = /^[0-9.,]+$/;
     // let testSequence = /([0-9]+(\.[0-9]+)?)/;
     
-    if(amount!==null){
-        if(amount!==undefined && amount!==''){
+    if(amount!==null && amount!==undefined){
+        if(amount!==''){
             let amountFiltered, splittedDecimal, amountTemp;
             amount = amount.toString().replace(/[^0-9.,]/g,'');
+            // amount = amount.toString().replace(/\D\.\,/g,'');
 
             // if(!testSequence.test(amount)){
             //     return "";
@@ -430,8 +431,9 @@ export const numberWithCommas= (amount, isDecimal)=> {
                     return `${amountTemp}.${splittedDecimal[1]}`;
                 }
             }
+            
             if((amountFiltered.match(/\./g) || []).length>1){
-                console.log("kukuku",amountFiltered);
+                
                 var numberParts = amountFiltered.split('.');
                 numberParts =  numberParts.slice(0,-1).join('') + '.' + numberParts.slice(-1)
                 
@@ -450,11 +452,14 @@ export const numberWithCommas= (amount, isDecimal)=> {
         if(amount===''){
             return "";
         }
-    }
-
-    if(amount===null){
+    }else{
         return null;
     }
+
+    // console.log("orarara",amount);
+    // if(amount===null){
+    //     return null;
+    // }
 }
 
 export const saveRouteForRedirect = (redirectType,currentRoute)=>{
