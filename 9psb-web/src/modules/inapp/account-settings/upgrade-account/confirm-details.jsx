@@ -411,14 +411,14 @@ class ConfirmUpgradeDetails extends React.Component{
 
                                                 <div className="app-panel inpage">
                                                     <div className="footer-with-cta toleft m-0 ">
-                                                        <Button variant="secondary"
+                                                        {/* <Button variant="secondary"
                                                             type="button"
                                                             disabled={upgradeSendDetailsRequest.is_request_processing}
                                                             className="ml-0 onboarding-btn light"
                                                             onClick={()=>history.push("/app/dashboard")}
                                                         > Skip
-                                                        {/* {CreateAccountStep1Request.is_request_processing?'Please wait...' :'Continue'} */}
-                                                        </Button>
+                                                        {CreateAccountStep1Request.is_request_processing?'Please wait...' :'Continue'}
+                                                        </Button> */}
                                                         <Button variant="secondary"
                                                             type="submit"
                                                             disabled={upgradeSendDetailsRequest.is_request_processing}
@@ -751,14 +751,14 @@ class ConfirmUpgradeDetails extends React.Component{
 
                                                 <div className="app-panel inpage">
                                                     <div className="footer-with-cta toleft m-0 ">
-                                                        <Button variant="secondary"
+                                                        {/* <Button variant="secondary"
                                                             type="button"
                                                             disabled={upgradeSendDetailsRequest.is_request_processing}
                                                             className="ml-0 onboarding-btn light"
                                                             onClick={()=>history.push("/app/dashboard")}
                                                         > Skip
-                                                        {/* {CreateAccountStep1Request.is_request_processing?'Please wait...' :'Continue'} */}
-                                                        </Button>
+                                                        {CreateAccountStep1Request.is_request_processing?'Please wait...' :'Continue'}
+                                                        </Button> */}
                                                         <Button variant="secondary"
                                                             type="submit"
                                                             disabled={upgradeSendDetailsRequest.is_request_processing}
