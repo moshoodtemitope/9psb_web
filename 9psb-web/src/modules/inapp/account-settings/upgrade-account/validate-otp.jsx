@@ -117,10 +117,12 @@ class ValidateAccountUpgradeOtp extends React.Component{
     }
 
     resendRegOtp = () =>{
+        
         const {dispatch} = this.props;
         let payload= {
             requestTrackingId : this.state.requestTrackingId!==""?this.state.requestTrackingId : this.state.requestTrackingId2
         }
+        // dispatch(onboardingActions.UpgradeValidateOtp("CLEAR"));
          dispatch(onboardingActions.ResendRegOtp(payload));
     }
 

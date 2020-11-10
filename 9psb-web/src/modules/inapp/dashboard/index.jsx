@@ -653,7 +653,9 @@ class Dashboard extends React.Component{
     };
 
     handleCloseUpgradeOptions = () => {
-        this.setState({ showUpgradePrompt: false })
+        if(this.props.UpgradeFetchDetailsReducer.request_status !== onboardingConstants.UPGRADE_FETCH_DETAILS_PENDING){
+            this.setState({ showUpgradePrompt: false })
+        }
     };
 
     renderTxtFullDetails = (txtDetails) => {

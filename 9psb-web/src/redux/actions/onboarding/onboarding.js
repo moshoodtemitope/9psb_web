@@ -665,9 +665,9 @@ function UpgradeSendDetails   (requestPayload, requestTrackingId){
         return dispatch =>{
         //    dispatch(ValidateRegOtp("CLEAR"));
             let consume;
-                if(requestTrackingId===""){
+                if(requestTrackingId===""){ //When BVN was not provided at first stage
                     consume = ApiService.request(routes.UPGRADE_SEND_DETAILS, "POST", requestPayload);
-                }else{
+                }else{ //When BVN was  provided at first stage
                     let payload = {
                         hash:requestTrackingId
                     }
@@ -678,17 +678,37 @@ function UpgradeSendDetails   (requestPayload, requestTrackingId){
                 .then(response =>{
                     dispatch(UpgradeFetchDetails("CLEAR"))
                     dispatch(UpgradeValidateOtp("CLEAR"))
-                    
-                    if(requestTrackingId===""){
+                    // console.log("kakakaka", response.data)
+                    if(requestTrackingId==="" && response.data.responseCode==="00" ){ //When BVN was not provided at first stage
+                        dispatch(success({...response.data}));
+                        history.push('/app/account-settings/account-upgrade/success');
+                        // history.push('/app/account-settings/account-upgrade/otp');
+                    }
+                    if(requestTrackingId==="" && response.data.responseCode==="55" ){ //When BVN was not provided at first stage
+                        dispatch(success({...response.data}));
+                    } 
+
+                    if(requestTrackingId==="" && response.data.responseCode!=="55" && response.data.responseCode!=="00" ){ //When BVN was  provided at first stage
+                        
                         dispatch(success({...response.data}));
                         history.push('/app/account-settings/account-upgrade/otp');
-                    }else{
-                        dispatch(success({...response.data, requestTrackingId}));
+                        // history.push('/app/account-settings/account-upgrade/success');
+                    }
+
+                    if(requestTrackingId!==""){ //When BVN was  provided at first stage
+                       
+                        dispatch(success({...response.data}));
                         history.push('/app/account-settings/account-upgrade/success');
                     }
                     
                 }).catch(error =>{
-                    console.log("papapa", error.response)
+                   
+                    if(requestTrackingId===""){ //When BVN was not provided at first stage
+
+                    }else{ //When BVN was  provided at first stage
+                        
+                        
+                    }
                     dispatch(failure(handleRequestErrors(error)));
                 });
             

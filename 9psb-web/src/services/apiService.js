@@ -511,18 +511,18 @@ export class ApiService {
                    
                     let tokenService = instance.post(routes.REFRESH_TOKEN, refreshpayload);
 
-                    return tokenService.then( (response)=> {
-                        
-                        if(response.status>=200 && response.status<210){
-                            if(response.data.message!==undefined){
-                                
+                    return tokenService.then((response) => {
+
+                        if (response.status >= 200 && response.status < 210) {
+                            if (response.data.message !== undefined) {
+
                                 let userData = JSON.parse(localStorage.getItem("psb-auth"));
-                                    userData.lastLogForAuth = Date.now();
-                                    userData.accessToken = response.data.message;
-                                    localStorage.setItem('psb-auth', JSON.stringify(userData));
+                                userData.lastLogForAuth = Date.now();
+                                userData.accessToken = response.data.message;
+                                localStorage.setItem('psb-auth', JSON.stringify(userData));
 
                                 delete instance.defaults.headers.common;
-                                instance.defaults.headers.common ={
+                                instance.defaults.headers.common = {
                                     ...tempRequest.tempHeaders
                                 };
                                 instance.defaults.headers.common['Authorization'] = `Bearer ${response.data.message}`;
@@ -530,36 +530,37 @@ export class ApiService {
                                 this.signTransaction(tempRequest.url, tempRequest.bodyData);
                                 service = instance.post(tempRequest.url, tempRequest.bodyData);
 
-                                
-                                return service.then((response3)=>{
 
-                                    if(response3.status>=200 && response3.status < 210){
-                                        
+                                return service.then((response3) => {
+
+                                    if (response3.status >= 200 && response3.status < 210) {
+
                                         return service;
                                     }
                                 })
-                                .catch((error2)=>{
-                                    return service;
-                                })
+                                    .catch((error2) => {
+                                        return service;
+                                    })
                             }
-                        }else{
+                        } else {
                             dispatch(onboardingActions.Logout())
                         }
 
-                        
-                        
 
-                       
+
+
+
                     }).catch(function (error) {
-                        
-                        if(url === routes.REFRESH_TOKEN){
+                        console.log("KKKK");
+                        if (url === routes.REFRESH_TOKEN) {
+
                             dispatch(onboardingActions.Logout())
-                        }else{
+                        } else {
                             // console.log("failed after token")
                             // return tokenService;
                             return service;
                         }
-                        
+
                     });
 
 

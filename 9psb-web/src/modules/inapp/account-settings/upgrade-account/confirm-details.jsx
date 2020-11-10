@@ -13,6 +13,7 @@ import {history} from '../../../../_helpers/history'
 import Alert from 'react-bootstrap/Alert';
 import Select from 'react-select';
 import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { Formik } from 'formik';
@@ -50,6 +51,7 @@ class ConfirmUpgradeDetails extends React.Component{
             docuploaded:'',
             isDocAdded: null,
             invalidImageUpload:false,
+            showUpgradePrompt:false,
             previewStyles:{}
         }
    
@@ -69,6 +71,65 @@ class ConfirmUpgradeDetails extends React.Component{
         const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
      
         return file && acceptedImageTypes.includes(file['type'])
+    }
+
+    handleCloseUpgradeOptions = () => {
+        if(this.props.UpgradeSendDetailsReducer.request_data.response.responseCode==="55"){
+            this.setState({ showUpgradePrompt: false })
+            history.push("/app/dashboard");
+        }
+        
+    };
+
+    renderUpgradeStatus = ()=>{
+        let {showUpgradePrompt} = this.state;
+
+        return(
+            <Modal show={showUpgradePrompt} onHide={this.handleCloseUpgradeOptions} size="lg" centered="true" dialogClassName="modal-40w" animation={false}>
+                <Modal.Header className="txt-header modal-bg modal-header">
+                    <Modal.Title>
+                        <div className="modal-bg">
+                            <h2>Update your account</h2>
+                            {/* <div className="modal-helptxt">Increase your transaction limit</div> */}
+                        </div>
+                    </Modal.Title>
+                    <div className="closeicon" onClick={this.handleCloseUpgradeOptions}>X</div>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <div className="form-content mt-0 w-70">
+                        <div className="form-wrap">
+                            <div className="modal-text">Account Upgrade is in progress  </div>
+                            <div className="footer-with-cta toleft ">
+                                <Button variant="secondary"
+                                    type="submit"
+                                    className="ml-0 onboarding-btn"
+                                >  Done
+                                </Button>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </Modal.Body>
+
+            </Modal>
+        )
+    }
+
+    sendCustomerUpdate =(payload)=>{
+        this.updateCustomerDetails(payload)
+            .then(
+                ()=>{
+                    if(this.props.UpgradeSendDetailsReducer.request_status === onboardingConstants.UPGRADE_SEND_DETAILS_SUCCESS){
+                        if(this.props.UpgradeSendDetailsReducer.request_data.response.responseCode==="55"){
+                            // console.log("ssyyds sdsd", this.props.UpgradeSendDetailsReducer.request_data)
+                            this.setState({showUpgradePrompt: true});
+                        }
+                    }
+                }
+            )
     }
 
     updateCustomerDetails = async(payload) =>{
@@ -138,384 +199,590 @@ class ConfirmUpgradeDetails extends React.Component{
     renderPageWrap = () =>{
         let {payload}= this.state;
 
-        const {customerInfo, docuploaded,isDocAdded, previewStyles,dateOfBirth, invalidImageUpload} = this.state;
+        const {customerInfo,
+            showUpgradePrompt, 
+            docuploaded,
+            isDocAdded, 
+            psbuser,
+            requestTrackingId,
+            previewStyles,dateOfBirth, invalidImageUpload} = this.state;
 
         // console.log("user data", customerInfo);
-        let validationChangeSchema = Yup.object().shape({
-            firstName: Yup.string()
-                .required('Required')
-                .test('alphabets', 'Please provide a valid name', (value) => {
-                    return /^[A-Za-z]+$/.test(value);
-                }),
-            lastName: Yup.string()
-                .required('Required')
-                .test('alphabets', 'Please provide a valid name', (value) => {
-                    return /^[A-Za-z]+$/.test(value);
-                }),
-            middleName: Yup.string()
-                .required('Required')
-                .test('alphabets', 'Please provide a valid name', (value) => {
-                    return /^[A-Za-z]+$/.test(value);
-                }),
-            homeAddress: Yup.string()
-                .required('Required'),
-            dateOfBirth: Yup.string()
-                .required('Required'),
-            bvn: Yup.string()
-                .required('Required'),
-            MeansOfId:Yup.string()
-                .required('Required'),
-            gender: Yup.string()
-                .required('Required'),
-            placeOfBirth: Yup.string()
-                .required('Required'),
-            IdNumber: Yup.string()
-                .when('MeansOfId',{
-                    is:(value)=>value!=="",
-                    then: Yup.string()
-                        .required('Required')
-                        
-                }),
-        });   
+        if(requestTrackingId!==""){
+              
 
-        let upgradeSendDetailsRequest = this.props.UpgradeSendDetailsReducer;
-        const   dpFormData = new FormData();
-        return(
-            <div className="each-section mt-80 res-mt-45">
-                <div className="twosided nomargin">
-                    <div>
-                        <div className="page-section-mainheading app-panel">
-                            <div className="border-lines"><span></span><span></span><span></span></div>
-                            
-                            <div className="subheading-title">
-                                <div className="backnav" onClick={()=>{
-                                     history.goBack()
-                                }}>
-                                    <img src={LeftCaret} alt=""/>
-                                    <span>Back</span>
+            let upgradeSendDetailsRequest = this.props.UpgradeSendDetailsReducer;
+            const   dpFormData = new FormData();
+            return(
+                <div className="each-section mt-80 res-mt-45">
+                    <div className="twosided nomargin">
+                        <div>
+                            <div className="page-section-mainheading app-panel">
+                                <div className="border-lines"><span></span><span></span><span></span></div>
+                                
+                                <div className="subheading-title">
+                                    <div className="backnav" onClick={()=>{
+                                        history.goBack()
+                                    }}>
+                                        <img src={LeftCaret} alt=""/>
+                                        <span>Back</span>
+                                    </div>
+                                    <h3>Please confirm your details</h3>
                                 </div>
-                                <h3>Please confirm your details</h3>
+                            </div>
+
+                            {showUpgradePrompt && this.renderUpgradeStatus()}
+                            
+                            <div className="dashboard-section">
+                                <Formik
+                                    initialValues={{
+                                        firstName: (customerInfo!=="" && customerInfo.firstName!==null && customerInfo.firstName!==undefined)? customerInfo.firstName:"",
+                                        middleName: (customerInfo!=="" && customerInfo.middleName!==null && customerInfo.middleName!==undefined)? customerInfo.middleName:"",
+                                        lastName:(customerInfo!=="" && customerInfo.lastName!==null && customerInfo.lastName!==undefined)? customerInfo.lastName:"",
+                                        homeAddress: (customerInfo!=="" && customerInfo.homeAddress!==null && customerInfo.homeAddress!==undefined)? customerInfo.homeAddress: "",
+                                        dateOfBirth: (customerInfo!=="" && customerInfo.dateofBirth!==null && customerInfo.dateofBirth!==undefined)? getDateFromISO(customerInfo.dateofBirth):"",
+                                        gender: (customerInfo!=="" && customerInfo.gender!==null && customerInfo.gender!==undefined)? customerInfo.gender:"",
+
+                                        // isFirstNameReturned: (customerInfo!=="" && customerInfo.cif!==null && customerInfo.cif!==undefined)?true:false,
+                                        isFirstNameReturned: (customerInfo!=="" && customerInfo.firstName!==null && customerInfo.firstName!==undefined)?true:false,
+                                        isMiddleNameReturned: (customerInfo!=="" && customerInfo.middleName!==null && customerInfo.middleName!==undefined)?true:false,
+                                        isLastNameReturned: (customerInfo!=="" && customerInfo.lastName!==null && customerInfo.lastName!==undefined)?true:false,
+                                        isHomeAddressReturned: (customerInfo!=="" && customerInfo.homeAddress!==null && customerInfo.homeAddress!==undefined)?true:false,
+                                        isDateOfBirthReturned: (customerInfo!=="" && customerInfo.dateofBirth!==null && customerInfo.dateofBirth!==undefined)?true:false,
+                                        isGenderReturned: (customerInfo!=="" && customerInfo.gender!==null && customerInfo.gender!==undefined)?true:false
+                                    }}
+
+                                    // validationSchema={validationChangeSchema}
+                                    onSubmit={(values, { resetForm }) => {
+
+                                        dpFormData.append('Gender', values.gender);
+                                        dpFormData.append('DateofBirth', values.isDateOfBirthReturned ? customerInfo.dateofBirth: values.dateOfBirth.toISOString());
+                                        // dpFormData.append('PlaceOfBirth', values.placeOfBirth);
+                                        dpFormData.append('Address', values.homeAddress);
+                                        
+
+                                        // this.sendCustomerUpdate(dpFormData);
+                                        this.sendCustomerUpdate(null);
+                                    }}
+                                >
+                                    {({ handleSubmit,
+                                        handleChange,
+                                        handleBlur,
+                                        resetForm,
+                                        setFieldValue,
+                                        setFieldTouched,
+                                        values,
+                                        touched,
+                                        isValid,
+                                        errors, }) => (
+                                            <Form
+                                                noValidate
+                                                onSubmit={handleSubmit}
+                                                className="form-content mt-0">
+                                                <div className="app-panel inpage">
+                                                    
+                                                    
+                                                    <div className="form-wrap w-70 mt-40 m-auto pt-10 m-100">
+                                                        
+                                                         
+
+                                                        <Form.Group className="poppedinput">
+                                                            <Form.Label className="block-level">First Name</Form.Label>
+                                                            <Form.Control type="text"
+                                                                name="firstName"
+                                                                onChange={values.isFirstNameReturned ===false? handleChange : null}
+                                                                placeholder=""
+                                                                value={values.firstName }
+                                                                disabled={values.isFirstNameReturned}
+                                                                className={errors.firstName && touched.firstName ? "is-invalid" : null}
+                                                                required />
+                                                            {errors.firstName && touched.firstName ? (
+                                                                <span className="invalid-feedback">{errors.firstName}</span>
+                                                            ) : null}
+
+                                                        </Form.Group>
+                                                        <Form.Group className="inputfield">
+                                                            <Form.Control type="text"
+                                                                name="middleName"
+                                                                onChange={handleChange}
+                                                                placeholder="Middle name"
+                                                                disabled={values.isMiddleNameReturned}
+                                                                value={values.middleName}
+                                                                className={errors.middleName && touched.middleName ? "is-invalid" : null}
+                                                                required />
+                                                            {errors.middleName && touched.middleName ? (
+                                                                <span className="invalid-feedback">{errors.middleName}</span>
+                                                            ) : null}
+
+                                                        </Form.Group>
+                                                        <Form.Group className="inputfield">
+                                                            <Form.Control type="text"
+                                                                name="lastName"
+                                                                onChange={values.isLastNameReturned ===false? handleChange : null}
+                                                                placeholder="Last name"
+                                                                disabled={values.isLastNameReturned}
+                                                                value={values.lastName}
+                                                                className={errors.lastName && touched.lastName ? "is-invalid" : null}
+                                                                required />
+                                                            {errors.lastName && touched.lastName ? (
+                                                                <span className="invalid-feedback">{errors.lastName}</span>
+                                                            ) : null}
+
+                                                        </Form.Group>
+                                               
+
+
+                                                        <Form.Row>
+                                                            <Col>
+                                                                <Form.Group controlId="debitLocation" className={errors.dateOfBirth && touched.dateOfBirth ? "has-invaliderror fullwidthdate " : "fullwidthdate "}>
+                                                                    
+                                                                    <DatePicker 
+                                                                        dateFormat="d MMMM, yyyy"
+                                                                        className="form-control form-control-sm"
+                                                                        peekNextMonth
+                                                                        showMonthDropdown
+                                                                        showYearDropdown
+                                                                        placeholderText="Choose Date of Birth"
+                                                                        dropdownMode="select"
+                                                                        name="dateOfBirth"
+                                                                        disabled={values.isDateOfBirthReturned}
+                                                                        value={dateOfBirth===""? values.dateOfBirth : this.state.dateOfBirth}
+                                                                        // onChange={setFieldValue}
+                                                                        maxDate={new Date()}
+                                                                        onChangeRaw={values.isDateOfBirthReturned===false? this.handleDateChangeRaw: null}
+                                                                        onChange={values.isDateOfBirthReturned===false?(e)=> {this.handleDOBPicker(e); setFieldValue('dateOfBirth', e) }:null}
+                                                                        // selected={values.dateOfBirth}
+                                                                        // selected={dateOfBirth===""? values.dateOfBirth : dateOfBirth}
+                                                                        className={errors.dateOfBirth && touched.dateOfBirth ? "is-invalid form-control form-control-sm h-38px" : "form-control form-control-sm h-38px"}
+
+                                                                    />
+                                                                    {errors.dateOfBirth && touched.dateOfBirth ? (
+                                                                        <span className="invalid-feedback">{errors.dateOfBirth}</span>
+                                                                    ) : null}
+                                                                </Form.Group>
+                                                            </Col>
+                                                        </Form.Row>
+
+                                                        <Form.Row>
+
+                                                            <Col>
+                                                                <select id="gender"
+                                                                    onChange={values.isGenderReturned === false ? handleChange : null}
+                                                                    name="gender"
+                                                                    disabled={values.isGenderReturned}
+                                                                    value={values.gender}
+                                                                    className={errors.gender && touched.gender ? "is-invalid form-control form-control-sm h-38px" : "form-control form-control-sm h-38px"}
+                                                                >
+                                                                    <option>Gender</option>
+                                                                    <option value="Female">Female</option>
+                                                                    <option value="Male">Male</option>
+                                                                </select>
+                                                                {errors.gender && touched.gender ? (
+                                                                    <span className="invalid-feedback">{errors.gender}</span>
+                                                                ) : null}
+                                                            </Col>
+                                                        </Form.Row>
+
+                                                        <Form.Group className="poppedinput">
+
+                                                            <Form.Label className="block-level">Home Address </Form.Label>
+                                                            <Form.Control type="text"
+                                                                name="homeAddress"
+                                                                onChange={values.isHomeAddressReturned === false ? handleChange : null}
+                                                                placeholder="Street address"
+                                                                disabled={values.isHomeAddressReturned}
+                                                                value={values.homeAddress}
+                                                                className={errors.homeAddress && touched.homeAddress ? "is-invalid" : null}
+                                                                required />
+                                                            {errors.homeAddress && touched.homeAddress ? (
+                                                                <span className="invalid-feedback">{errors.homeAddress}</span>
+                                                            ) : null}
+
+                                                        </Form.Group>
+
+                                                        
+                                                    </div>
+                                                </div>
+                                                {upgradeSendDetailsRequest.request_status ===onboardingConstants.UPGRADE_SEND_DETAILS_FAILURE && 
+                                                    
+                                                    <ErrorMessage errorMessage={upgradeSendDetailsRequest.request_data.error} canRetry={false} retryFunc={()=>this.sendCustomerUpdate(dpFormData)} />
+                                                
+                                                }
+
+                                                <div className="app-panel inpage">
+                                                    <div className="footer-with-cta toleft m-0 ">
+                                                        <Button variant="secondary"
+                                                            type="button"
+                                                            disabled={upgradeSendDetailsRequest.is_request_processing}
+                                                            className="ml-0 onboarding-btn light"
+                                                            onClick={()=>history.push("/app/dashboard")}
+                                                        > Skip
+                                                        {/* {CreateAccountStep1Request.is_request_processing?'Please wait...' :'Continue'} */}
+                                                        </Button>
+                                                        <Button variant="secondary"
+                                                            type="submit"
+                                                            disabled={upgradeSendDetailsRequest.is_request_processing}
+                                                            className="ml-10 onboarding-btn"
+                                                        > 
+                                                        {upgradeSendDetailsRequest.is_request_processing?'Please wait...' :'Continue'}
+                                                        </Button>
+
+                                                    </div>
+                                                </div>
+
+                                                
+                                                
+                                            </Form>
+                                        )}
+                                </Formik>
                             </div>
                         </div>
-
+                        <DownloadApp/>
                         
-                        
-                        <div className="dashboard-section">
-                            <Formik
-                                initialValues={{
-                                    firstName: (customerInfo!=="" && customerInfo.firstName!==null && customerInfo.firstName!==undefined)? customerInfo.firstName:"",
-                                    middleName: (customerInfo!=="" && customerInfo.middleName!==null && customerInfo.middleName!==undefined)? customerInfo.middleName:"",
-                                    lastName:(customerInfo!=="" && customerInfo.lastName!==null && customerInfo.lastName!==undefined)? customerInfo.lastName:"",
-                                    homeAddress: (customerInfo!=="" && customerInfo.homeAddress!==null && customerInfo.homeAddress!==undefined)? customerInfo.homeAddress: "",
-                                    placeOfBirth: (customerInfo!=="" && customerInfo.placeOfBirth!==null && customerInfo.placeOfBirth!==undefined)? customerInfo.placeOfBirth: "",
-                                    bvn: (customerInfo!=="" && customerInfo.idNumber!==null && customerInfo.idNumber!==undefined)? customerInfo.idNumber: "",
-                                    dateOfBirth: (customerInfo!=="" && customerInfo.dateofBirth!==null && customerInfo.dateofBirth!==undefined)? getDateFromISO(customerInfo.dateofBirth):"",
-                                    stateChosen: "",
-                                    lgaChosen: "",
-                                    MeansOfId:"",
-                                    IdNumber:"",
-                                    gender: (customerInfo!=="" && customerInfo.gender!==null && customerInfo.gender!==undefined)? customerInfo.gender:"",
+                    </div>
+                </div>
+            )
+        }
+        if(requestTrackingId===""){
+            let validationChangeSchema = Yup.object().shape({
+                // firstName: Yup.string()
+                //     .required('Required')
+                //     .test('alphabets', 'Please provide a valid name', (value) => {
+                //         return /^[A-Za-z]+$/.test(value);
+                //     }),
+                // lastName: Yup.string()
+                //     .required('Required')
+                //     .test('alphabets', 'Please provide a valid name', (value) => {
+                //         return /^[A-Za-z]+$/.test(value);
+                //     }),
+                // middleName: Yup.string()
+                //     .required('Required')
+                //     .test('alphabets', 'Please provide a valid name', (value) => {
+                //         return /^[A-Za-z]+$/.test(value);
+                //     }),
+                // homeAddress: Yup.string()
+                //     .required('Required'),
+                dateOfBirth: Yup.string()
+                    .required('Required'),
+                placeOfBirth: Yup.string()
+                    .required('Required'),
+                bvn: Yup.string()
+                    .required('Required'),
+                MeansOfId:Yup.string()
+                    .required('Required'),
+                gender: Yup.string()
+                    .required('Required'),
+                // placeOfBirth: Yup.string()
+                //     .required('Required'),
+                IdNumber: Yup.string()
+                    .when('MeansOfId',{
+                        is:(value)=>value!=="",
+                        then: Yup.string()
+                            .required('Required')
+                            
+                    }),
+            });   
 
-                                    // isFirstNameReturned: (customerInfo!=="" && customerInfo.cif!==null && customerInfo.cif!==undefined)?true:false,
-                                    isFirstNameReturned: (customerInfo!=="" && customerInfo.firstName!==null && customerInfo.firstName!==undefined)?true:false,
-                                    isMiddleNameReturned: (customerInfo!=="" && customerInfo.middleName!==null && customerInfo.middleName!==undefined)?true:false,
-                                    isLastNameReturned: (customerInfo!=="" && customerInfo.lastName!==null && customerInfo.lastName!==undefined)?true:false,
-                                    isHomeAddressReturned: (customerInfo!=="" && customerInfo.homeAddress!==null && customerInfo.homeAddress!==undefined)?true:false,
-                                    isplaceOfBirthReturned: (customerInfo!=="" && customerInfo.placeOfBirth!==null && customerInfo.placeOfBirth!==undefined)?true:false,
-                                    isBVNReturned: (customerInfo!=="" && customerInfo.idNumber!==null && customerInfo.idNumber!==undefined)?true:false,
-                                    isDateOfBirthReturned: (customerInfo!=="" && customerInfo.dateofBirth!==null && customerInfo.dateofBirth!==undefined)?true:false,
-                                    isGenderReturned: (customerInfo!=="" && customerInfo.gender!==null && customerInfo.gender!==undefined)?true:false
-                                }}
+            let upgradeSendDetailsRequest = this.props.UpgradeSendDetailsReducer;
+            const   dpFormData = new FormData();
+            return(
+                <div className="each-section mt-80 res-mt-45">
+                    <div className="twosided nomargin">
+                        <div>
+                            <div className="page-section-mainheading app-panel">
+                                <div className="border-lines"><span></span><span></span><span></span></div>
+                                
+                                <div className="subheading-title">
+                                    <div className="backnav" onClick={()=>{
+                                        history.goBack()
+                                    }}>
+                                        <img src={LeftCaret} alt=""/>
+                                        <span>Back</span>
+                                    </div>
+                                    <h3>Please confirm your details</h3>
+                                </div>
+                            </div>
 
-                                validationSchema={validationChangeSchema}
-                                onSubmit={(values, { resetForm }) => {
+                            {showUpgradePrompt && this.renderUpgradeStatus()}
+                            
+                            <div className="dashboard-section">
+                                <Formik
+                                    initialValues={{
+                                        bvn: ( psbuser.profileData!==undefined && psbuser.profileData.bvn!==null && psbuser.profileData.bvn!==undefined)? psbuser.profileData.bvn: "",
+                                        dateOfBirth: ( psbuser.profileData!==undefined && psbuser.profileData.dateofBirth!==undefined && psbuser.profileData.dateofBirth!==null)? getDateFromISO(psbuser.profileData.dateofBirth):"",
+                                        gender: (psbuser.profileData!==undefined && psbuser.profileData!=="" && psbuser.profileData.gender!==null && psbuser.profileData.gender!==undefined)? psbuser.profileData.gender:"",
+                                        homeAddress: ( psbuser.profileData!==undefined && psbuser.profileData.homeAddress!==null && psbuser.profileData.homeAddress!==undefined)? psbuser.profileData.homeAddress: "",
+                                        placeOfBirth: (psbuser.profileData!==undefined && psbuser.profileData.placeOfBirth!==null && psbuser.profileData.placeOfBirth!==undefined)? psbuser.profileData.placeOfBirth: "",
+                                        MeansOfId:"",
+                                        IdNumber:"",
+                                       
 
-                                    if(docuploaded===''){
-                                        this.setState({isDocAdded:false})
-                                    }else{
+                                        isBVNReturned: (psbuser.profileData!==undefined && psbuser.profileData.bvn!==null && psbuser.profileData.bvn!==undefined && psbuser.profileData.bvn!=="")?true:false,
+                                        isDateOfBirthReturned: (psbuser.profileData!==undefined && psbuser.profileData.dateofBirth!==null && psbuser.profileData.dateofBirth!==undefined && psbuser.profileData.dateofBirth!=="")?true:false,
+                                        isGenderReturned: (psbuser.profileData!==undefined && psbuser.profileData.gender!==null && psbuser.profileData.gender!==undefined && psbuser.profileData.gender!=="")?true:false,
+                                        isHomeAddressReturned: (psbuser.profileData!==undefined && psbuser.profileData.homeAddress!==null && psbuser.profileData.homeAddress!==undefined && psbuser.profileData.homeAddress!=="")?true:false,
+                                        isplaceOfBirthReturned: (psbuser.profileData!==undefined && psbuser.profileData.placeOfBirth!==null && psbuser.profileData.placeOfBirth!==undefined && psbuser.profileData.placeOfBirth!=="")?true:false,
                                         
-                                                dpFormData.append('BvnNumber', values.bvn);
-                                                dpFormData.append('IdNumber', values.IdNumber);
-                                                dpFormData.append('MeansOfId', parseInt(values.MeansOfId));
-                                                dpFormData.append('Gender', values.gender);
-                                                dpFormData.append('DateofBirth', values.isDateOfBirthReturned ? customerInfo.dateofBirth: values.dateOfBirth.toISOString());
-                                                dpFormData.append('PlaceOfBirth', values.placeOfBirth);
-                                                dpFormData.append('Address', values.homeAddress);
-                                                dpFormData.append('PassportPhotogragh', this.state.docuploaded);
+                                        
+                                        
+                                    }}
 
-                                                this.updateCustomerDetails(dpFormData);
-                                                // console.log("ooooolll",values.dateOfBirth);
-                                                // for (var value of dpFormData.values()) {
-                                                //     console.log("lslsl",value); 
-                                                //  }
-                                    }
+                                    validationSchema={validationChangeSchema}
+                                    onSubmit={(values, { resetForm }) => {
 
-                                }}
-                            >
-                                {({ handleSubmit,
-                                    handleChange,
-                                    handleBlur,
-                                    resetForm,
-                                    setFieldValue,
-                                    setFieldTouched,
-                                    values,
-                                    touched,
-                                    isValid,
-                                    errors, }) => (
-                                        <Form
-                                            noValidate
-                                            onSubmit={handleSubmit}
-                                            className="form-content mt-0">
-                                            <div className="app-panel inpage">
-                                                <div className="panel-helptext w-70 mt-20  m-auto m-100">
-                                                    {/* Change Password */}
-                                                </div>
-                                                <div className="card-text text-center mb-0">
-                                                        <div className="" 
-                                                                className={upgradeSendDetailsRequest.is_request_processing?"photo-upload disabled-item" :"photo-upload"} >
-                                                            <label htmlFor="photo-upload" className="upload-photo" style={previewStyles}></label>
-                                                            <input type="file" accept="image/*" name="" id="photo-upload"  onChange={this.HandleFileUpLoad}/>
-                                                        </div>
-                                                    Upload your passport
-                                                </div>
-                                                {invalidImageUpload &&
-                                                    <Alert variant="danger" className="w-80 m-auto">
-                                                        Please upload a valid image
-                                                    </Alert>
-                                                }
-                                                
-                                                <div className="form-wrap w-70 mt-40 m-auto pt-10 m-100">
-                                                    
-                                                        
-                                                    <Form.Group className="poppedinput">
-                                                        <Form.Label className="block-level">BVN</Form.Label>
-                                                        <Form.Control type="text"
-                                                            name="bvn"
-                                                            onChange={values.isBVNReturned===false? handleChange : null}
-                                                            placeholder=""
-                                                            value={allowNumbersOnly(values.bvn,11)}
-                                                            disabled={values.isBVNReturned}
-                                                            className={errors.bvn && touched.bvn ? "is-invalid" : null}
-                                                            required />
-                                                        {errors.bvn && touched.bvn ? (
-                                                            <span className="invalid-feedback">{errors.bvn}</span>
-                                                        ) : null}
+                                        if(docuploaded===''){
+                                            this.setState({isDocAdded:false})
+                                        }else{
+                                            
+                                                    dpFormData.append('BvnNumber', values.bvn);
+                                                    dpFormData.append('IdNumber', values.IdNumber);
+                                                    dpFormData.append('MeansOfId', parseInt(values.MeansOfId));
+                                                    dpFormData.append('Gender', values.gender);
+                                                    dpFormData.append('DateofBirth', values.isDateOfBirthReturned ? psbuser.profileData.dateofBirth: values.dateOfBirth.toISOString());
+                                                    dpFormData.append('PlaceOfBirth', values.placeOfBirth);
+                                                    dpFormData.append('Address', values.homeAddress);
+                                                    dpFormData.append('PassportPhotogragh', this.state.docuploaded);
 
-                                                    </Form.Group>
+                                                    this.sendCustomerUpdate(dpFormData);
+                                                    // console.log("ooooolll",values.dateOfBirth);
+                                                    // for (var value of dpFormData.values()) {
+                                                    //     console.log("lslsl",value); 
+                                                    //  }
+                                        }
 
-                                                    <Form.Group className="poppedinput">
-                                                        <Form.Label className="block-level">First Name</Form.Label>
-                                                        <Form.Control type="text"
-                                                            name="firstName"
-                                                            onChange={values.isFirstNameReturned ===false? handleChange : null}
-                                                            placeholder=""
-                                                            value={values.firstName }
-                                                            disabled={values.isFirstNameReturned}
-                                                            className={errors.firstName && touched.firstName ? "is-invalid" : null}
-                                                            required />
-                                                        {errors.firstName && touched.firstName ? (
-                                                            <span className="invalid-feedback">{errors.firstName}</span>
-                                                        ) : null}
-
-                                                    </Form.Group>
-                                                    <Form.Group className="inputfield">
-                                                        <Form.Control type="text"
-                                                            name="middleName"
-                                                            onChange={handleChange}
-                                                            placeholder="Middle name"
-                                                            disabled={values.isMiddleNameReturned}
-                                                            value={values.middleName}
-                                                            className={errors.middleName && touched.middleName ? "is-invalid" : null}
-                                                            required />
-                                                        {errors.middleName && touched.middleName ? (
-                                                            <span className="invalid-feedback">{errors.middleName}</span>
-                                                        ) : null}
-
-                                                    </Form.Group>
-                                                    <Form.Group className="inputfield">
-                                                        <Form.Control type="text"
-                                                            name="lastName"
-                                                            onChange={values.isLastNameReturned ===false? handleChange : null}
-                                                            placeholder="Last name"
-                                                            disabled={values.isLastNameReturned}
-                                                            value={values.lastName}
-                                                            className={errors.lastName && touched.lastName ? "is-invalid" : null}
-                                                            required />
-                                                        {errors.lastName && touched.lastName ? (
-                                                            <span className="invalid-feedback">{errors.lastName}</span>
-                                                        ) : null}
-
-                                                    </Form.Group>
-                                                    <Form.Row>
-
-                                                        <Col>
-                                                            <select id="MeansOfId"
-                                                                onChange={handleChange}
-                                                                name="MeansOfId"
-                                                                value={values.MeansOfId}
-                                                                className={errors.MeansOfId && touched.MeansOfId ? "is-invalid form-control form-control-sm h-38px" : "form-control form-control-sm h-38px"}
-                                                            >
-                                                                <option>Means of Identification</option>
-                                                                <option value="2">Drivers Licence</option>
-                                                                <option value="3">International Passport</option>
-                                                                <option value="4">Voters Card</option>
-                                                                <option value="5">NIMC</option>
-                                                            </select>
-                                                            {errors.MeansOfId && touched.MeansOfId ? (
-                                                                <span className="invalid-feedback">{errors.MeansOfId}</span>
-                                                            ) : null}
-                                                        </Col>
-                                                    </Form.Row>
-                                                    {values.MeansOfId !=="" &&
-                                                    <Form.Group className="poppedinput">
-
-                                                        <Form.Label className="block-level">ID Number</Form.Label>
-                                                        <Form.Control type="text"
-                                                            name="IdNumber"
-                                                            onChange={handleChange}
-                                                            placeholder="ID Number"
-                                                            disabled={values.isHomeAddressReturned}
-                                                            value={values.IdNumber}
-                                                            className={errors.IdNumber && touched.IdNumber ? "is-invalid" : null}
-                                                            required />
-                                                        {errors.IdNumber && touched.IdNumber ? (
-                                                            <span className="invalid-feedback">{errors.IdNumber}</span>
-                                                        ) : null}
-
-                                                    </Form.Group>
-                                                    }
-
-                                                    <Form.Group className="poppedinput">
-
-                                                        <Form.Label className="block-level">Home Address</Form.Label>
-                                                        <Form.Control type="text"
-                                                            name="homeAddress"
-                                                            onChange={values.isHomeAddressReturned===false ? handleChange : null}
-                                                            placeholder="Street address"
-                                                            disabled={values.isHomeAddressReturned}
-                                                            value={values.homeAddress}
-                                                            className={errors.homeAddress && touched.homeAddress ? "is-invalid" : null}
-                                                            required />
-                                                        {errors.homeAddress && touched.homeAddress ? (
-                                                            <span className="invalid-feedback">{errors.homeAddress}</span>
-                                                        ) : null}
-
-                                                    </Form.Group>
-
-                                                    <Form.Group className="poppedinput">
-
-                                                        <Form.Label className="block-level">Place of Birth</Form.Label>
-                                                        <Form.Control type="text"
-                                                            name="placeOfBirth"
-                                                            onChange={values.isplaceOfBirthReturned ===false ? handleChange : null}
-                                                            placeholder=""
-                                                            disabled={values.isplaceOfBirthReturned}
-                                                            value={values.placeOfBirth}
-                                                            className={errors.placeOfBirth && touched.placeOfBirth ? "is-invalid" : null}
-                                                            required />
-                                                        {errors.placeOfBirth && touched.placeOfBirth ? (
-                                                            <span className="invalid-feedback">{errors.placeOfBirth}</span>
-                                                        ) : null}
-
-                                                    </Form.Group>
-
-                                                    <Form.Row>
-                                                        <Col>
-                                                            <Form.Group controlId="debitLocation" className={errors.dateOfBirth && touched.dateOfBirth ? "has-invaliderror fullwidthdate " : "fullwidthdate "}>
-                                                                
-                                                                <DatePicker 
-                                                                    dateFormat="d MMMM, yyyy"
-                                                                    className="form-control form-control-sm"
-                                                                    peekNextMonth
-                                                                    showMonthDropdown
-                                                                    showYearDropdown
-                                                                    placeholderText="Choose Date of Birth"
-                                                                    dropdownMode="select"
-                                                                    name="dateOfBirth"
-                                                                    disabled={values.isDateOfBirthReturned}
-                                                                    value={dateOfBirth===""? values.dateOfBirth : this.state.dateOfBirth}
-                                                                    // onChange={setFieldValue}
-                                                                    maxDate={new Date()}
-                                                                    onChangeRaw={values.isDateOfBirthReturned===false? this.handleDateChangeRaw: null}
-                                                                    onChange={values.isDateOfBirthReturned===false?(e)=> {this.handleDOBPicker(e); setFieldValue('dateOfBirth', e) }:null}
-                                                                    // selected={values.dateOfBirth}
-                                                                    // selected={dateOfBirth===""? values.dateOfBirth : dateOfBirth}
-                                                                    className={errors.dateOfBirth && touched.dateOfBirth ? "is-invalid form-control form-control-sm h-38px" : "form-control form-control-sm h-38px"}
-
-                                                                />
-                                                                {errors.dateOfBirth && touched.dateOfBirth ? (
-                                                                    <span className="invalid-feedback">{errors.dateOfBirth}</span>
-                                                                ) : null}
-                                                            </Form.Group>
-                                                        </Col>
-                                                    </Form.Row>
-
-                                                    <Form.Row>
-
-                                                        <Col>
-                                                            <select id="gender"
-                                                                onChange={values.isGenderReturned ===false ? handleChange : null}
-                                                                name="gender"
-                                                                disabled={values.isGenderReturned}
-                                                                value={values.gender}
-                                                                className={errors.gender && touched.gender ? "is-invalid form-control form-control-sm h-38px" : "form-control form-control-sm h-38px"}
-                                                            >
-                                                                <option>Gender</option>
-                                                                <option value="Female">Female</option>
-                                                                <option value="Male">Male</option>
-                                                            </select>
-                                                            {errors.gender && touched.gender ? (
-                                                                <span className="invalid-feedback">{errors.gender}</span>
-                                                            ) : null}
-                                                        </Col>
-                                                    </Form.Row>
-                                                    
-                                                    {isDocAdded ===false &&
+                                    }}
+                                >
+                                    {({ handleSubmit,
+                                        handleChange,
+                                        handleBlur,
+                                        resetForm,
+                                        setFieldValue,
+                                        setFieldTouched,
+                                        values,
+                                        touched,
+                                        isValid,
+                                        errors, }) => (
+                                            <Form
+                                                noValidate
+                                                onSubmit={handleSubmit}
+                                                className="form-content mt-0">
+                                                <div className="app-panel inpage">
+                                                    <div className="panel-helptext w-70 mt-20  m-auto m-100">
+                                                        {/* Change Password */}
+                                                    </div>
+                                                    <div className="card-text text-center mb-0">
+                                                            <div className="" 
+                                                                    className={upgradeSendDetailsRequest.is_request_processing?"photo-upload disabled-item" :"photo-upload"} >
+                                                                <label htmlFor="photo-upload" className="upload-photo" style={previewStyles}></label>
+                                                                <input type="file" accept="image/*" name="" id="photo-upload"  onChange={this.HandleFileUpLoad}/>
+                                                            </div>
+                                                        Upload your passport
+                                                    </div>
+                                                    {invalidImageUpload &&
                                                         <Alert variant="danger" className="w-80 m-auto">
-                                                            Please upload your passport
+                                                            Please upload a valid image
                                                         </Alert>
                                                     }
+                                                    
+                                                    <div className="form-wrap w-70 mt-40 m-auto pt-10 m-100">
+                                                        
+                                                            
+                                                        <Form.Group className="poppedinput">
+                                                            <Form.Label className="block-level">BVN</Form.Label>
+                                                            <Form.Control type="text"
+                                                                name="bvn"
+                                                                onChange={values.isBVNReturned===false? handleChange : null}
+                                                                placeholder=""
+                                                                value={allowNumbersOnly(values.bvn,11)}
+                                                                disabled={values.isBVNReturned}
+                                                                className={errors.bvn && touched.bvn ? "is-invalid" : null}
+                                                                required />
+                                                            {errors.bvn && touched.bvn ? (
+                                                                <span className="invalid-feedback">{errors.bvn}</span>
+                                                            ) : null}
+
+                                                        </Form.Group>
+
+                                                        <Form.Row>
+                                                            <Col>
+                                                                <Form.Group controlId="debitLocation" className={errors.dateOfBirth && touched.dateOfBirth ? "has-invaliderror fullwidthdate " : "fullwidthdate "}>
+                                                                    
+                                                                    <DatePicker 
+                                                                        dateFormat="d MMMM, yyyy"
+                                                                        className="form-control form-control-sm"
+                                                                        peekNextMonth
+                                                                        showMonthDropdown
+                                                                        showYearDropdown
+                                                                        placeholderText="Choose Date of Birth"
+                                                                        dropdownMode="select"
+                                                                        name="dateOfBirth"
+                                                                        disabled={values.isDateOfBirthReturned}
+                                                                        value={dateOfBirth===""? values.dateOfBirth : this.state.dateOfBirth}
+                                                                        // onChange={setFieldValue}
+                                                                        maxDate={new Date()}
+                                                                        onChangeRaw={values.isDateOfBirthReturned===false? this.handleDateChangeRaw: null}
+                                                                        onChange={values.isDateOfBirthReturned===false?(e)=> {this.handleDOBPicker(e); setFieldValue('dateOfBirth', e) }:null}
+                                                                        // selected={values.dateOfBirth}
+                                                                        // selected={dateOfBirth===""? values.dateOfBirth : dateOfBirth}
+                                                                        className={errors.dateOfBirth && touched.dateOfBirth ? "is-invalid form-control form-control-sm h-38px" : "form-control form-control-sm h-38px"}
+
+                                                                    />
+                                                                    {errors.dateOfBirth && touched.dateOfBirth ? (
+                                                                        <span className="invalid-feedback">{errors.dateOfBirth}</span>
+                                                                    ) : null}
+                                                                </Form.Group>
+                                                            </Col>
+                                                        </Form.Row>
+
+                                                        <Form.Group className="poppedinput">
+
+                                                            <Form.Label className="block-level">Place of Birth</Form.Label>
+                                                            <Form.Control type="text"
+                                                                name="placeOfBirth"
+                                                                onChange={values.isplaceOfBirthReturned ===false ? handleChange : null}
+                                                                placeholder=""
+                                                                disabled={values.isplaceOfBirthReturned}
+                                                                value={values.placeOfBirth}
+                                                                className={errors.placeOfBirth && touched.placeOfBirth ? "is-invalid" : null}
+                                                                required />
+                                                            {errors.placeOfBirth && touched.placeOfBirth ? (
+                                                                <span className="invalid-feedback">{errors.placeOfBirth}</span>
+                                                            ) : null}
+
+                                                        </Form.Group>
+
+                                                        <Form.Row>
+
+                                                            <Col>
+                                                                <select id="gender"
+                                                                    onChange={values.isGenderReturned ===false ? handleChange : null}
+                                                                    name="gender"
+                                                                    disabled={values.isGenderReturned}
+                                                                    value={values.gender}
+                                                                    className={errors.gender && touched.gender ? "is-invalid form-control form-control-sm h-38px" : "form-control form-control-sm h-38px"}
+                                                                >
+                                                                    <option>Gender</option>
+                                                                    <option value="Female">Female</option>
+                                                                    <option value="Male">Male</option>
+                                                                </select>
+                                                                {errors.gender && touched.gender ? (
+                                                                    <span className="invalid-feedback">{errors.gender}</span>
+                                                                ) : null}
+                                                            </Col>
+                                                        </Form.Row>
+
+                                                        <Form.Group className="poppedinput">
+
+                                                            <Form.Label className="block-level">Home Address</Form.Label>
+                                                            <Form.Control type="text"
+                                                                name="homeAddress"
+                                                                onChange={values.isHomeAddressReturned===false ? handleChange : null}
+                                                                placeholder="Street address"
+                                                                disabled={values.isHomeAddressReturned}
+                                                                value={values.homeAddress}
+                                                                className={errors.homeAddress && touched.homeAddress ? "is-invalid" : null}
+                                                                required />
+                                                            {errors.homeAddress && touched.homeAddress ? (
+                                                                <span className="invalid-feedback">{errors.homeAddress}</span>
+                                                            ) : null}
+
+                                                        </Form.Group>
+
+                                                        
+                                                        <Form.Row>
+
+                                                            <Col>
+                                                                <select id="MeansOfId"
+                                                                    onChange={handleChange}
+                                                                    name="MeansOfId"
+                                                                    value={values.MeansOfId}
+                                                                    className={errors.MeansOfId && touched.MeansOfId ? "is-invalid form-control form-control-sm h-38px" : "form-control form-control-sm h-38px"}
+                                                                >
+                                                                    <option>Means of Identification</option>
+                                                                    <option value="2">Drivers Licence</option>
+                                                                    <option value="3">International Passport</option>
+                                                                    <option value="4">Voters Card</option>
+                                                                    <option value="5">NIMC</option>
+                                                                </select>
+                                                                {errors.MeansOfId && touched.MeansOfId ? (
+                                                                    <span className="invalid-feedback">{errors.MeansOfId}</span>
+                                                                ) : null}
+                                                            </Col>
+                                                        </Form.Row>
+                                                        {values.MeansOfId !=="" &&
+                                                        <Form.Group className="poppedinput">
+
+                                                            <Form.Label className="block-level">ID Number</Form.Label>
+                                                            <Form.Control type="text"
+                                                                name="IdNumber"
+                                                                onChange={handleChange}
+                                                                placeholder="ID Number"
+                                                                
+                                                                value={values.IdNumber}
+                                                                className={errors.IdNumber && touched.IdNumber ? "is-invalid" : null}
+                                                                required />
+                                                            {errors.IdNumber && touched.IdNumber ? (
+                                                                <span className="invalid-feedback">{errors.IdNumber}</span>
+                                                            ) : null}
+
+                                                        </Form.Group>
+                                                        }
+
+                                                        
+
+                                                        
+
+                                                        
+
+                                                        
+                                                        
+                                                        {isDocAdded ===false &&
+                                                            <Alert variant="danger" className="w-80 m-auto">
+                                                                Please upload your passport
+                                                            </Alert>
+                                                        }
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            {upgradeSendDetailsRequest.request_status ===onboardingConstants.UPGRADE_SEND_DETAILS_FAILURE && 
+                                                {upgradeSendDetailsRequest.request_status ===onboardingConstants.UPGRADE_SEND_DETAILS_FAILURE && 
+                                                    
+                                                    <ErrorMessage errorMessage={upgradeSendDetailsRequest.request_data.error} canRetry={false} retryFunc={()=>this.sendCustomerUpdate(dpFormData)} />
                                                 
-                                                <ErrorMessage errorMessage={upgradeSendDetailsRequest.request_data.error} canRetry={false} retryFunc={()=>this.updateCustomerDetails(dpFormData)} />
-                                            
-                                            }
+                                                }
 
-                                            <div className="app-panel inpage">
-                                                <div className="footer-with-cta toleft m-0 ">
-                                                    <Button variant="secondary"
-                                                        type="button"
-                                                        disabled={upgradeSendDetailsRequest.is_request_processing}
-                                                        className="ml-0 onboarding-btn light"
-                                                        onClick={()=>history.push("/app/dashboard")}
-                                                    > Skip
-                                                     {/* {CreateAccountStep1Request.is_request_processing?'Please wait...' :'Continue'} */}
-                                                    </Button>
-                                                    <Button variant="secondary"
-                                                        type="submit"
-                                                        disabled={upgradeSendDetailsRequest.is_request_processing}
-                                                        className="ml-10 onboarding-btn"
-                                                    > 
-                                                     {upgradeSendDetailsRequest.is_request_processing?'Please wait...' :'Continue'}
-                                                    </Button>
+                                                <div className="app-panel inpage">
+                                                    <div className="footer-with-cta toleft m-0 ">
+                                                        <Button variant="secondary"
+                                                            type="button"
+                                                            disabled={upgradeSendDetailsRequest.is_request_processing}
+                                                            className="ml-0 onboarding-btn light"
+                                                            onClick={()=>history.push("/app/dashboard")}
+                                                        > Skip
+                                                        {/* {CreateAccountStep1Request.is_request_processing?'Please wait...' :'Continue'} */}
+                                                        </Button>
+                                                        <Button variant="secondary"
+                                                            type="submit"
+                                                            disabled={upgradeSendDetailsRequest.is_request_processing}
+                                                            className="ml-10 onboarding-btn"
+                                                        > 
+                                                        {upgradeSendDetailsRequest.is_request_processing?'Please wait...' :'Continue'}
+                                                        </Button>
 
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            
-                                            
-                                        </Form>
-                                    )}
-                            </Formik>
+                                                
+                                                
+                                            </Form>
+                                        )}
+                                </Formik>
+                            </div>
                         </div>
+                        <DownloadApp/>
+                        
                     </div>
-                    <DownloadApp/>
-                    
                 </div>
-            </div>
-        )
+            )
+        }
     }
 
     

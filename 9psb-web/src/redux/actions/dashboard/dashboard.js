@@ -17,7 +17,7 @@ export const accountActions = {
 
 function GetCustomerDashboardData   (){
     // if(requestPayload!=="CLEAR"){
-        
+        let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
         return dispatch =>{
             let consume = ApiService.request(routes.GET_ACCOUNTS, "GET", null);
             dispatch(request(consume));
@@ -29,13 +29,13 @@ function GetCustomerDashboardData   (){
                             
                             if(response.data.accounts.length>=1){
                                 
-                                let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+                                
     
                                 psbAuth.allAccounts = response.data.accounts;
                                 psbAuth.kycLevel = response.data.kycLevel;
                                 psbAuth.savings = response.data.savings;
     
-                                localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                                // localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
                                 
                                 
                             }else{
@@ -67,7 +67,9 @@ function GetCustomerDashboardData   (){
                                 return consume6
                                 .then(response6 =>{
                                      allData.profileData = response6.data
+                                     psbAuth.profileData = response6.data;
 
+                                     localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
                                      dispatch(success(allData));
                                 })
                                 .catch(error =>{
