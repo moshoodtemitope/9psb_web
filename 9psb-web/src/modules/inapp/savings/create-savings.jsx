@@ -106,7 +106,7 @@ class CreateSavings extends React.Component{
             getSavingsInterestRequest =  this.props.GetSavingsInterestReducer,
             createSavingsRequest =  this.props.CreateSavingsReducer,
             savingsDetails = getSavingsInterestRequest.request_data.response;
-            // console.log("savings data", getSavingsInterestRequest.request_data.response)
+            
         return (
             <Modal show={showSavingsPrompt} onHide={createSavingsRequest.is_request_processing !==true ? this.handleCloseSavingsPromptOptions: ()=>{} } size="lg" centered="true" dialogClassName="modal-40w" animation={false}>
                 <Modal.Header className="txt-header modal-bg modal-header">

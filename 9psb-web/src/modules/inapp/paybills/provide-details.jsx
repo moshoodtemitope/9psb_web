@@ -269,7 +269,7 @@ class BillDetails extends React.Component{
                                                 onChange={(selected) => {
                                                         setFieldValue('chosenBouquet', selected.value);
                                                         setFieldValue('amount', selected.itemAmount);
-                                                        // console.log("kkkk", selected.itemAmount)
+                                                        
                                                         this.setState({isAmountFixed: selected.isAmountFixed, amountToPay:selected.itemAmount,selectedBouquet:selected, selectedBouquetName:selected.label})
                                                     }
                                                 }

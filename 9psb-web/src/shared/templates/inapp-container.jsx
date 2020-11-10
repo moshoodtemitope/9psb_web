@@ -17,7 +17,7 @@ class InAppContainer extends React.Component{
     render() {
         
 
-        // console.log("user is", user.BranchId)
+        
         // if(user.BranchId)
         return (
             

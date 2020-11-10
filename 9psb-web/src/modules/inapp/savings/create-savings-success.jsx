@@ -57,7 +57,7 @@ class CreateSavingsSuccess extends React.Component{
             } = this.state;
         let successDetails;
             
-            console.log("lelele", `1-${existingCustomerInfo}`)
+            
             
         return(
             <div className="each-section mt-80 res-mt-45">

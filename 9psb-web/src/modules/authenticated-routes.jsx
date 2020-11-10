@@ -116,7 +116,7 @@ function PrivateRoute({ component: Component, authed, ...rest }) {
     // let isLoggedIn = authed.request_status === onboardingConstants.LOGIN_USER_SUCCESS && psbuser;
     let isLoggedIn = authed.request_status === onboardingConstants.LOGIN_USER_SUCCESS || psbuser;
 
-    // console.log("is logged",psbuser);
+ 
      /**To be uncommented */
 
     if(isLoggedIn){

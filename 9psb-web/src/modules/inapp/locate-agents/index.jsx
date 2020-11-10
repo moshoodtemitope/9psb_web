@@ -55,8 +55,7 @@ class LocateAgents extends React.Component{
         const {dispatch} = this.props;
         dispatch(accountActions.LocateAnAgent("CLEAR"));
 
-        // console.log("Signed is", createTransactionSigner())
-        // encryptAnItem.createTransactionSigner();
+       
     }
 
     

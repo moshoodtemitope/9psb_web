@@ -76,7 +76,7 @@ class AccountUpgradeSuccess extends React.Component{
                 successDetails =existingCustomerInfo2;
             }
 
-            console.log("lelele", `1-${existingCustomerInfo}`, `2-${existingCustomerInfo2}`)
+            
             
         return(
             <div className="each-section mt-80 res-mt-45">

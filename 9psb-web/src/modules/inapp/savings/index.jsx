@@ -155,7 +155,7 @@ class GetAllSavings extends React.Component{
             getCashoutInfoRequest =  this.props.CheckSavingsCashoutReducer,
             cashoutSavingsRequest =  this.props.CashoutSavingsReducer,
             savingsDetails = getCashoutInfoRequest.request_data.response;
-            // console.log("savings data", getCashoutInfoRequest.request_data.response)
+           
         if (cashoutSavingsRequest.request_status !== paymentsConstants.CASHOUT_SAVINGS_SUCCESS) { 
             return (
                 <Modal show={showSavingsPrompt} onHide={cashoutSavingsRequest.is_request_processing !== true ? this.handleCloseSavingsPromptOptions : () => { }} size="lg" centered="true" dialogClassName="modal-40w" animation={false}>
@@ -474,7 +474,7 @@ class GetAllSavings extends React.Component{
             getCashoutInfoRequest =  this.props.CheckSavingsCashoutReducer,
             CheckSavingsCashoutRequest = this.props.CheckSavingsCashoutReducer;
 
-            // console.log("All savings", allSavings); 
+           
             let 
             {
               

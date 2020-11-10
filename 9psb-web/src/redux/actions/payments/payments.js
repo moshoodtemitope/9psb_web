@@ -501,7 +501,7 @@ function TranferToBankAccount   (requestPayload){
                 .then(response =>{
                     // dispatch(saveRecipientData("CLEAR"))
                     // dispatch(confirmBeneficiary("CLEAR"))
-                    // console.log("log is ", response);
+                   
                     dispatch(success(requestPayload));
                     history.push("/app/transfer/to-bank/success");
                     

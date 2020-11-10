@@ -678,7 +678,7 @@ function UpgradeSendDetails   (requestPayload, requestTrackingId){
                 .then(response =>{
                     dispatch(UpgradeFetchDetails("CLEAR"))
                     dispatch(UpgradeValidateOtp("CLEAR"))
-                    // console.log("kakakaka", response.data)
+                    
                     if(requestTrackingId==="" && response.data.responseCode==="00" ){ //When BVN was not provided at first stage
                         dispatch(success({...response.data}));
                         history.push('/app/account-settings/account-upgrade/success');

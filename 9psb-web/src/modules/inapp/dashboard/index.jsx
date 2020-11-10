@@ -187,7 +187,7 @@ class Dashboard extends React.Component{
             })
         };
 
-        // console.log("dsdsdsds", customerAccounts);
+      
         if(customerAccounts.length){
             customerAccounts.map((eachAcount, index)=>{
                 accounstList.push({
@@ -250,7 +250,7 @@ class Dashboard extends React.Component{
                                 {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
                                 </div>
                             </div>
-                            {(psbuser.kycLevel !==2 && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
+                            {(psbuser.kycLevel !==2 && psbuser.kycLevel !==undefined && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
                                 <div className="fund-wallet-cta">
                                     <Button variant="primary"
                                         type="button"
@@ -279,7 +279,7 @@ class Dashboard extends React.Component{
                                 <div className="each-summary-title">Your Wallet balance</div>
                                 <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
                             </div>
-                            {(psbuser.kycLevel !==2 && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
+                            {(psbuser.kycLevel !==2 && psbuser.kycLevel !==undefined && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
                                 <div className="fund-wallet-cta">
                                     <Button variant="primary"
                                         type="button"
@@ -349,6 +349,7 @@ class Dashboard extends React.Component{
     }
 
     renderDefaultAccountSummary= ()=>{
+        
         const{screenWidthSize, 
                 showSiderBar, 
                 psbuser, 
@@ -416,7 +417,7 @@ class Dashboard extends React.Component{
                                         selectedAccount,
                                         selectedAccountIndex: selectedAccount.accountIndex
                                     })
-                                    console.log("was here", selectedAccount)
+                                   
                                     this.loadHistoryForAWallet(selectedAccount.value)
                                     
                                 }}
@@ -440,7 +441,7 @@ class Dashboard extends React.Component{
                                {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
                             </div>
                         </div>
-                        {(psbuser.kycLevel !==2 && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
+                        {(psbuser.kycLevel !==2 && psbuser.kycLevel !==undefined && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
                             <div className="fund-wallet-cta">
                                 <Button variant="primary"
                                     type="button"
@@ -469,7 +470,7 @@ class Dashboard extends React.Component{
                             <div className="each-summary-title">Your Wallet balance</div>
                             <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
                         </div>
-                        {(psbuser.kycLevel !==2 && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
+                        {(psbuser.kycLevel !==2 && psbuser.kycLevel !==undefined && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
                             <div className="fund-wallet-cta">
                                 <Button variant="primary"
                                     type="button"
@@ -762,7 +763,7 @@ class Dashboard extends React.Component{
                         validationSchema={checkValidationSchema}
                         onSubmit={(values, { resetForm }) => {
 
-                            // console.log("kalie ded", values.upgradeOption);
+                            
                             if (values.upgradeOption === "1" && values.theBVN!=="") {
                                 let bvnDetails = {
                                     bvnNumber:   values.theBVN

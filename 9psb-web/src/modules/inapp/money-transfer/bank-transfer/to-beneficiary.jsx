@@ -158,7 +158,7 @@ class TransferToBankBeneficiaryDetails extends React.Component{
                                                 this.setState({lesserAccountBalanceError:true})
                                             }
                                         }else{
-                                            // console.log("dsmd sdsdsdsd",customerData.accountNumber, accountNumber, customerData.bankCode)
+                                           
                                             this.setState({sameAccountError:true})
                                         }
                                     }

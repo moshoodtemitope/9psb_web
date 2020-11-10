@@ -1,5 +1,5 @@
 export const handleRequestErrors = (error, isCustom)=>{
-    // console.log(typeof error, "dvnsdsbdnb")
+    
     if(error.toString().indexOf("'closed' of undefined")>-1  
         // error.toString().indexOf("code 401")>-1
     ){
@@ -49,7 +49,7 @@ export const handleRequestErrors = (error, isCustom)=>{
 
         if(typeof error ==="string" && isCustom){
             return error
-            // console.log("dvnsdsbdnb")
+           
             // return 
         }
         
@@ -62,8 +62,7 @@ export const handleRequestErrors = (error, isCustom)=>{
 }
 
 export const modelStateErrorHandler = (error, field) => {
-    //console.log("in model state");
-    //console.log(error);
+   
     try {
         
         if (error.response) {
@@ -72,7 +71,7 @@ export const modelStateErrorHandler = (error, field) => {
                     let message = '';
                         for (let key in error.response.data.errors) {
                             if (error.response.data.errors.hasOwnProperty(key)) {
-                                // console.log(key + " -> " + error.errors[key]);
+                                
                                 if (Object.keys(error.response.data.errors).length > 1) {
                                     message += error.response.data.errors[key] + "\n";
                                 } else {
@@ -94,26 +93,23 @@ export const modelStateErrorHandler = (error, field) => {
         // }  //Check for the exact error code to know what to return
         
     } catch (err) {
-       // console.log(err);
+ 
         return "Error : Something went wrong";
     }
     
 }
 
 export const handleError = (error) => {
-    //console.log("-----in handle error")
-    //console.log(error);
+    
     var message = '';
     if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        // console.log(error.response.data);
-        // console.log(error.response.status);
-        // console.log(error.response.headers);
+        
         if (error.response.status >= 500 && error.response.status < 600) {
             message = 'something went wrong, try again please.';
         } else {
-            // console.log("----====", typeof error.response.data);
+           
             message = error.response.data.message || error.response.data.Message;
         }
 
@@ -121,11 +117,11 @@ export const handleError = (error) => {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
-        //console.log(error.request);
+       
         message = error.message
     } else {
         // Something happened in setting up the request that triggered an Error
-        //console.log('Error', error.message);
+        
         message = error.message;
     }
     return message;
@@ -155,7 +151,7 @@ export const getDateFromISO =(date, returnTime) =>{
 
     let convertedDateAndTime = `${convertedDate} ${convertedTime}`;
     return convertedDateAndTime;
-    // console.log(year+'-' + month + '-'+dt) 
+    
 }
 
 export const accountNumber = (accountNum, maxChars)=>{
@@ -271,7 +267,7 @@ export const allowNumbersOnly = (numbers, maxLength)=>{
         
 
         // if(maxLength!==null && maxLength!==undefined && typeof maxLength ==="number" && filteredNum.toString().length>maxLength){
-        //     // console.log("##",filteredNum.toString().length);
+       
         //     filteredNum = filteredNum.toString().substring(0,maxLength);
 
             
@@ -281,7 +277,7 @@ export const allowNumbersOnly = (numbers, maxLength)=>{
         //     return filteredNum;
         // }
         // else{
-        //     // console.log("++",filteredNum.toString().length)
+        
         // }
 
         if (typeof maxLength === "number") {
@@ -456,7 +452,7 @@ export const numberWithCommas= (amount, isDecimal)=> {
         return null;
     }
 
-    // console.log("orarara",amount);
+    
     // if(amount===null){
     //     return null;
     // }

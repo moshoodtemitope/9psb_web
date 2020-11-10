@@ -94,7 +94,7 @@ export class ApiService {
 
 
     static signTransaction = (url, payload)=>{
-        // console.log("was here", url, payload);
+       
         let transferUrls=[
                 "Customer/transfertophonenumber",
                 "Customer/transfertoaccount",
@@ -551,12 +551,12 @@ export class ApiService {
 
 
                     }).catch(function (error) {
-                        console.log("KKKK");
+                      
                         if (url === routes.REFRESH_TOKEN) {
 
                             dispatch(onboardingActions.Logout())
                         } else {
-                            // console.log("failed after token")
+                            
                             // return tokenService;
                             return service;
                         }

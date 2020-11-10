@@ -124,7 +124,7 @@ class ConfirmUpgradeDetails extends React.Component{
                 ()=>{
                     if(this.props.UpgradeSendDetailsReducer.request_status === onboardingConstants.UPGRADE_SEND_DETAILS_SUCCESS){
                         if(this.props.UpgradeSendDetailsReducer.request_data.response.responseCode==="55"){
-                            // console.log("ssyyds sdsd", this.props.UpgradeSendDetailsReducer.request_data)
+                            
                             this.setState({showUpgradePrompt: true});
                         }
                     }
@@ -207,7 +207,7 @@ class ConfirmUpgradeDetails extends React.Component{
             requestTrackingId,
             previewStyles,dateOfBirth, invalidImageUpload} = this.state;
 
-        // console.log("user data", customerInfo);
+       
         if(requestTrackingId!==""){
               
 
@@ -544,10 +544,7 @@ class ConfirmUpgradeDetails extends React.Component{
                                                     dpFormData.append('PassportPhotogragh', this.state.docuploaded);
 
                                                     this.sendCustomerUpdate(dpFormData);
-                                                    // console.log("ooooolll",values.dateOfBirth);
-                                                    // for (var value of dpFormData.values()) {
-                                                    //     console.log("lslsl",value); 
-                                                    //  }
+                                                    
                                         }
 
                                     }}
