@@ -8,7 +8,9 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet';
 import Form from 'react-bootstrap/Form';
-import DatePicker from '../../../_helpers/datepickerfield'
+// import DatePicker from '../../../_helpers/datepickerfield'
+
+import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button'
@@ -41,6 +43,7 @@ class ConfirmDetailsFromOtp extends React.Component{
             ? loginInfo.request_data.response: '',
             customerInfo:"",
             docuploaded:'',
+            dateOfBirth:"",
             isDocAdded: null,
             invalidImageUpload:false,
             previewStyles:{}
@@ -189,12 +192,21 @@ class ConfirmDetailsFromOtp extends React.Component{
         return str.join(' ');
     }
 
-
+    handleDateChangeRaw = (e) => {
+        e.preventDefault();
+    }
+    handleDOBPicker = (dateOfBirth) => {
+        dateOfBirth.setHours(dateOfBirth.getHours() + 1);
+        
+        
+        this.setState({ dateOfBirth: getDateFromISO(dateOfBirth.toISOString()) });
+    }
 
     renderSignUpStep3=()=>{
         let updateCustomerDetailsRequest = this.props.UpdateCustomerDetailsReducer,
             uploadAFileRequest =  this.props.UploadAFileReducer,
-            GetLgasRequest      = this.props.GetLgasReducer;
+            GetLgasRequest      = this.props.GetLgasReducer,
+            {dateOfBirth} =  this.state;
 
         const {customerInfo,existingCustomerInfo, docuploaded, previewStyles, lgaList, psbuser, invalidImageUpload} = this.state;
         
@@ -437,8 +449,11 @@ class ConfirmDetailsFromOtp extends React.Component{
                                                             placeholderText="Choose Date of Birth"
                                                             name="dateOfBirth"
                                                             disabled={values.isDateOfBirthReturned}
-                                                            value={values.dateOfBirth}
-                                                            onChange={setFieldValue}
+                                                            value={dateOfBirth===""? values.dateOfBirth : this.state.dateOfBirth}
+                                                            // onChange={setFieldValue}
+                                                            maxDate={new Date()}
+                                                            onChangeRaw={values.isDateOfBirthReturned===false? this.handleDateChangeRaw: null}
+                                                            onChange={values.isDateOfBirthReturned===false?(e)=> {this.handleDOBPicker(e); setFieldValue('dateOfBirth', e) }:null}
                                                             maxDate={new Date()}
                                                             className={errors.dateOfBirth && touched.dateOfBirth ? "is-invalid form-control form-control-sm h-38px" : "form-control form-control-sm h-38px"}
 
