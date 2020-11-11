@@ -18,6 +18,9 @@ export const accountActions = {
 function GetCustomerDashboardData   (){
     // if(requestPayload!=="CLEAR"){
         let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+        if(localStorage.getItem("psb-onboard")){
+            localStorage.removeItem('psb-onboard');
+        }
         return dispatch =>{
             let consume = ApiService.request(routes.GET_ACCOUNTS, "GET", null);
             dispatch(request(consume));

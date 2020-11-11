@@ -144,6 +144,11 @@ function Login   (requestPayload){
                         //     });
 
                     }else{
+                        let userInfoData2 = {
+                            ...userInfoData,
+                            phoneNumber: requestPayload.mobileNumber
+                         }
+                         localStorage.setItem('psb-auth', JSON.stringify(userInfoData2));
                         if(userInfoData.isProfileSet===false){
                             let consume2 = ApiService.request(routes.GET_CUSTOMER_PROFILE, "GET", null);
                             dispatch(request(consume2));
@@ -283,6 +288,7 @@ function CreateAccountStep1   (requestPayload){
                 .then(response =>{
                     
                     dispatch(success(response.data));
+                    localStorage.setItem('psb-onboard', JSON.stringify(requestPayload));
                     // dispatch(CheckIfCustomerExists("CLEAR"));
                     history.push("/app/signup/otp");
                         // history.push("/app/signup/provide-details")
@@ -812,42 +818,52 @@ function UpgradeCompletion   (requestPayload){
 
 function CreateTransactionPin   (requestPayload){
     if(requestPayload!=="CLEAR"){
-        return dispatch =>{
-            let consume = ApiService.request(routes.CREATE_TRANSACTION_PIN, "POST", requestPayload);
-            dispatch(request(consume));
-            let psbuser =JSON.parse(localStorage.getItem('psb-auth'));
-            return consume
-                .then(response =>{
-                    
-                    dispatch(success(response.data));
-                    // dispatch(Logout());
-                    psbuser.isPinSet = true;
-                    psbuser.isProfileSet = true;
-                    localStorage.setItem('psb-auth', JSON.stringify(psbuser));
-                    history.push("/app/create-pin-success");
+        let userData = JSON.parse(localStorage.getItem("psb-auth")),
+            onboardData = JSON.parse(localStorage.getItem("psb-onboard")),
+            refreshTokenPayload = {};
+        
+        if(userData && !onboardData){
+            refreshTokenPayload.mobileNumber = userData.phoneNumber;
+            refreshTokenPayload.refreshToken = userData.refreshToken;
+        }
+        if(userData && onboardData){
+            refreshTokenPayload.mobileNumber = onboardData.mobileNumber;
+            refreshTokenPayload.refreshToken = userData.refreshToken;
+        }
 
-                    // if(psbuser.isProfileSet===false){
-                    //     let consume2 = ApiService.request(routes.GET_CUSTOMER_PROFILE, "GET", null);
-                    //     dispatch(request(consume2));
-                    //     return consume2
-                    //         .then(response2 =>{
-                    //             dispatch(success(response2.data));
-                    //             history.push("/app/create-pin-success");
-                    //         })
-                    //         .catch(error =>{
-                                
-                    //             history.push("/app/create-pin-success");
-                    //         });
-                    // }else{
-                    //     dispatch(success(response.data));
-                    //     history.push("/app/create-pin-success");
-                    // }
-                    
-                }).catch(error =>{
-                    
+        
+        return dispatch => {
+            let consume = ApiService.request(routes.REFRESH_TOKEN, "POST", refreshTokenPayload);
+            dispatch(request(consume));
+            // let psbuser = JSON.parse(localStorage.getItem('psb-auth'));
+            return consume
+                .then(response1 => {
+                    let userDataOnboard = JSON.parse(localStorage.getItem("psb-auth"));
+                                    userDataOnboard.lastLogForAuth = Date.now();
+                                    userDataOnboard.accessToken = response1.data.message;
+                                    localStorage.setItem('psb-auth', JSON.stringify(userDataOnboard));
+
+                    let consume2 = ApiService.request(routes.CREATE_TRANSACTION_PIN, "POST", requestPayload);
+                    dispatch(request(consume2));
+                    let psbuser = JSON.parse(localStorage.getItem('psb-auth'));
+                    return consume2
+                        .then(response => {
+                            dispatch(success(response.data));
+                            
+                            psbuser.isPinSet = true;
+                            psbuser.isProfileSet = true;
+                            localStorage.setItem('psb-auth', JSON.stringify(psbuser));
+                            history.push("/app/create-pin-success");
+                        }).catch(error => {
+
+                            dispatch(failure(handleRequestErrors(error)));
+                        });
+
+                }).catch(error => {
+
                     dispatch(failure(handleRequestErrors(error)));
                 });
-            
+
         }
         
     }
@@ -928,6 +944,8 @@ function InitiatePinReset   (requestPayload){
 
 function CompletePinReset   (requestPayload){
     if(requestPayload!=="CLEAR"){
+
+         
         return dispatch =>{
             let consume = ApiService.request(routes.COMPLETE_RESET_TRANSACTION_PIN, "POST", requestPayload);
             dispatch(request(consume));
@@ -1075,7 +1093,7 @@ function ResfreshToken   (refreshTokenPayload){
                     if(response.status===200){
                         if(response.data.token!==undefined){
                             
-                            userData = JSON.parse(localStorage.getItem("psb-auth"));;
+                            userData = JSON.parse(localStorage.getItem("psb-auth"));
                             userData.lastLogForAuth = Date.now();
                             userData.statusCode = response.status;
                             userData.token = response.data.token;
