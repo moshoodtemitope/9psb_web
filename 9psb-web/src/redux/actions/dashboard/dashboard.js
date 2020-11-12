@@ -37,7 +37,9 @@ function GetCustomerDashboardData   (){
                                 psbAuth.allAccounts = response.data.accounts;
                                 psbAuth.kycLevel = response.data.kycLevel;
                                 psbAuth.savings = response.data.savings;
-    
+                                
+
+                                
                                 // localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
                                 
                                 
@@ -76,6 +78,7 @@ function GetCustomerDashboardData   (){
                                      dispatch(success(allData));
                                 })
                                 .catch(error =>{
+                                    localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
                                     dispatch(success(allData));
                                 })
                             })
@@ -83,7 +86,9 @@ function GetCustomerDashboardData   (){
                                 dispatch(failure(handleRequestErrors(error)));
                             })
                     }else{
-                        dispatch(success({accounts:response.data.accounts}))
+                        // localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                        // dispatch(success({accounts:response.data.accounts}))
+                        dispatch(failure(handleRequestErrors("An error occured")));
                     }
                     
                     // dispatch(success({accounts:response.data}));

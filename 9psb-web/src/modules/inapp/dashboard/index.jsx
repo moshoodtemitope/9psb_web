@@ -165,12 +165,16 @@ class Dashboard extends React.Component{
       }
 
     renderAccountSummary= ()=>{
-        const{screenWidthSize, 
+        
+        let {screenWidthSize, 
                 showSiderBar, 
-                psbuser, 
+                // psbuser, 
                 selectedAccount,
                 isAccountCopied,
-                selectedAccountIndex} = this.state
+                selectedAccountIndex} = this.state;
+
+        let psbuser = JSON.parse(localStorage.getItem('psb-auth'));
+                
         let GetCustomerDashboardDataRequest = this.props.GetCustomerDashboardDataReducer,
         customerAccounts = GetCustomerDashboardDataRequest.request_data.response.accounts,
         defaultAccount= selectedAccount!==""?selectedAccount: customerAccounts[0];
@@ -350,12 +354,14 @@ class Dashboard extends React.Component{
 
     renderDefaultAccountSummary= ()=>{
         
-        const{screenWidthSize, 
+        let{screenWidthSize, 
                 showSiderBar, 
                 psbuser, 
                 selectedAccount,
                 isAccountCopied,
                 selectedAccountIndex} = this.state;
+
+                
         let 
             accounstList =[
                 

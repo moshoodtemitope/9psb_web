@@ -64,6 +64,7 @@ function Login   (requestPayload){
                         return consume6
                             .then(response6 => {
                                 psbAuth.savings = response6.data.savings;
+                                psbAuth.kycLevel = response.data.kycLevel;
                                 let consume2 = ApiService.request(routes.GET_PROFILE_PIX, "GET", null);
                                 dispatch(request(consume2));
                                 return consume2
