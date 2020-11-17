@@ -161,7 +161,7 @@ class NewTxtPin extends React.Component{
                                                             name="otp"
                                                             onChange={(e)=> setFieldValue('otp', e.target.value)}
                                                             maxLength="6"
-                                                            value={allowNumbersOnly(values.otp,4)}
+                                                            value={allowNumbersOnly(values.otp,6)}
                                                             className={errors.otp && touched.otp ? "is-invalid" : null}
                                                             required />
                                                         {errors.otp && touched.otp ? (
