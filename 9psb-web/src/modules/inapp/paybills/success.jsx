@@ -69,7 +69,8 @@ class BillPaymentSuccess extends React.Component{
                                     Hi {psbuser.firstName}
                                 </div>
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                    Your payment of &#8358;{existingCustomerInfo2.requestPayload.amount} from your wallet {existingCustomerInfo2.requestPayload.walletNumber}  to {existingCustomerInfo2.requestPayload.billerName} for {existingCustomerInfo2.requestPayload.selectedBouquetName} was successful.
+                                    {/* Your payment of &#8358;{existingCustomerInfo2.requestPayload.amount} from your wallet {existingCustomerInfo2.requestPayload.walletNumber}  to {existingCustomerInfo2.requestPayload.billerName} for {existingCustomerInfo2.requestPayload.selectedBouquetName} was successful. */}
+                                    Your payment of &#8358;{existingCustomerInfo2.requestPayload.amount} from your wallet {existingCustomerInfo2.requestPayload.walletNumber}  for {existingCustomerInfo2.requestPayload.selectedBouquetName} was successful.
                                 </div>
                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
                                     An SMS has been sent  you  with details.
