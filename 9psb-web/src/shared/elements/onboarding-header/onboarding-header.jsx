@@ -52,16 +52,16 @@ class OnboardingHeader extends React.Component{
                             </Link>
                         </div>
                         <div className="header-items">
-                            {(screenWidthSize>=1024) && <Link  to='/'>Back to homepage</Link>}
+                            {(screenWidthSize>=1024) && <a href="https://9psb.com.ng/">Back to homepage</a>}
                             <Link  to='/app/signup'>Open an Account</Link>
                             {(screenWidthSize>=1024) && 
                                 <div className="download-app">
                                     <span>Download app</span>
                                     <div className="download-links">
-                                        <a href="#">
+                                        <a href="https://apps.apple.com/us/app/9psb/id1519792091">
                                             <img src={AppStore} alt=""/>
                                         </a>
-                                        <a href="#">
+                                        <a href="https://play.google.com/store/apps/details?id=com.mobile.banking.psbcustomer">
                                             <img src={PlayStore} alt=""/>
                                         </a>
                                     </div>
