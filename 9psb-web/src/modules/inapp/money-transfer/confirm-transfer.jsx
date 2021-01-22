@@ -58,10 +58,10 @@ class ConfirmTransferToPhone extends React.Component{
     }
 
 
-    confirmTransfer = (payload, saveBeneficiary)=>{
+    confirmTransfer = (payload, saveBeneficiary, isNonExistingAccount)=>{
 
         const {dispatch} = this.props;
-         dispatch(paymentActions.TranferToPhoneNumber(payload, saveBeneficiary));
+         dispatch(paymentActions.TranferToPhoneNumber(payload, saveBeneficiary, isNonExistingAccount));
         
     }
 
@@ -112,9 +112,9 @@ class ConfirmTransferToPhone extends React.Component{
                                             transactionPin: encryptAnItem(values.txtPin),
                                             toMobileNumber: existingCustomerInfo.toMobileNumber,
                                             sourceAccountNumber:existingCustomerInfo.sourceAccountNumber,
-                                            reciepientName: existingCustomerInfo.displayName,
+                                            reciepientName: existingCustomerInfo.displayName?existingCustomerInfo.displayName:"",
                                             amount: existingCustomerInfo.amount,
-                                            narration: existingCustomerInfo.narration,
+                                            narration: existingCustomerInfo.narration?existingCustomerInfo.narration:"",
                                         },
                                         beneficiaryInfo:{
                                             bankCode:existingCustomerInfo.bankCode,
@@ -129,7 +129,7 @@ class ConfirmTransferToPhone extends React.Component{
                                     // history.push("/app/transfer/success");
                                     this.setState({payload})
                                     
-                                    this.confirmTransfer(payload, values.saveBeneficiary);
+                                    this.confirmTransfer(payload, values.saveBeneficiary, this.props.location.state.isNonExistingAccount);
                                     // return;
                                     // this.registerStep2(payload)
                                     //     .then(() => {
@@ -159,10 +159,10 @@ class ConfirmTransferToPhone extends React.Component{
                                                     Hi {psbuser.firstName}
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                                    You are about to transfer &#8358;{numberWithCommas(existingCustomerInfo.amount, true)} from your wallet account to {existingCustomerInfo.displayName} with Phone - {existingCustomerInfo.accountNumber}.
+                                                    You are about to transfer &#8358;{numberWithCommas(existingCustomerInfo.amount, true)} from your wallet account to {existingCustomerInfo.displayName && <span>{existingCustomerInfo.displayName} with Phone -</span>}{existingCustomerInfo.accountNumber && <span>{existingCustomerInfo.accountNumber}</span> } {(!existingCustomerInfo.accountNumber && existingCustomerInfo.toMobileNumber) && <span>{existingCustomerInfo.toMobileNumber}</span> }.
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                                    Please confirm.
+                                                   You will be charged &#8358;{numberWithCommas(existingCustomerInfo.fee, true)} for this transaction
                                                 </div>
                                                 <div className="form-wrap w-70 mt-40 m-auto pt-20">
                                                    
@@ -209,13 +209,13 @@ class ConfirmTransferToPhone extends React.Component{
                                                 <div className="">
                                                     {
                                                         TransferMoneyToPhoneNumberRequest.request_data.failedRequest==="savebeneficiary" &&
-                                                        <ErrorMessage errorMessage={TransferMoneyToPhoneNumberRequest.request_data.error} canRetry={false} retryFunc={()=>this.confirmTransfer(payload, true)} />
+                                                        <ErrorMessage errorMessage={TransferMoneyToPhoneNumberRequest.request_data.error} canRetry={false} retryFunc={()=>this.confirmTransfer(payload, true, this.props.location.state.isNonExistingAccount)} />
                                                     }
                                                     {
                                                         TransferMoneyToPhoneNumberRequest.request_data.failedRequest==="transfer" &&
                                                         <ErrorMessage errorMessage={TransferMoneyToPhoneNumberRequest.request_data.error} 
                                                                     // canRetry={TransferMoneyToPhoneNumberRequest.request_data.error!=="Insufficient balance."? true: false} 
-                                                                    retryFunc={()=>this.confirmTransfer(payload, false)} />
+                                                                    retryFunc={()=>this.confirmTransfer(payload, false, this.props.location.state.isNonExistingAccount)} />
                                                     }
                                                     
                                                 </div>

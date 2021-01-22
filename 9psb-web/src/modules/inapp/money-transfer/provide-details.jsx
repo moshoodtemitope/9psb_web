@@ -6,8 +6,9 @@ import {Fragment} from "react";
 
 import { Helmet } from 'react-helmet';
 import {history} from '../../../_helpers/history'
-import Alert from 'react-bootstrap/Alert';
-import Select from 'react-select';
+
+import Modal from 'react-bootstrap/Modal'
+
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -34,6 +35,7 @@ class MoneyTransferDetails extends React.Component{
             amountEntered:"",
             selectedAccount:"",
             lesserAccountBalanceError:false,
+            numberIsNotExisting: false
         }
    
        
@@ -46,6 +48,60 @@ class MoneyTransferDetails extends React.Component{
     clearRecords = ()=>{
         const {dispatch} = this.props;
         dispatch(paymentActions.TranferToPhoneStep1("CLEAR"));
+    }
+
+    handleCloseNonExistentNumber = () => {
+       
+        this.setState({ numberIsNotExisting: false })
+        this.clearRecords();
+    };
+
+    renderNonExistentNumberPrompt = () => {
+       let{payload, numberIsNotExisting}= this.state;
+         
+
+        
+        return (
+            <Modal show={numberIsNotExisting} onHide={this.handleCloseNonExistentNumber} size="lg" centered="true" dialogClassName="modal-40w" animation={false}>
+                <Modal.Header className="txt-header modal-bg modal-header">
+                    <Modal.Title>
+                        <div className="modal-bg">
+                            <h2>Confirm Transfer</h2>
+                        </div>
+                    </Modal.Title>
+                    <div className="closeicon" onClick={this.handleCloseNonExistentNumber}>X</div>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <div className="confirmation-msg">
+                        <h3>{payload.toMobileNumber} does not have a 9PSB account</h3>
+                        <div className="confirmation-txt">
+                        If you proceed with this payment, the recipient will be able to access the funds once they open a 9PSB account by dialing <span>*990#</span>  or downloading the <span>9PSB app</span> 
+                        </div>
+                    </div>
+                    <div className="footer-with-cta toleft mt-30 forcomfirmation">
+                        <Button variant="secondary"
+                            type="button"
+                            
+                            className="ml-0 onboarding-btn light"
+                            onClick={this.handleCloseNonExistentNumber}
+                        > Cancel
+                            {/* {CreateAccountStep1Request.is_request_processing?'Please wait...' :'Continue'} */}
+                        </Button>
+                        <Button variant="secondary"
+                            type="submit"
+                            onClick={this.proceedToTransfer}
+                            className=" onboarding-btn"
+                        >  Proceed to transfer
+                        </Button>
+
+                    </div>
+
+                </Modal.Body>
+
+            </Modal>
+        )
+        
     }
 
 
@@ -78,10 +134,33 @@ class MoneyTransferDetails extends React.Component{
         )
     }
 
-    verifyAccount = (payload)=>{
-
+    processVerification = async(payload) =>{
         const {dispatch} = this.props;
-         dispatch(paymentActions.TranferToPhoneStep1(payload));
+        await dispatch(paymentActions.TranferToPhoneStep1(payload));
+    }
+    proceedToTransfer =()=>{
+        this.setState({ numberIsNotExisting: false })
+        history.push("/app/transfer/confirm", {isNonExistingAccount:true})
+    }
+
+    verifyAccount = (payload)=>{
+        this.processVerification(payload)
+                .then(()=>{
+                    
+                    // if(this.props.TransferMoneyToPhoneSTEP1Reducer.request_status ===paymentsConstants.TRANSFER_TO_PHONE_STEP1_FAILURE){
+                    //     console.log("alot o", this.props.TransferMoneyToPhoneSTEP1Reducer.request_data)
+                    //     this.setState({numberIsNotExisting:true, toMobileNumber: payload.toMobileNumber})
+                    // }
+                    if(this.props.TransferMoneyToPhoneSTEP1Reducer.request_status ===paymentsConstants.TRANSFER_TO_PHONE_STEP1_SUCCESS){
+                        
+                        if(this.props.TransferMoneyToPhoneSTEP1Reducer.request_data.response.statusCode==="310"){
+                            this.setState({numberIsNotExisting:true, toMobileNumber: payload.toMobileNumber})
+                        }
+                        
+                    }
+                })
+        // const {dispatch} = this.props;
+        //  dispatch(paymentActions.TranferToPhoneStep1(payload));
         
     }
 
@@ -92,6 +171,7 @@ class MoneyTransferDetails extends React.Component{
             selectedAccount,
             lesserAccountBalanceError,
             payload,
+            numberIsNotExisting,
             accountNumber} = this.state;
         let validationSchema = Yup.object().shape({
                 phoneNumber: Yup.string()
@@ -105,6 +185,7 @@ class MoneyTransferDetails extends React.Component{
             <div className="each-section mt-80 res-mt-45">
                 <div className="twosided nomargin">
                     <div>
+                    {numberIsNotExisting===true && this.renderNonExistentNumberPrompt()}
                         <div className="page-section-mainheading app-panel">
                             <div className="border-lines"><span></span><span></span><span></span></div>
                             <div className="subheading-title">
@@ -268,7 +349,7 @@ class MoneyTransferDetails extends React.Component{
                                                 </div>
                                             </div>
                                             
-                                            {TransferMoneyToPhoneSTEP1Request.request_status ===paymentsConstants.TRANSFER_TO_PHONE_STEP1_FAILURE && 
+                                            {(TransferMoneyToPhoneSTEP1Request.request_status ===paymentsConstants.TRANSFER_TO_PHONE_STEP1_FAILURE && TransferMoneyToPhoneSTEP1Request.request_data.error!=="Phone Number does not exist on 9PSB platform") && 
                                                 
                                                     <ErrorMessage errorMessage={TransferMoneyToPhoneSTEP1Request.request_data.error} canRetry={false} retryFunc={()=>this.verifyAccount(payload)} />
                                                 

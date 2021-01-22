@@ -18,6 +18,55 @@
         }
     }
 }
+.savings-tabs{
+    display: flex;
+    margin: 20px 0;
+    a{
+        padding: 12px 30px;
+        color: #515151;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 500;
+        margin-right:30px ;
+        &.active, &:hover{
+            border-radius: 4px;
+            background-color: #FFFFFF;
+            color: #0E0E0E;
+            text-decoration: none;
+        }
+        @media screen and  (max-width: 424px){
+            padding: 12px 8px;
+        }
+    }
+}
+.wallet-balance {
+    color: #fff;
+}
+div.fund-wallet-cta {
+    text-align: right;
+    padding-right: 0;
+    button, button:hover{
+        background: #fff!important;
+        border-radius: 19px;
+        color: #167557;
+        font-weight: 800;
+        font-size: 12px!important;
+        padding: 7px 22px!important;
+        border: none!important;
+    }
+}
+.savings-heading-panel{
+    padding: 34px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    background-image: url('../../../assets/images/accountbg.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    box-shadow: 0 0 5px #85929E;
+}
 .light-text{
     font-weight: normal;
 }
@@ -25,8 +74,8 @@
     font-size: 20px !important;
 }
 .amount-info {
-    display: flex;
-    justify-content: space-between;
+    // display: flex;
+    // justify-content: space-between;
     .amount-saved {
         font-size: 16px;
         font-weight: 800;
@@ -76,9 +125,173 @@
         top: -12px;
     }
 }
+.wallet-amount {
+    font-size: 21px;
+    font-weight: 800;
+}
 .savings-bar {
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 5px;
     background-color: rgba(240,242,245,0.5);
     padding: 20px;
+}
+.nosavings{
+    text-align: center;
+    margin-top: 13px;
+    img{
+        margin: 10px 0 20px;
+        width: 30%;
+    }
+}
+.amount-text {
+    font-size: 16px;
+    font-weight: bold;
+    @media screen and  (max-width: 424px){
+        max-width: 70%;
+        word-break: break-all;
+        line-height: 1.2;
+    }
+    
+}
+  
+
+.each-savings-info{
+    box-shadow: 0 0 5px rgba(133, 146, 158, 0.12);
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    // &:not(.uncollapsed){
+    //     display: flex;
+    //     justify-content: space-between;
+    //     align-items: center;
+    // }
+    .saving-detail{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 16px;
+        flex-basis: 93%;
+        border-right: 1px solid #F2F2F2;
+        @media screen and  (max-width: 767px){
+            flex-basis: 80%;
+        }
+    }
+    .saving-control {
+        flex-basis: 7%;
+        padding: 18px 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        @media screen and  (max-width: 767px){
+            flex-basis: 20%;
+        }
+    }
+    .interest-txt {
+        color: #167557;
+        font-size: 14px;
+    }
+    .saving-status {
+        border-radius: 4px;
+        padding: 4px 18px;
+        font-size: 9px;
+        &.done{
+            border: 1px solid #8CB787;
+            background: #D4FAC3;
+            color: #548E4E;
+        }
+        &.ongoing {
+            border: 1px solid #A3C23D;
+            background-color: #E8FF9C;
+            color: #548E4E;
+        }
+    }
+    .other-details-wrap {
+        flex-basis: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #F2F2F2;
+        padding: 18px 7% 18px 16px;
+        .date-started {
+            font-size: 12px;
+        }
+        .date-matured {
+            color: #548E4E;
+            font-size: 12px;
+        }
+        .cta-wrapper{
+            .onboarding-btn, .onboarding-btn:hover{
+                padding: 10px 28px !important;
+                font-size: 12px !important;
+            }
+        }
+        .date-info{
+            display: block;
+        }
+        
+    }
+}
+.upgrading-heading {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+.collapsed{
+    .other-details-wrap{
+        display: none;
+    }
+    .caretup{
+        display: none;
+    }
+}
+.uncollapsed{
+    .caretdown{
+        display: none;
+    }
+}
+.upgrade-txt {
+    font-size: 11px;
+    opacity: 0.7;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    max-width: 54%;
+}
+.upgrade-cta {
+    text-align: center;
+    .onboarding-btn, .onboarding-btn:hover{
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        font-size: 12px !important;
+        font-weight: 500;
+        display: unset;
+    }
+}
+@media screen and  (max-width: 425px){
+    .savings-heading-panel{
+        display: block;
+    }
+    div.fund-wallet-cta{
+        text-align: left;
+    }
+}
+@media screen and  (min-width: 768px) and (max-width: 1024px){
+    .wallet-amount{
+        font-size: 18px;
+    }
+}
+@media screen and  (max-width: 1023px){
+    .wallet-amount{
+        font-size: 16px;
+        font-weight: 800;
+        white-space: initial;
+        word-break: break-all;
+        max-width: 100%;
+        line-height: 1.19;
+    }
+    div.fund-wallet-cta button{
+        padding: 7px 17px !important;
+    }
 }

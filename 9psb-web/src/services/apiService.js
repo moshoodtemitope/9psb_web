@@ -97,6 +97,7 @@ export class ApiService {
        
         let transferUrls=[
                 "Customer/transfertophonenumber",
+                "Customer/transfertonewphonenumber",
                 "Customer/transfertoaccount",
             ],
             airtmeUrls=[
@@ -410,6 +411,7 @@ export class ApiService {
                         // dispatch(onboardingActions.Logout())
 
                         let responseData= error.response;
+                        
                         if(responseData.config.url.indexOf("Identity/refreshtoken")>-1){
                             dispatch(onboardingActions.Logout())
                         }else{
@@ -551,8 +553,8 @@ export class ApiService {
 
 
                     }).catch(function (error) {
-                      
-                        if (url === routes.REFRESH_TOKEN) {
+                        // console.log("here now", error.response.config)
+                        if ( error.response && error.response.config.url === routes.REFRESH_TOKEN) {
 
                             dispatch(onboardingActions.Logout())
                         } else {

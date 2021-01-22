@@ -132,8 +132,27 @@ function GetSavings   (requestPayload){
             dispatch(request(consume));
             return consume
                 .then(response =>{
+
+                    let consume2 = ApiService.request(routes.GET_ACCOUNTS, "GET", null);
+                    dispatch(request(consume2));
+                    return consume2
+                    .then(response2 =>{
+                        if(response2.status===200 && response2.headers['content-type'].indexOf('application/json')>-1){
+                            if(response2.data.accounts.length>=1){
+                                let psbAuth = JSON.parse(localStorage.getItem("psb-auth"));
+                                psbAuth.savings = response2.data.savings;
+                                localStorage.setItem('psb-auth', JSON.stringify(psbAuth));
+                            }
+                        }
+                        dispatch(success(response.data));
+                    })
+                    .catch(error =>{
+                        dispatch(success(response.data));
+                        
+                    })
+
+
                     
-                    dispatch(success(response.data));
 
                     // history.push("/app/transfer/confirm")
                     
@@ -236,16 +255,33 @@ function TranferToPhoneStep1   (requestPayload){
             dispatch(request(consume));
             return consume
                 .then(response =>{
-                    
                     dispatch(success({
                         ...requestPayload,
                         ...response.data
                         }));
+                    if(response.data.statusCode !=="310"){
+                        history.push("/app/transfer/confirm", {isNonExistingAccount:false})
+                    }
 
-                    history.push("/app/transfer/confirm")
+                    
                     
                 }).catch(error =>{
-                    dispatch(failure(handleRequestErrors(error)));
+                    if(error.response){
+                        if(error.response.data && error.response.data.stateCode){
+                            if(error.response.data.stateCode ===310){
+                                dispatch(success({
+                                    ...requestPayload
+                                    }));
+
+                                    
+                            }
+                        }else{
+                            dispatch(failure(handleRequestErrors(error)));
+                        }
+                    }else{
+                        dispatch(failure(handleRequestErrors(error)));
+                    }
+                    
                     
                 });
             
@@ -264,11 +300,18 @@ function TranferToPhoneStep1   (requestPayload){
     function clear() { return { type: paymentsConstants.TRANSFER_TO_PHONE_STEP1_RESET, clear_data:""} }
 }
 
-function TranferToPhoneNumber   (requestPayload, saveBeneficiary){
+function TranferToPhoneNumber   (requestPayload, saveBeneficiary, isNonExistingAccount){
     if(requestPayload!=="CLEAR"){
         return dispatch =>{
             if(saveBeneficiary===false){
-                let consume = ApiService.request(`${routes.TRANSFER_TO_PHONE_NUMBER}`, "POST", requestPayload.transferInfo);
+                let url;
+                if(isNonExistingAccount){
+                    url = routes.TRANSFER_TO_NEWPHONE_NUMBER;
+                }else{
+                    url = routes.TRANSFER_TO_PHONE_NUMBER;
+                }
+
+                let consume = ApiService.request(`${url}`, "POST", requestPayload.transferInfo);
                 dispatch(request(consume));
                 return consume
                     .then(response =>{

@@ -375,80 +375,70 @@ export const numberWithoutDecimals= (amount)=> {
 }
 
 export const numberWithCommas= (amount, isDecimal)=> {
-    // let testSequence = /^[0-9.,]+$/;
-    // let testSequence = /([0-9]+(\.[0-9]+)?)/;
     
-    if(amount!==null && amount!==undefined){
-        if(amount!==''){
+    if (amount !== null && amount !== undefined) {
+        if (amount !== '') {
             let amountFiltered, splittedDecimal, amountTemp;
-            amount = amount.toString().replace(/[^0-9.,]/g,'');
-            // amount = amount.toString().replace(/\D\.\,/g,'');
+            amount = amount.toString().replace(/[^0-9.,]/g, '');
 
-            // if(!testSequence.test(amount)){
-            //     return "";
-            // }
-        // return numberProvided.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        // return parseFloat(numberProvided).toLocaleString(undefined, {maximumFractionDigits:2});
-            
-            // if(amount.indexOf(',')>-1){
-                amountFiltered = amount.toString().replace(/,/g, '');
-            // }
+            amountFiltered = amount.toString().replace(/,/g, '');
 
-            
-            if((amountFiltered.match(/\./g) || []).length===1){
-                
-                if(amountFiltered.indexOf('.')>0){
+
+
+            if ((amountFiltered.match(/\./g) || []).length === 1) {
+
+                if (amountFiltered.indexOf('.') > 0) {
                     splittedDecimal = amountFiltered.trim().split('.');
 
-                    if(splittedDecimal[1].indexOf('.')>-1){
+                    if (splittedDecimal[1].indexOf('.') > -1) {
                         splittedDecimal[1] = splittedDecimal[1].replace(/./g, '')
                     }
 
-                    if(splittedDecimal[0].indexOf('.')>-1){
+                    if (splittedDecimal[0].indexOf('.') > -1) {
                         splittedDecimal[0] = splittedDecimal[0].replace(/./g, '')
                     }
 
-                    if(splittedDecimal[1].length>2){
-                        
-                        splittedDecimal[1] = splittedDecimal[1].substring(2,0);
+                    if (splittedDecimal[1].length > 2) {
+
+                        splittedDecimal[1] = splittedDecimal[1].substring(2, 0);
                     }
 
-                    if(splittedDecimal[1].length<2 && isDecimal===true){
-                        
-                        splittedDecimal[1] = splittedDecimal[1]+'0';
+                    if (splittedDecimal[1].length < 2 && isDecimal === true) {
+
+                        splittedDecimal[1] = splittedDecimal[1] + '0';
                     }
 
                     // if(splittedDecimal[1].length===1 && splittedDecimal[1]!=='0' && isDecimal===true){
                     //     splittedDecimal[1] = splittedDecimal[1]+'0';
                     // }
-                    
+
 
                     amountTemp = splittedDecimal[0].toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
                     return `${amountTemp}.${splittedDecimal[1]}`;
                 }
             }
-            
-            if((amountFiltered.match(/\./g) || []).length>1){
-                
+
+            if ((amountFiltered.match(/\./g) || []).length > 1) {
+
                 var numberParts = amountFiltered.split('.');
-                numberParts =  numberParts.slice(0,-1).join('') + '.' + numberParts.slice(-1)
-                
-                return numberParts.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');    
+                numberParts = numberParts.slice(0, -1).join('') + '.' + numberParts.slice(-1)
+
+                return numberParts.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
             }
 
-            if(amountFiltered.indexOf('.')===-1 && isDecimal===true){
-                amountFiltered = amountFiltered+'.00';
+            if (amountFiltered.indexOf('.') === -1 && isDecimal === true) {
+                amountFiltered = amountFiltered + '.00';
             }
-            
+
             return amountFiltered.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-            
-        
-            
+
+
+
         }
-        if(amount===''){
+        if (amount === '') {
             return "";
         }
-    }else{
+    } else {
         return null;
     }
 

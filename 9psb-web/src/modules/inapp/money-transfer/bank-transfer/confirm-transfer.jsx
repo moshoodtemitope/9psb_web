@@ -142,7 +142,7 @@ class ConfirmBankTransfer extends React.Component{
                                                     You are about to transfer &#8358;{numberWithCommas(existingCustomerInfo.amount, true)} from your wallet({existingCustomerInfo.sourceAccountNumber}) to {confirmBeneficiaryRequest.displayName} with Wallet number - {existingCustomerInfo.accountNumber}({existingCustomerInfo.bankName}).
                                                 </div>
                                                 <div className="panel-helptext mt-20 centered m-auto pt-20">
-                                                    Please confirm.
+                                                   You will be charged &#8358;{numberWithCommas(existingCustomerInfo.fee, true)} for this transaction
                                                 </div>
                                                 <div className="form-wrap w-70 mt-40 m-auto pt-20">
                                                    

@@ -3,9 +3,7 @@ import { Link, NavLink} from 'react-router-dom';
 import { connect } from 'react-redux';
 import {Fragment} from "react";
 import "./in-app-sidebar.scss"; 
-import Logo from '../../../assets/images/logo.svg';
-import AppStore from '../../../assets/images/appstore.svg';
-import PlayStore from '../../../assets/images/playstore.svg';
+
 
 import Home from '../../../assets/images/home.svg';
 import History from '../../../assets/images/history.svg';
@@ -141,12 +139,12 @@ class InAppSideBar extends React.Component{
                         <img src={SendMoney} alt=""/>
                         <span>Transfer Money</span>
                     </NavLink>
-                    {(psbuser.savings!==undefined && psbuser.savings!==null && psbuser.savings!=="") && 
+                    {/* {(psbuser.savings!==undefined && psbuser.savings!==null && psbuser.savings!=="") &&  */}
                         <NavLink to="/app/savings">
                             <img src={SendMoney} alt="" />
                             <span>Savings</span>
                         </NavLink>
-                    }
+                    {/* } */}
                     <NavLink  to="/app/buy-airtime">
                         <img src={Phone} alt=""/>
                         <span>Buy Airtime</span>

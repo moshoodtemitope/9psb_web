@@ -288,7 +288,7 @@ class CashDeposit extends React.Component{
                                                         // disabled={DepositCashWithAgentRequest.is_request_processing}
                                                         className="ml-0 onboarding-btn"
                                                     > Continue
-                                                     {/* {DepositCashWithAgentRequest.is_request_processing?'Please wait...' :'Continue'} */}
+                                                     
                                                     </Button>
 
                                                 </div>

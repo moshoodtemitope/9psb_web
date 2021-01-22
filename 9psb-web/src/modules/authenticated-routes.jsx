@@ -119,7 +119,7 @@ function PrivateRoute({ component: Component, authed, ...rest }) {
  
      /**To be uncommented */
 
-    if(isLoggedIn){
+    if(isLoggedIn && psbuser){
         let psbuser =  JSON.parse(localStorage.getItem("psb-auth"));
 
             if(psbuser.isProfileSet===false){

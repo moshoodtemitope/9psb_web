@@ -30,6 +30,7 @@ import DebitIcon from '../../../assets/images/debit-txt.svg';
 import CreditIcon from '../../../assets/images/credit-txt.svg';
 import EmptyIcon from '../../../assets/images/empty.svg';
 import LoadingIcon from '../../../assets/images/loading.gif';
+import SavingsIc1 from '../../../assets/images/savings-ic2.svg';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -135,7 +136,7 @@ class Dashboard extends React.Component{
         
     }
 
-    copyAccountNumber = () =>{
+    copyAccountNumber = () => {
         /* Get the text field */
         var copyText = document.querySelector(".account-to-copy");
         if (document.selection) { // IE
@@ -148,21 +149,21 @@ class Dashboard extends React.Component{
             window.getSelection().removeAllRanges();
             window.getSelection().addRange(range);
         }
-       
+
         // copyText.select();
         // copyText.setSelectionRange(0, 99999); 
-      
-        
+
+
         document.execCommand("copy");
-      
+
         /* Alert the copied text */
-        this.setState({isAccountCopied: true}, ()=>{
+        this.setState({ isAccountCopied: true }, () => {
             setTimeout(() => {
-                this.setState({isAccountCopied: false})
+                this.setState({ isAccountCopied: false })
             }, 3000);
         });
-       
-      }
+
+    }
 
     renderAccountSummary= ()=>{
         
@@ -207,144 +208,150 @@ class Dashboard extends React.Component{
 
 
             return (
-                <div className="account-summary-wrap">
-                    {screenWidthSize >=1024 &&
-                        <div className="account-summary">
-                            <div className="wallet-balance">
-                                <div className="each-summary-title">Your Wallet balance</div>
-                                <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
-                            </div>
-                            <div className="accounts-list">
-                                {accounstList.length>=2 &&
-                                    <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
-                                }  
+                <div>
+                    <div className="account-summary-wrap">
+                        {screenWidthSize >= 1024 &&
+                            <div className="account-summary">
+                                <div className="wallet-balance">
+                                    <div className="each-summary-title">Your Wallet balance</div>
+                                    <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
+                                </div>
+                                <div className="accounts-list">
+                                    {accounstList.length >= 2 &&
+                                        <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
+                                    }
 
-                                {accounstList.length<2 &&
-                                    <div className="each-summary-title">Account</div> 
-                                }
-                                <Select
-                                defaultValue={{label:`${defaultAccount.walletNumber} - ${defaultAccount.productName}`}}
-                                    options={accounstList}
-                                    styles={selectStyle}
-                                    onChange={(selectedAccount)=>{
-                                        this.setState({
-                                            selectedAccount,
-                                            selectedAccountIndex: selectedAccount.accountIndex
-                                        })
-                                        this.loadHistoryForAWallet(selectedAccount.value)
-                                        
-                                    }}
-                                    noOptionsMessage ={()=>`No account found`}
-                                    placeholder="choose account"
-                                />
-                            </div>
-                            <div className="account-num-wrap">
-                                <div>
-                                    <div className="each-summary-title">Account Number</div>
-                                    <div className="seleceted-account">
-                                        <span className="account-to-copy">{defaultAccount.walletNumber}</span>
-                                        
-                                        {
-                                            document.queryCommandSupported('copy') &&
-                                            <span className="copy-icon" onClick={this.copyAccountNumber}>
-                                                <img src={CopyImg} alt="" />
-                                            </span>
-                                        }
+                                    {accounstList.length < 2 &&
+                                        <div className="each-summary-title">Account</div>
+                                    }
+                                    <Select
+                                        defaultValue={{ label: `${defaultAccount.walletNumber} - ${defaultAccount.productName}` }}
+                                        options={accounstList}
+                                        styles={selectStyle}
+                                        onChange={(selectedAccount) => {
+                                            this.setState({
+                                                selectedAccount,
+                                                selectedAccountIndex: selectedAccount.accountIndex
+                                            })
+                                            this.loadHistoryForAWallet(selectedAccount.value)
+
+                                        }}
+                                        noOptionsMessage={() => `No account found`}
+                                        placeholder="choose account"
+                                    />
+                                </div>
+                                <div className="account-num-wrap">
+                                    <div>
+                                        <div className="each-summary-title">Account Number</div>
+                                        <div className="seleceted-account">
+                                            <span className="account-to-copy">{defaultAccount.walletNumber}</span>
+
+                                            {
+                                                document.queryCommandSupported('copy') &&
+                                                <span className="copy-icon" onClick={this.copyAccountNumber}>
+                                                    <img src={CopyImg} alt="" />
+                                                </span>
+                                            }
+                                        </div>
+                                        {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
                                     </div>
-                                {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
                                 </div>
-                            </div>
-                            {(psbuser.kycLevel !==2 && psbuser.kycLevel !==undefined && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
-                                <div className="fund-wallet-cta">
-                                    <Button variant="primary"
-                                        type="button"
-                                        className="ml-0 mt-20 fundwallet-btn"
-                                        onClick={()=>this.handleUpgradePrompt()}
-                                    >  Upgrade Account
+                                {/* {(psbuser.kycLevel !== 2 && psbuser.kycLevel !== undefined && (selectedAccount === "" || (selectedAccount !== "" && selectedAccount.accountType !== "002"))) &&
+                                    <div className="fund-wallet-cta">
+                                        <Button variant="primary"
+                                            type="button"
+                                            className="ml-0 mt-20 fundwallet-btn"
+                                            onClick={() => this.handleUpgradePrompt()}
+                                        >  Upgrade Account
                                     </Button>
-                                </div>
-                            }
-                            { (selectedAccount!=="" && selectedAccount.accountType==="002" ) &&
-                                <div className="fund-wallet-cta">
-                                    <Button variant="primary"
-                                        type="button"
-                                        className="ml-0 mt-20 fundwallet-btn"
-                                        onClick={()=>this.goToNewSavings()}
-                                    >  Add Savings
-                                    </Button>
-                                </div>
-                            }
-                        </div>
-                    }
-
-                    {screenWidthSize < 1024 &&
-                        <div className="account-summary mobilesummary">
-                            <div className="wallet-balance">
-                                <div className="each-summary-title">Your Wallet balance</div>
-                                <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
-                            </div>
-                            {(psbuser.kycLevel !==2 && psbuser.kycLevel !==undefined && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
-                                <div className="fund-wallet-cta">
-                                    <Button variant="primary"
-                                        type="button"
-                                        className="ml-0 fundwallet-btn"
-                                        onClick={()=>this.handleUpgradePrompt()}
-                                    >  Upgrade Account
-                                    </Button>
-                                </div>
-                            }
-                            { (selectedAccount!=="" && selectedAccount.accountType==="002" ) &&
-                                <div className="fund-wallet-cta">
-                                    <Button variant="primary"
-                                        type="button"
-                                        className="ml-0 mt-20 fundwallet-btn"
-                                        onClick={()=>this.goToNewSavings()}
-                                    >  Add Savings
-                                    </Button>
-                                </div>
-                            }
-                            <div className="account-num-wrap">
-                                <div>
-                                    <div className="each-summary-title">Account Number</div>
-                                    <div className="seleceted-account">
-                                        <span className="account-to-copy">{defaultAccount.walletNumber}</span>
-                                        {
-                                            document.queryCommandSupported('copy') &&
-                                            <span className="copy-icon" onClick={this.copyAccountNumber}>
-                                                <img src={CopyImg} alt="" />
-                                            </span>
-                                        }
-                                        
                                     </div>
-                                {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
+                                } */}
+                                {(selectedAccount !== "" && selectedAccount.accountType === "002") &&
+                                    <div className="fund-wallet-cta">
+                                        <Button variant="primary"
+                                            type="button"
+                                            className="ml-0 mt-20 fundwallet-btn"
+                                            onClick={() => this.goToNewSavings()}
+                                        >  Add Savings
+                                    </Button>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        {screenWidthSize < 1024 &&
+                            <div className="account-summary mobilesummary">
+                                <div className="wallet-balance">
+                                    <div className="each-summary-title">Your Wallet balance</div>
+                                    <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
+                                </div>
+                                {/* {(psbuser.kycLevel !== 2 && psbuser.kycLevel !== undefined && (selectedAccount === "" || (selectedAccount !== "" && selectedAccount.accountType !== "002"))) &&
+                                    <div className="fund-wallet-cta">
+                                        <Button variant="primary"
+                                            type="button"
+                                            className="ml-0 fundwallet-btn"
+                                            onClick={() => this.handleUpgradePrompt()}
+                                        >  Upgrade Account
+                                    </Button>
+                                    </div>
+                                } */}
+                                {(selectedAccount !== "" && selectedAccount.accountType === "002") &&
+                                    <div className="fund-wallet-cta">
+                                        <Button variant="primary"
+                                            type="button"
+                                            className="ml-0 mt-20 fundwallet-btn"
+                                            onClick={() => this.goToNewSavings()}
+                                        >  Add Savings
+                                    </Button>
+                                    </div>
+                                }
+                                <div className="account-num-wrap">
+                                    <div>
+                                        <div className="each-summary-title">Account Number</div>
+                                        <div className="seleceted-account">
+                                            <span className="account-to-copy">{defaultAccount.walletNumber}</span>
+                                            {
+                                                document.queryCommandSupported('copy') &&
+                                                <span className="copy-icon" onClick={this.copyAccountNumber}>
+                                                    <img src={CopyImg} alt="" />
+                                                </span>
+                                            }
+
+                                        </div>
+                                        {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
+                                    </div>
+                                </div>
+                                <div className="accounts-list">
+                                    {accounstList.length >= 2 &&
+                                        <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
+                                    }
+
+                                    {accounstList.length < 2 &&
+                                        <div className="each-summary-title">Account</div>
+                                    }
+                                    <Select
+                                        defaultValue={{ label: `${defaultAccount.walletNumber} - ${defaultAccount.productName}` }}
+                                        options={accounstList}
+                                        styles={selectStyle}
+                                        onChange={(selectedAccount) => {
+                                            this.setState({
+                                                selectedAccount,
+                                                selectedAccountIndex: selectedAccount.accountIndex
+                                            })
+                                            this.loadHistoryForAWallet(selectedAccount.value)
+                                        }}
+                                        noOptionsMessage={() => `No account found`}
+                                        placeholder="choose account"
+                                    />
                                 </div>
                             </div>
-                            <div className="accounts-list">
-                                {accounstList.length>=2 &&
-                                    <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
-                                }  
+                        }
 
-                                {accounstList.length<2 &&
-                                    <div className="each-summary-title">Account</div> 
-                                }
-                                <Select 
-                                    defaultValue={{label:`${defaultAccount.walletNumber} - ${defaultAccount.productName}`}}
-                                    options={accounstList}
-                                    styles={selectStyle}
-                                    onChange={(selectedAccount)=>{
-                                        this.setState({
-                                            selectedAccount,
-                                            selectedAccountIndex: selectedAccount.accountIndex
-                                        })
-                                        this.loadHistoryForAWallet(selectedAccount.value)
-                                    }}
-                                    noOptionsMessage ={()=>`No account found`}
-                                    placeholder="choose account"
-                                />
-                            </div>
-                        </div>
-                    }
-
+                    </div>
+                    {(psbuser.kycLevel !== 2 &&
+                        psbuser.kycLevel !== undefined &&
+                        (selectedAccount === "" || (selectedAccount !== "" && selectedAccount.accountType !== "002"))
+                    ) && this.renderUpgradePrompt()}
                 </div>
             )
         }else{
@@ -399,145 +406,152 @@ class Dashboard extends React.Component{
 
 
         return (
-            <div className="account-summary-wrap">
-                {screenWidthSize >=1024 &&
-                    <div className="account-summary">
-                        <div className="wallet-balance">
-                            <div className="each-summary-title">Your Wallet balance</div>
-                            <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
-                        </div>
-                        <div className="accounts-list">
-                            {accounstList.length>=2 &&
-                                <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
-                            }  
+            <div>
+                <div className="account-summary-wrap">
+                    {screenWidthSize >= 1024 &&
+                        <div className="account-summary">
+                            <div className="wallet-balance">
+                                <div className="each-summary-title">Your Wallet balance</div>
+                                <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
+                            </div>
+                            <div className="accounts-list">
+                                {accounstList.length >= 2 &&
+                                    <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
+                                }
 
-                            {accounstList.length<2 &&
-                                <div className="each-summary-title">Account</div> 
-                            }
-                            <Select
-                               defaultValue={{label:`${defaultAccount.walletNumber} - ${defaultAccount.productName}`}}
-                                options={accounstList}
-                                styles={selectStyle}
-                                onChange={(selectedAccount)=>{
-                                    this.setState({
-                                        selectedAccount,
-                                        selectedAccountIndex: selectedAccount.accountIndex
-                                    })
-                                   
-                                    this.loadHistoryForAWallet(selectedAccount.value)
-                                    
-                                }}
-                                noOptionsMessage ={()=>`No account found`}
-                                placeholder="choose account"
-                            />
-                        </div>
-                        <div className="account-num-wrap">
-                            <div>
-                                <div className="each-summary-title">Account Number</div>
-                                <div className="seleceted-account">
-                                    <span className="account-to-copy">{defaultAccount.walletNumber}</span>
-                                    
-                                    {
-                                        document.queryCommandSupported('copy') &&
-                                        <span className="copy-icon" onClick={this.copyAccountNumber}>
-                                            <img src={CopyImg} alt="" />
-                                        </span>
-                                    }
+                                {accounstList.length < 2 &&
+                                    <div className="each-summary-title">Account</div>
+                                }
+                                <Select
+                                    defaultValue={{ label: `${defaultAccount.walletNumber} - ${defaultAccount.productName}` }}
+                                    options={accounstList}
+                                    styles={selectStyle}
+                                    onChange={(selectedAccount) => {
+                                        this.setState({
+                                            selectedAccount,
+                                            selectedAccountIndex: selectedAccount.accountIndex
+                                        })
+
+                                        this.loadHistoryForAWallet(selectedAccount.value)
+
+                                    }}
+                                    noOptionsMessage={() => `No account found`}
+                                    placeholder="choose account"
+                                />
+                            </div>
+                            <div className="account-num-wrap">
+                                <div>
+                                    <div className="each-summary-title">Account Number</div>
+                                    <div className="seleceted-account">
+                                        <span className="account-to-copy">{defaultAccount.walletNumber}</span>
+
+                                        {
+                                            document.queryCommandSupported('copy') &&
+                                            <span className="copy-icon" onClick={this.copyAccountNumber}>
+                                                <img src={CopyImg} alt="" />
+                                            </span>
+                                        }
+                                    </div>
+                                    {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
                                 </div>
-                               {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
                             </div>
-                        </div>
-                        {(psbuser.kycLevel !==2 && psbuser.kycLevel !==undefined && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
-                            <div className="fund-wallet-cta">
-                                <Button variant="primary"
-                                    type="button"
-                                    className="ml-0 mt-20 fundwallet-btn"
-                                    onClick={()=>this.handleUpgradePrompt()}
-                                >  Upgrade Account
-                                </Button>
-                            </div>
-                        }
-                    {(selectedAccount !== "" && selectedAccount.accountType === "002") &&
-                        <div className="fund-wallet-cta">
-                            <Button variant="primary"
-                                type="button"
-                                className="ml-0 mt-20 fundwallet-btn"
-                                onClick={() => this.goToNewSavings()}
-                            >  Add Savings
-                                    </Button>
-                        </div>
-                    }
-                    </div>
-                }
-
-                {screenWidthSize < 1024 &&
-                    <div className="account-summary mobilesummary">
-                        <div className="wallet-balance">
-                            <div className="each-summary-title">Your Wallet balance</div>
-                            <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
-                        </div>
-                        {(psbuser.kycLevel !==2 && psbuser.kycLevel !==undefined && (selectedAccount==="" || (selectedAccount!=="" && selectedAccount.accountType!=="002" ))) &&
-                            <div className="fund-wallet-cta">
-                                <Button variant="primary"
-                                    type="button"
-                                    className="ml-0 fundwallet-btn"
-                                    onClick={()=>this.handleUpgradePrompt()}
-                                >  Upgrade Account
-                                </Button>
-                            </div>
-                        }
-                        { (selectedAccount!=="" && selectedAccount.accountType==="002" ) &&
+                            {/* {(psbuser.kycLevel !== 2 && psbuser.kycLevel !== undefined && (selectedAccount === "" || (selectedAccount !== "" && selectedAccount.accountType !== "002"))) &&
                                 <div className="fund-wallet-cta">
                                     <Button variant="primary"
                                         type="button"
                                         className="ml-0 mt-20 fundwallet-btn"
-                                        onClick={()=>this.goToNewSavings()}
+                                        onClick={() => this.handleUpgradePrompt()}
+                                    >  Upgrade Account
+                                </Button>
+                                </div>
+                            } */}
+                            {(selectedAccount !== "" && selectedAccount.accountType === "002") &&
+                                <div className="fund-wallet-cta">
+                                    <Button variant="primary"
+                                        type="button"
+                                        className="ml-0 mt-20 fundwallet-btn"
+                                        onClick={() => this.goToNewSavings()}
                                     >  Add Savings
                                     </Button>
                                 </div>
                             }
-                        <div className="account-num-wrap">
-                            <div>
-                                <div className="each-summary-title">Account Number</div>
-                                <div className="seleceted-account">
-                                    <span className="account-to-copy">{defaultAccount.walletNumber}</span>
-                                    {
-                                        document.queryCommandSupported('copy') &&
-                                        <span className="copy-icon" onClick={this.copyAccountNumber}>
-                                            <img src={CopyImg} alt="" />
-                                        </span>
-                                    }
-                                    
+                        </div>
+                    }
+
+                    {screenWidthSize < 1024 &&
+                        <div className="account-summary mobilesummary">
+                            <div className="wallet-balance">
+                                <div className="each-summary-title">Your Wallet balance</div>
+                                <div className="wallet-amount">&#x20A6;{numberWithCommas(`${defaultAccount.walletBalance}`, true)}</div>
+                            </div>
+                            {/* {(psbuser.kycLevel !== 2 && psbuser.kycLevel !== undefined && (selectedAccount === "" || (selectedAccount !== "" && selectedAccount.accountType !== "002"))) &&
+                                <div className="fund-wallet-cta">
+                                    <Button variant="primary"
+                                        type="button"
+                                        className="ml-0 fundwallet-btn"
+                                        onClick={() => this.handleUpgradePrompt()}
+                                    >  Upgrade Account
+                                </Button>
                                 </div>
-                               {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
+                            } */}
+                            {(selectedAccount !== "" && selectedAccount.accountType === "002") &&
+                                <div className="fund-wallet-cta">
+                                    <Button variant="primary"
+                                        type="button"
+                                        className="ml-0 mt-20 fundwallet-btn"
+                                        onClick={() => this.goToNewSavings()}
+                                    >  Add Savings
+                                    </Button>
+                                </div>
+                            }
+                            <div className="account-num-wrap">
+                                <div>
+                                    <div className="each-summary-title">Account Number</div>
+                                    <div className="seleceted-account">
+                                        <span className="account-to-copy">{defaultAccount.walletNumber}</span>
+                                        {
+                                            document.queryCommandSupported('copy') &&
+                                            <span className="copy-icon" onClick={this.copyAccountNumber}>
+                                                <img src={CopyImg} alt="" />
+                                            </span>
+                                        }
+
+                                    </div>
+                                    {isAccountCopied && <small className="accountcopied-txt">Copied!</small>}
+                                </div>
+                            </div>
+                            <div className="accounts-list">
+                                {accounstList.length >= 2 &&
+                                    <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
+                                }
+
+                                {accounstList.length < 2 &&
+                                    <div className="each-summary-title">Account</div>
+                                }
+                                <Select
+                                    defaultValue={{ label: `${defaultAccount.walletNumber} - ${defaultAccount.productName}` }}
+                                    options={accounstList}
+                                    styles={selectStyle}
+                                    onChange={(selectedAccount) => {
+                                        this.setState({
+                                            selectedAccount,
+                                            selectedAccountIndex: selectedAccount.accountIndex
+                                        })
+                                        this.loadHistoryForAWallet(selectedAccount.value)
+                                    }}
+                                    noOptionsMessage={() => `No account found`}
+                                    placeholder="choose account"
+                                />
                             </div>
                         </div>
-                        <div className="accounts-list">
-                            {accounstList.length>=2 &&
-                                <div className="each-summary-title">Account ({selectedAccountIndex} of {accounstList.length})</div>
-                            }  
+                    }
 
-                            {accounstList.length<2 &&
-                                <div className="each-summary-title">Account</div> 
-                            }
-                            <Select 
-                                defaultValue={{label:`${defaultAccount.walletNumber} - ${defaultAccount.productName}`}}
-                                options={accounstList}
-                                styles={selectStyle}
-                                onChange={(selectedAccount)=>{
-                                    this.setState({
-                                        selectedAccount,
-                                        selectedAccountIndex: selectedAccount.accountIndex
-                                    })
-                                    this.loadHistoryForAWallet(selectedAccount.value)
-                                }}
-                                noOptionsMessage ={()=>`No account found`}
-                                placeholder="choose account"
-                            />
-                        </div>
-                    </div>
-                }
-
+                </div>
+                
+                {(psbuser.kycLevel !== 2 && 
+                    psbuser.kycLevel !== undefined && 
+                    (selectedAccount === "" || (selectedAccount !== "" && selectedAccount.accountType !== "002"))
+                ) && this.renderUpgradePrompt()}
             </div>
         )
     }
@@ -1068,6 +1082,45 @@ class Dashboard extends React.Component{
                             </div>
                         </div>
                     </div> */}
+                </div>
+            </div>
+        )
+    }
+
+    renderUpgradePrompt =() =>{
+        let psbuser = JSON.parse(localStorage.getItem('psb-auth'));
+        return(
+            <div className="upgrade-prompt-wrap">
+                
+                <div className="upgrade-msg">
+                    <div className="upgrade-icon">
+                        <img src={SavingsIc1} alt=""/>
+                    </div>
+                    {
+                        psbuser.kycLevel===1 && 
+                        <div className="upgrade-text">
+                            <h3>Do more with your accounts</h3>
+                            <h6>Increase your limit to up to N500,000 daily when you upgrade your account by providing your identity document </h6>
+                        </div>
+                    }
+
+                    {
+                        psbuser.kycLevel!==1 && 
+                        <div className="upgrade-text">
+                            <h3>Do more with 9rasave account.</h3>
+                            <h6>Increase your transaction limit, save your funds and earn interest.</h6>
+                        </div>
+                    }
+                    
+                </div>
+                <div className="upgrade-cta">
+                    <Button variant="secondary"
+                        type="button"
+                        onClick={()=>this.handleUpgradePrompt()}
+                        className="ml-0 onboarding-btn"
+                    > {psbuser.kycLevel===1? "Update Identity document":"Upgrade Now"}
+                        
+                    </Button>
                 </div>
             </div>
         )

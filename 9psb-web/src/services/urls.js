@@ -3,7 +3,7 @@
 // const URL = 'http://40.76.69.211/';
 // const URL = 'http://102.164.38.19';
 
-// const URL = process.env.NODE_ENV === 'development' ? 'http://40.76.69.211/' : 'http://41.190.22.40/'
+// const URL = process.env.NODE_ENV === 'development' ? 'https://theprojectsplash.com/' : 'https://theprojectsplash.com/'
 const URL = process.env.NODE_ENV === 'development' ? 'https://prod-api.9psb.com.ng/' : 'https://prod-api.9psb.com.ng/'
 // const URL = process.env.NODE_ENV === 'development' ? 'http://40.76.69.211/' : 'https://api.9psb.com.ng/'
 const BASEURL = URL;  
@@ -74,7 +74,8 @@ export const routes = {
     //Transfers Apis
     DEPOSIT_CASH_USING_AGENT: BASEURL + 'Transfers/api/Customer/depositusingagent',
     TRANSFER_TO_PHONE_NUMBER: BASEURL + 'Transfers/api/Customer/transfertophonenumber',
-    CONFIRM_ACCOUNT_WITH_PHONE: BASEURL + 'Transfers/api/Customer/confirmaccountwithphone',
+    TRANSFER_TO_NEWPHONE_NUMBER: BASEURL + 'Transfers/api/Customer/transfertonewphonenumber',
+    CONFIRM_ACCOUNT_WITH_PHONE: BASEURL + 'Transfers/api/v2/customer/confirmaccountwithphone',
     SAVE_TRANSFER_BENEFICIARY: BASEURL + 'Transfers/api/Customer/addbeneficiary',
     GET_TRANSFER_BENEFICIARIES: BASEURL + 'Transfers/api/Customer/beneficiaries',
     GET_BANKS: BASEURL + 'Transfers/api/Customer/banks',
